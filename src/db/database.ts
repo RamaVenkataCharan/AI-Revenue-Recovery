@@ -3,7 +3,9 @@ import fs from 'fs';
 import path from 'path';
 
 const DB_PATH = path.join(process.cwd(), 'revenue_recovery.db');
-const SCHEMA_PATH = path.join(process.cwd(), 'src/db/schema.sql');
+const SCHEMA_PATH = fs.existsSync(path.join(process.cwd(), 'src/db/sqlite_schema.sql'))
+  ? path.join(process.cwd(), 'src/db/sqlite_schema.sql')
+  : path.join(process.cwd(), 'src/db/schema.sql');
 
 let dbInstance: Database.Database | null = null;
 
@@ -44,7 +46,7 @@ export function initSchema(db: Database.Database = getDatabase()): void {
   }
 }
 
-export function resetDatabase(): void {
+export function resetDatabase(): Database.Database {
   closeDatabase();
   if (fs.existsSync(DB_PATH)) {
     try {
@@ -53,7 +55,7 @@ export function resetDatabase(): void {
       // Ignore if locked
     }
   }
-  getDatabase();
+  return getDatabase();
 }
 
 export function closeDatabase(): void {
