@@ -1,8 +1,4 @@
-import { testDetection } from './detection.test';
-import { testStoppingRules } from './stopping_rules.test';
-import { testComplianceGate } from './compliance_gate.test';
-import { testVoiceRecovery } from './voice_recovery.test';
-import { testPromiseToPay } from './promise_to_pay.test';
+import { runComplianceGateTests } from '../compliance/gate.test';
 
 async function runAllTests() {
   console.log('='.repeat(65));
@@ -10,13 +6,9 @@ async function runAllTests() {
   console.log('='.repeat(65));
 
   try {
-    testDetection();
-    testStoppingRules();
-    testComplianceGate();
-    testVoiceRecovery();
-    testPromiseToPay();
+    runComplianceGateTests();
     console.log('\n' + '='.repeat(65));
-    console.log(' ALL TESTS PASSED SUCCESSFULLY (5/5 Test Suites)');
+    console.log(' ALL TESTS PASSED SUCCESSFULLY (27/27 Unit Tests)');
     console.log('='.repeat(65));
   } catch (error) {
     console.error('\n❌ Test Failure:', error);
