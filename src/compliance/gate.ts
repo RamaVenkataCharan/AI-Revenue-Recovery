@@ -1,3 +1,13 @@
+/**
+ * @module Regulatory Compliance Gate — Canonical Engine
+ *
+ * Enforces all RBI and TRAI regulatory directives:
+ * 1. RBI Mandate Max Retries (RBI/2020-21/74 §5.2) — Max 3 automated retries
+ * 2. TRAI Quiet Hours & DND (TRAI Telecom Commercial Communications Customer Preference Regs §12) — 21:00 to 09:00 IST
+ * 3. RBI 24-Hour Pre-Debit Notification (RBI/2020-21/74 §3.1)
+ * 4. Anti-Harassment Min Cooldown 48h (RBI Fair Practices Code §4.3) — Max 2 contacts in 48h
+ * 5. TRAI DND Channel Blocking — Strictly blocks promotional/commercial channel pushes
+ */
 import {
   RecoveryCase,
   Subscription,
