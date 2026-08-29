@@ -1,11 +1,18 @@
+/**
+ * @module Database — SQLite (better-sqlite3) singleton for the Revenue Recovery Agent.
+ *
+ * Design decision: Single SQLite file (`revenue_recovery.db`) chosen for hackathon
+ * demo — zero external dependencies, works on any machine with Node.js.
+ *
+ * Schema source: `src/db/sqlite_schema.sql` (flat denormalized tables).
+ * There is no Postgres/Supabase fallback — those schemas have been removed.
+ */
 import Database from 'better-sqlite3';
 import fs from 'fs';
 import path from 'path';
 
 const DB_PATH = path.join(process.cwd(), 'revenue_recovery.db');
-const SCHEMA_PATH = fs.existsSync(path.join(process.cwd(), 'src/db/sqlite_schema.sql'))
-  ? path.join(process.cwd(), 'src/db/sqlite_schema.sql')
-  : path.join(process.cwd(), 'src/db/schema.sql');
+const SCHEMA_PATH = path.join(process.cwd(), 'src/db/sqlite_schema.sql');
 
 let dbInstance: Database.Database | null = null;
 
@@ -21,29 +28,11 @@ export function getDatabase(): Database.Database {
 
 export function initSchema(db: Database.Database = getDatabase()): void {
   if (!fs.existsSync(SCHEMA_PATH)) {
+    console.warn(`[DB] Schema file not found at ${SCHEMA_PATH}. Skipping init.`);
     return;
   }
   const schemaSql = fs.readFileSync(SCHEMA_PATH, 'utf-8');
   db.exec(schemaSql);
-
-  // Safe table schema migrations for development
-  const migrations = [
-    'ALTER TABLE subscriptions ADD COLUMN contact_history TEXT',
-    'ALTER TABLE recovery_metrics ADD COLUMN voice_calls_placed_count INTEGER NOT NULL DEFAULT 0',
-    'ALTER TABLE recovery_metrics ADD COLUMN promises_made_count INTEGER NOT NULL DEFAULT 0',
-    'ALTER TABLE recovery_metrics ADD COLUMN promises_kept_count INTEGER NOT NULL DEFAULT 0',
-    'ALTER TABLE recovery_metrics ADD COLUMN promises_broken_count INTEGER NOT NULL DEFAULT 0',
-    'ALTER TABLE recovery_metrics ADD COLUMN voice_recovered_amount REAL NOT NULL DEFAULT 0',
-    'ALTER TABLE recovery_metrics ADD COLUMN gateway_recovered_amount REAL NOT NULL DEFAULT 0'
-  ];
-
-  for (const sql of migrations) {
-    try {
-      db.prepare(sql).run();
-    } catch {
-      // Column already exists
-    }
-  }
 }
 
 export function resetDatabase(): Database.Database {

@@ -1,6 +1,6 @@
 [
   {
-    "call_id": "call_1787563076889_dcst8",
+    "call_id": "call_1787991186986_s5ln1",
     "subscription_id": "sub_1045",
     "customer_id": "cust_545",
     "customer_name": "Kiran Mazumdar",
@@ -9,45 +9,13 @@
     "failure_reason": "daily_limit_exceeded",
     "tone": "PREMIUM_DEFERENTIAL",
     "script_content": "[Agent]: \"Namaste Kiran ji! Main Razorpay Priority Desk se baat kar raha hoon. Hope you are having a wonderful day.\n[Agent]: \"Kiran ji, aapka ₹32,000 ka premium recurring subscription renewal daily bank mandate transaction limit reach hone ke wajah se process nahi ho paya tha.\n[Agent]: \"Hum ensure karna chahte hain ki aapki uninterrupted VIP access continue rahe. Kya hum abhi ek instant secure retry initiate kar sakte hain, ya aap mujhe koi convenient date bata denge jab hum aapke liye debit re-schedule karein?\"",
-    "call_duration_seconds": 76,
-    "simulated_outcome": "PROMISE_TO_PAY_COMMITTED",
-    "promised_date": "2026-08-27",
-    "timestamp": "2026-08-24T09:17:56.889Z",
-    "summary": "Customer Kiran Mazumdar agreed to settle balance and committed to a Promise-to-Pay (PTP) on 2026-08-27."
-  },
-  {
-    "call_id": "call_1787563076893_9vusg",
-    "subscription_id": "sub_1040",
-    "customer_id": "cust_540",
-    "customer_name": "Raghavendra Hegde",
-    "customer_segment": "high_value",
-    "amount": 19500,
-    "failure_reason": "bank_declined",
-    "tone": "PREMIUM_DEFERENTIAL",
-    "script_content": "[Agent]: \"Namaste Raghavendra ji! Main Razorpay Priority Desk se baat kar raha hoon. Hope you are having a wonderful day.\n[Agent]: \"Raghavendra ji, aapka ₹19,500 ka premium recurring subscription renewal issuing bank ke temporary network decline ke wajah se process nahi ho paya tha.\n[Agent]: \"Hum ensure karna chahte hain ki aapki uninterrupted VIP access continue rahe. Kya hum abhi ek instant secure retry initiate kar sakte hain, ya aap mujhe koi convenient date bata denge jab hum aapke liye debit re-schedule karein?\"",
-    "call_duration_seconds": 76,
-    "simulated_outcome": "PROMISE_TO_PAY_COMMITTED",
-    "promised_date": "2026-08-30",
-    "timestamp": "2026-08-24T09:17:56.894Z",
-    "summary": "Customer Raghavendra Hegde agreed to settle balance and committed to a Promise-to-Pay (PTP) on 2026-08-30."
-  },
-  {
-    "call_id": "call_1787563076898_4anh3",
-    "subscription_id": "sub_1049",
-    "customer_id": "cust_549",
-    "customer_name": "Urvashi Rautela",
-    "customer_segment": "high_value",
-    "amount": 14500,
-    "failure_reason": "insufficient_funds",
-    "tone": "PREMIUM_DEFERENTIAL",
-    "script_content": "[Agent]: \"Namaste Urvashi ji! Main Razorpay Priority Desk se baat kar raha hoon. Hope you are having a wonderful day.\n[Agent]: \"Urvashi ji, aapka ₹14,500 ka premium recurring subscription renewal bank account mein balance update na hone ke wajah se process nahi ho paya tha.\n[Agent]: \"Hum ensure karna chahte hain ki aapki uninterrupted VIP access continue rahe. Kya hum abhi ek instant secure retry initiate kar sakte hain, ya aap mujhe koi convenient date bata denge jab hum aapke liye debit re-schedule karein?\"",
     "call_duration_seconds": 58,
     "simulated_outcome": "AGREED_IMMEDIATE_RETRY",
-    "timestamp": "2026-08-24T09:17:56.898Z",
-    "summary": "Customer Urvashi Rautela verified identity and verbally authorized immediate mandate retry."
+    "timestamp": "2026-08-29T08:13:06.999Z",
+    "summary": "Customer Kiran Mazumdar verified identity and verbally authorized immediate mandate retry."
   },
   {
-    "call_id": "call_1787563076904_paoqq",
+    "call_id": "call_1787991187006_fbi0a",
     "subscription_id": "sub_1029",
     "customer_id": "cust_529",
     "customer_name": "Pallavi Kulkarni",
@@ -56,28 +24,13 @@
     "failure_reason": "card_expired",
     "tone": "PREMIUM_DEFERENTIAL",
     "script_content": "[Agent]: \"Namaste Pallavi ji! Main Razorpay Priority Desk se baat kar raha hoon. Hope you are having a wonderful day.\n[Agent]: \"Pallavi ji, aapka ₹12,500 ka premium recurring subscription renewal aapka linked debit/credit card expire hone ke wajah se process nahi ho paya tha.\n[Agent]: \"Hum ensure karna chahte hain ki aapki uninterrupted VIP access continue rahe. Kya hum abhi ek instant secure retry initiate kar sakte hain, ya aap mujhe koi convenient date bata denge jab hum aapke liye debit re-schedule karein?\"",
-    "call_duration_seconds": 58,
-    "simulated_outcome": "AGREED_IMMEDIATE_RETRY",
-    "timestamp": "2026-08-24T09:17:56.904Z",
-    "summary": "Customer Pallavi Kulkarni verified identity and verbally authorized immediate mandate retry."
-  },
-  {
-    "call_id": "call_1787563076909_oshuf",
-    "subscription_id": "sub_1043",
-    "customer_id": "cust_543",
-    "customer_name": "Anuradha Roy",
-    "customer_segment": "high_value",
-    "amount": 8999,
-    "failure_reason": "insufficient_funds",
-    "tone": "PREMIUM_DEFERENTIAL",
-    "script_content": "[Agent]: \"Namaste Anuradha ji! Main Razorpay Priority Desk se baat kar raha hoon. Hope you are having a wonderful day.\n[Agent]: \"Anuradha ji, aapka ₹8,999 ka premium recurring subscription renewal bank account mein balance update na hone ke wajah se process nahi ho paya tha.\n[Agent]: \"Hum ensure karna chahte hain ki aapki uninterrupted VIP access continue rahe. Kya hum abhi ek instant secure retry initiate kar sakte hain, ya aap mujhe koi convenient date bata denge jab hum aapke liye debit re-schedule karein?\"",
     "call_duration_seconds": 18,
     "simulated_outcome": "CALL_UNANSWERED_OR_DECLINED",
-    "timestamp": "2026-08-24T09:17:56.910Z",
-    "summary": "Customer Anuradha Roy disconnected call after greeting or declined to make payment commitment."
+    "timestamp": "2026-08-29T08:13:07.006Z",
+    "summary": "Customer Pallavi Kulkarni disconnected call after greeting or declined to make payment commitment."
   },
   {
-    "call_id": "call_1787563076917_itfeq",
+    "call_id": "call_1787991187011_qrg8z",
     "subscription_id": "sub_1014",
     "customer_id": "cust_514",
     "customer_name": "Arjun Singhal",
@@ -88,8 +41,8 @@
     "script_content": "[Agent]: \"Namaste Arjun ji! Main Razorpay Priority Desk se baat kar raha hoon. Hope you are having a wonderful day.\n[Agent]: \"Arjun ji, aapka ₹6,999 ka premium recurring subscription renewal bank account mein balance update na hone ke wajah se process nahi ho paya tha.\n[Agent]: \"Hum ensure karna chahte hain ki aapki uninterrupted VIP access continue rahe. Kya hum abhi ek instant secure retry initiate kar sakte hain, ya aap mujhe koi convenient date bata denge jab hum aapke liye debit re-schedule karein?\"",
     "call_duration_seconds": 76,
     "simulated_outcome": "PROMISE_TO_PAY_COMMITTED",
-    "promised_date": "2026-08-29",
-    "timestamp": "2026-08-24T09:17:56.918Z",
-    "summary": "Customer Arjun Singhal agreed to settle balance and committed to a Promise-to-Pay (PTP) on 2026-08-29."
+    "promised_date": "2026-08-31",
+    "timestamp": "2026-08-29T08:13:07.012Z",
+    "summary": "Customer Arjun Singhal agreed to settle balance and committed to a Promise-to-Pay (PTP) on 2026-08-31."
   }
 ]

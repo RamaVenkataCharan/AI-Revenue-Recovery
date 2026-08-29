@@ -8,11 +8,17 @@
     "mandate_status": "failed",
     "failure_reason_code": "insufficient_funds",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-23T08:30:00Z",
+    "last_attempt_timestamp": "2026-08-28T17:00:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [
+      "2026-08-23T17:00:00.000Z"
+    ],
+    "phone": "+919810000000",
+    "dnd_registered": true,
+    "pre_debit_notice_sent_at": null,
+    "last_contacted_at": "2026-08-23T17:00:00.000Z"
   },
   {
     "subscription_id": "sub_1002",
@@ -23,15 +29,18 @@
     "mandate_status": "failed",
     "failure_reason_code": "card_expired",
     "retry_count_so_far": 1,
-    "last_attempt_timestamp": "2026-08-22T14:15:00Z",
+    "last_attempt_timestamp": "2026-08-28T05:30:00.000Z",
     "customer_segment": "high_value",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 3,
     "contact_history": [
-      "2026-08-23T10:00:00Z",
-      "2026-08-23T16:30:00Z",
-      "2026-08-24T05:00:00Z"
-    ]
+      "2026-08-27T05:30:00.000Z",
+      "2026-08-27T21:30:00.000Z"
+    ],
+    "phone": "+919810013579",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T23:30:00.000Z",
+    "last_contacted_at": "2026-08-27T21:30:00.000Z"
   },
   {
     "subscription_id": "sub_1003",
@@ -42,11 +51,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "mandate_revoked",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-23T11:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T08:15:00.000Z",
     "customer_segment": "at_risk",
     "previous_payment_history": "frequent_delay",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810027158",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T02:15:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1004",
@@ -57,11 +70,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "technical_error",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-24T05:00:00Z",
+    "last_attempt_timestamp": "2026-08-27T23:00:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810040737",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-26T17:00:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1005",
@@ -72,11 +89,17 @@
     "mandate_status": "failed",
     "failure_reason_code": "bank_declined",
     "retry_count_so_far": 3,
-    "last_attempt_timestamp": "2026-08-22T09:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T11:45:00.000Z",
     "customer_segment": "high_value",
     "previous_payment_history": "occasional_delay",
     "recent_contact_count_48h": 1,
-    "contact_history": ["2026-08-23T11:00:00Z"]
+    "contact_history": [
+      "2026-08-27T21:45:00.000Z"
+    ],
+    "phone": "+919810054316",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T05:45:00.000Z",
+    "last_contacted_at": "2026-08-27T21:45:00.000Z"
   },
   {
     "subscription_id": "sub_1006",
@@ -87,11 +110,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "insufficient_funds",
     "retry_count_so_far": 1,
-    "last_attempt_timestamp": "2026-08-24T02:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T13:30:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "occasional_delay",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810067895",
+    "dnd_registered": true,
+    "pre_debit_notice_sent_at": "2026-08-27T07:30:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1007",
@@ -102,11 +129,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "daily_limit_exceeded",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-23T04:30:00Z",
+    "last_attempt_timestamp": "2026-08-28T17:00:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810081474",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T11:00:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1008",
@@ -117,15 +148,18 @@
     "mandate_status": "failed",
     "failure_reason_code": "insufficient_funds",
     "retry_count_so_far": 2,
-    "last_attempt_timestamp": "2026-08-21T10:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T04:00:00.000Z",
     "customer_segment": "high_value",
     "previous_payment_history": "frequent_delay",
     "recent_contact_count_48h": 3,
     "contact_history": [
-      "2026-08-23T09:00:00Z",
-      "2026-08-23T15:00:00Z",
-      "2026-08-24T04:00:00Z"
-    ]
+      "2026-08-27T04:00:00.000Z",
+      "2026-08-27T20:00:00.000Z"
+    ],
+    "phone": "+919810095053",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": null,
+    "last_contacted_at": "2026-08-27T20:00:00.000Z"
   },
   {
     "subscription_id": "sub_1009",
@@ -136,11 +170,17 @@
     "mandate_status": "failed",
     "failure_reason_code": "card_expired",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-23T07:15:00Z",
+    "last_attempt_timestamp": "2026-08-28T05:30:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [
+      "2026-08-23T05:30:00.000Z"
+    ],
+    "phone": "+919810108632",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T23:30:00.000Z",
+    "last_contacted_at": "2026-08-23T05:30:00.000Z"
   },
   {
     "subscription_id": "sub_1010",
@@ -151,11 +191,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "technical_error",
     "retry_count_so_far": 1,
-    "last_attempt_timestamp": "2026-08-23T03:00:00Z",
+    "last_attempt_timestamp": "2026-08-27T23:00:00.000Z",
     "customer_segment": "high_value",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810122211",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-26T17:00:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1011",
@@ -166,11 +210,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "insufficient_funds",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-23T06:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T10:00:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810135790",
+    "dnd_registered": true,
+    "pre_debit_notice_sent_at": "2026-08-27T04:00:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1012",
@@ -181,11 +229,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "bank_declined",
     "retry_count_so_far": 1,
-    "last_attempt_timestamp": "2026-08-22T16:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T11:45:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "occasional_delay",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810149369",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T05:45:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1013",
@@ -196,11 +248,17 @@
     "mandate_status": "failed",
     "failure_reason_code": "mandate_revoked",
     "retry_count_so_far": 1,
-    "last_attempt_timestamp": "2026-08-23T12:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T17:00:00.000Z",
     "customer_segment": "at_risk",
     "previous_payment_history": "frequent_delay",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [
+      "2026-08-23T17:00:00.000Z"
+    ],
+    "phone": "+919810162948",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T11:00:00.000Z",
+    "last_contacted_at": "2026-08-23T17:00:00.000Z"
   },
   {
     "subscription_id": "sub_1014",
@@ -211,11 +269,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "insufficient_funds",
     "retry_count_so_far": 1,
-    "last_attempt_timestamp": "2026-08-23T01:30:00Z",
+    "last_attempt_timestamp": "2026-08-28T14:45:00.000Z",
     "customer_segment": "high_value",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810176527",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T08:45:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1015",
@@ -226,14 +288,18 @@
     "mandate_status": "failed",
     "failure_reason_code": "card_expired",
     "retry_count_so_far": 1,
-    "last_attempt_timestamp": "2026-08-20T10:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T04:00:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "occasional_delay",
     "recent_contact_count_48h": 2,
     "contact_history": [
-      "2026-08-23T08:00:00Z",
-      "2026-08-23T18:00:00Z"
-    ]
+      "2026-08-27T04:00:00.000Z",
+      "2026-08-27T20:00:00.000Z"
+    ],
+    "phone": "+919810190106",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": null,
+    "last_contacted_at": "2026-08-27T20:00:00.000Z"
   },
   {
     "subscription_id": "sub_1016",
@@ -244,11 +310,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "technical_error",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-24T06:30:00Z",
+    "last_attempt_timestamp": "2026-08-27T23:00:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810203685",
+    "dnd_registered": true,
+    "pre_debit_notice_sent_at": "2026-08-27T17:00:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1017",
@@ -259,11 +329,17 @@
     "mandate_status": "failed",
     "failure_reason_code": "insufficient_funds",
     "retry_count_so_far": 3,
-    "last_attempt_timestamp": "2026-08-21T08:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T08:15:00.000Z",
     "customer_segment": "high_value",
     "previous_payment_history": "frequent_delay",
     "recent_contact_count_48h": 1,
-    "contact_history": ["2026-08-23T14:00:00Z"]
+    "contact_history": [
+      "2026-08-27T18:15:00.000Z"
+    ],
+    "phone": "+919810217264",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T02:15:00.000Z",
+    "last_contacted_at": "2026-08-27T18:15:00.000Z"
   },
   {
     "subscription_id": "sub_1018",
@@ -274,11 +350,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "daily_limit_exceeded",
     "retry_count_so_far": 1,
-    "last_attempt_timestamp": "2026-08-22T18:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T10:00:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810230843",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T04:00:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1019",
@@ -289,11 +369,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "insufficient_funds",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-23T09:45:00Z",
+    "last_attempt_timestamp": "2026-08-28T17:00:00.000Z",
     "customer_segment": "at_risk",
     "previous_payment_history": "frequent_delay",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810244422",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T11:00:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1020",
@@ -304,11 +388,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "bank_declined",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-23T05:15:00Z",
+    "last_attempt_timestamp": "2026-08-28T13:30:00.000Z",
     "customer_segment": "high_value",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810258001",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T07:30:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1021",
@@ -319,11 +407,17 @@
     "mandate_status": "failed",
     "failure_reason_code": "insufficient_funds",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-23T07:30:00Z",
+    "last_attempt_timestamp": "2026-08-28T14:45:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [
+      "2026-08-23T14:45:00.000Z"
+    ],
+    "phone": "+919810271580",
+    "dnd_registered": true,
+    "pre_debit_notice_sent_at": "2026-08-27T08:45:00.000Z",
+    "last_contacted_at": "2026-08-23T14:45:00.000Z"
   },
   {
     "subscription_id": "sub_1022",
@@ -334,11 +428,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "card_expired",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-23T06:45:00Z",
+    "last_attempt_timestamp": "2026-08-27T23:00:00.000Z",
     "customer_segment": "high_value",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810285159",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": null,
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1023",
@@ -349,11 +447,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "technical_error",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-24T04:15:00Z",
+    "last_attempt_timestamp": "2026-08-28T05:30:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810298738",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T23:30:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1024",
@@ -364,11 +466,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "mandate_revoked",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-23T10:30:00Z",
+    "last_attempt_timestamp": "2026-08-28T08:15:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "occasional_delay",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810312317",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T02:15:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1025",
@@ -379,11 +485,17 @@
     "mandate_status": "failed",
     "failure_reason_code": "insufficient_funds",
     "retry_count_so_far": 1,
-    "last_attempt_timestamp": "2026-08-23T00:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T17:00:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "occasional_delay",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [
+      "2026-08-23T17:00:00.000Z"
+    ],
+    "phone": "+919810325896",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T11:00:00.000Z",
+    "last_contacted_at": "2026-08-23T17:00:00.000Z"
   },
   {
     "subscription_id": "sub_1026",
@@ -394,11 +506,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "daily_limit_exceeded",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-23T08:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T11:45:00.000Z",
     "customer_segment": "high_value",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810339475",
+    "dnd_registered": true,
+    "pre_debit_notice_sent_at": "2026-08-27T05:45:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1027",
@@ -409,15 +525,18 @@
     "mandate_status": "failed",
     "failure_reason_code": "bank_declined",
     "retry_count_so_far": 1,
-    "last_attempt_timestamp": "2026-08-22T11:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T13:30:00.000Z",
     "customer_segment": "at_risk",
     "previous_payment_history": "occasional_delay",
     "recent_contact_count_48h": 3,
     "contact_history": [
-      "2026-08-23T07:00:00Z",
-      "2026-08-23T14:00:00Z",
-      "2026-08-24T03:00:00Z"
-    ]
+      "2026-08-27T13:30:00.000Z",
+      "2026-08-28T05:30:00.000Z"
+    ],
+    "phone": "+919810353054",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T07:30:00.000Z",
+    "last_contacted_at": "2026-08-28T05:30:00.000Z"
   },
   {
     "subscription_id": "sub_1028",
@@ -428,11 +547,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "insufficient_funds",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-23T11:30:00Z",
+    "last_attempt_timestamp": "2026-08-27T23:00:00.000Z",
     "customer_segment": "at_risk",
     "previous_payment_history": "frequent_delay",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810366633",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-26T17:00:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1029",
@@ -443,11 +566,17 @@
     "mandate_status": "failed",
     "failure_reason_code": "card_expired",
     "retry_count_so_far": 1,
-    "last_attempt_timestamp": "2026-08-22T08:30:00Z",
+    "last_attempt_timestamp": "2026-08-28T04:00:00.000Z",
     "customer_segment": "high_value",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [
+      "2026-08-23T04:00:00.000Z"
+    ],
+    "phone": "+919810380212",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": null,
+    "last_contacted_at": "2026-08-23T04:00:00.000Z"
   },
   {
     "subscription_id": "sub_1030",
@@ -458,11 +587,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "technical_error",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-24T05:30:00Z",
+    "last_attempt_timestamp": "2026-08-28T05:30:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810393791",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T23:30:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1031",
@@ -473,11 +606,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "insufficient_funds",
     "retry_count_so_far": 1,
-    "last_attempt_timestamp": "2026-08-23T02:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T17:00:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810407370",
+    "dnd_registered": true,
+    "pre_debit_notice_sent_at": "2026-08-27T11:00:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1032",
@@ -488,11 +625,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "mandate_revoked",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-23T09:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T10:00:00.000Z",
     "customer_segment": "high_value",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810420949",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T04:00:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1033",
@@ -503,11 +644,17 @@
     "mandate_status": "failed",
     "failure_reason_code": "bank_declined",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-23T07:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T11:45:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "occasional_delay",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [
+      "2026-08-23T11:45:00.000Z"
+    ],
+    "phone": "+919810434528",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T05:45:00.000Z",
+    "last_contacted_at": "2026-08-23T11:45:00.000Z"
   },
   {
     "subscription_id": "sub_1034",
@@ -518,11 +665,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "insufficient_funds",
     "retry_count_so_far": 3,
-    "last_attempt_timestamp": "2026-08-20T14:00:00Z",
+    "last_attempt_timestamp": "2026-08-27T23:00:00.000Z",
     "customer_segment": "high_value",
     "previous_payment_history": "occasional_delay",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810448107",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-26T17:00:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1035",
@@ -533,11 +684,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "daily_limit_exceeded",
     "retry_count_so_far": 1,
-    "last_attempt_timestamp": "2026-08-22T20:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T14:45:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810461686",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T08:45:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1036",
@@ -548,11 +703,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "card_expired",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-23T06:15:00Z",
+    "last_attempt_timestamp": "2026-08-28T04:00:00.000Z",
     "customer_segment": "at_risk",
     "previous_payment_history": "frequent_delay",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810475265",
+    "dnd_registered": true,
+    "pre_debit_notice_sent_at": null,
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1037",
@@ -563,11 +722,17 @@
     "mandate_status": "failed",
     "failure_reason_code": "technical_error",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-24T06:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T17:00:00.000Z",
     "customer_segment": "high_value",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [
+      "2026-08-23T17:00:00.000Z"
+    ],
+    "phone": "+919810488844",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-28T11:00:00.000Z",
+    "last_contacted_at": "2026-08-23T17:00:00.000Z"
   },
   {
     "subscription_id": "sub_1038",
@@ -578,11 +743,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "insufficient_funds",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-23T08:15:00Z",
+    "last_attempt_timestamp": "2026-08-28T08:15:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810502423",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T02:15:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1039",
@@ -593,11 +762,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "mandate_revoked",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-23T11:45:00Z",
+    "last_attempt_timestamp": "2026-08-28T10:00:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "frequent_delay",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810516002",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T04:00:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1040",
@@ -608,11 +781,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "bank_declined",
     "retry_count_so_far": 1,
-    "last_attempt_timestamp": "2026-08-22T15:30:00Z",
+    "last_attempt_timestamp": "2026-08-27T23:00:00.000Z",
     "customer_segment": "high_value",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810529581",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-26T17:00:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1041",
@@ -623,11 +800,17 @@
     "mandate_status": "failed",
     "failure_reason_code": "insufficient_funds",
     "retry_count_so_far": 2,
-    "last_attempt_timestamp": "2026-08-21T12:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T13:30:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "occasional_delay",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [
+      "2026-08-23T13:30:00.000Z"
+    ],
+    "phone": "+919810543160",
+    "dnd_registered": true,
+    "pre_debit_notice_sent_at": "2026-08-27T07:30:00.000Z",
+    "last_contacted_at": "2026-08-23T13:30:00.000Z"
   },
   {
     "subscription_id": "sub_1042",
@@ -638,14 +821,18 @@
     "mandate_status": "failed",
     "failure_reason_code": "card_expired",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-23T05:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T14:45:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 2,
     "contact_history": [
-      "2026-08-23T12:00:00Z",
-      "2026-08-24T02:00:00Z"
-    ]
+      "2026-08-27T14:45:00.000Z",
+      "2026-08-28T06:45:00.000Z"
+    ],
+    "phone": "+919810556739",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T08:45:00.000Z",
+    "last_contacted_at": "2026-08-28T06:45:00.000Z"
   },
   {
     "subscription_id": "sub_1043",
@@ -656,11 +843,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "insufficient_funds",
     "retry_count_so_far": 1,
-    "last_attempt_timestamp": "2026-08-23T03:30:00Z",
+    "last_attempt_timestamp": "2026-08-28T17:00:00.000Z",
     "customer_segment": "high_value",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810570318",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": null,
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1044",
@@ -671,11 +862,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "technical_error",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-24T06:10:00Z",
+    "last_attempt_timestamp": "2026-08-28T05:30:00.000Z",
     "customer_segment": "at_risk",
     "previous_payment_history": "occasional_delay",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810583897",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T23:30:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1045",
@@ -686,11 +881,17 @@
     "mandate_status": "failed",
     "failure_reason_code": "daily_limit_exceeded",
     "retry_count_so_far": 2,
-    "last_attempt_timestamp": "2026-08-21T17:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T08:15:00.000Z",
     "customer_segment": "high_value",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [
+      "2026-08-23T08:15:00.000Z"
+    ],
+    "phone": "+919810597476",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T02:15:00.000Z",
+    "last_contacted_at": "2026-08-23T08:15:00.000Z"
   },
   {
     "subscription_id": "sub_1046",
@@ -701,11 +902,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "insufficient_funds",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-23T10:00:00Z",
+    "last_attempt_timestamp": "2026-08-27T23:00:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810611055",
+    "dnd_registered": true,
+    "pre_debit_notice_sent_at": "2026-08-26T17:00:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1047",
@@ -716,11 +921,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "mandate_revoked",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-23T08:45:00Z",
+    "last_attempt_timestamp": "2026-08-28T11:45:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "frequent_delay",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810624634",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T05:45:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1048",
@@ -731,11 +940,15 @@
     "mandate_status": "failed",
     "failure_reason_code": "bank_declined",
     "retry_count_so_far": 0,
-    "last_attempt_timestamp": "2026-08-23T04:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T13:30:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810638213",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T07:30:00.000Z",
+    "last_contacted_at": null
   },
   {
     "subscription_id": "sub_1049",
@@ -746,11 +959,17 @@
     "mandate_status": "failed",
     "failure_reason_code": "insufficient_funds",
     "retry_count_so_far": 1,
-    "last_attempt_timestamp": "2026-08-23T01:00:00Z",
+    "last_attempt_timestamp": "2026-08-28T17:00:00.000Z",
     "customer_segment": "high_value",
     "previous_payment_history": "occasional_delay",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [
+      "2026-08-23T17:00:00.000Z"
+    ],
+    "phone": "+919810651792",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": "2026-08-27T11:00:00.000Z",
+    "last_contacted_at": "2026-08-23T17:00:00.000Z"
   },
   {
     "subscription_id": "sub_1050",
@@ -761,10 +980,14 @@
     "mandate_status": "failed",
     "failure_reason_code": "technical_error",
     "retry_count_so_far": 3,
-    "last_attempt_timestamp": "2026-08-21T09:30:00Z",
+    "last_attempt_timestamp": "2026-08-28T04:00:00.000Z",
     "customer_segment": "standard",
     "previous_payment_history": "on_time",
     "recent_contact_count_48h": 0,
-    "contact_history": []
+    "contact_history": [],
+    "phone": "+919810665371",
+    "dnd_registered": false,
+    "pre_debit_notice_sent_at": null,
+    "last_contacted_at": null
   }
 ]
