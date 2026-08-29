@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { 
   TrendingUp, 
   ShieldAlert, 
@@ -16,6 +17,15 @@ import {
   Clock,
   Sparkles
 } from 'lucide-react';
+import { FunnelFallback } from '@/app/components/motion/FunnelFallback';
+
+const RecoveryFunnel3D = dynamic(
+  () => import('@/app/components/motion/RecoveryFunnel3D'),
+  {
+    ssr: false,
+    loading: () => <FunnelFallback />
+  }
+);
 
 function formatINR(amount: number): string {
   return new Intl.NumberFormat('en-IN', {
@@ -191,66 +201,12 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* RECOVERY FUNNEL VISUALIZATION */}
-      <div className="rounded-2xl glass-panel p-6 border border-white/10">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4 mb-6">
-          <div>
-            <h2 className="text-base font-bold text-white flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-emerald-400" />
-              Autonomous Recovery Funnel Flow
-            </h2>
-            <p className="text-xs text-slate-400">
-              Stage-by-stage progression from detection to confirmed money settlement
-            </p>
-          </div>
-          <span className="text-xs font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800 px-2.5 py-1 rounded">
-            Zero Unchecked Actions
-          </span>
-        </div>
-
-        {/* Funnel Flow Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-3 relative">
-          {funnel.map((stage, idx) => (
-            <div 
-              key={stage.stage}
-              className={`rounded-xl p-4 border flex flex-col justify-between transition-all ${
-                idx === 4 
-                  ? 'bg-emerald-950/40 border-emerald-500/50 shadow-glow-emerald' 
-                  : idx === 2
-                  ? 'bg-slate-900/90 border-amber-500/30'
-                  : 'bg-slate-900/60 border-white/10 hover:border-white/20'
-              }`}
-            >
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] font-bold text-slate-400">
-                    Step 0{idx + 1}
-                  </span>
-                  <span className={`text-[11px] font-mono font-bold px-1.5 py-0.5 rounded ${
-                    idx === 4 ? 'bg-emerald-500/20 text-emerald-300' : 'bg-slate-800 text-slate-300'
-                  }`}>
-                    {stage.percentage}%
-                  </span>
-                </div>
-
-                <div className="text-sm font-semibold text-white">
-                  {stage.label.split('. ')[1] || stage.label}
-                </div>
-
-                <div className="mt-3 text-2xl font-bold num-mono text-white">
-                  {stage.count} <span className="text-xs font-normal text-slate-400">cases</span>
-                </div>
-              </div>
-
-              <div className="mt-4 pt-3 border-t border-white/5">
-                <p className="text-[11px] text-slate-400 line-clamp-2">
-                  {stage.description}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* MOMENT 2: 3D PERSPECTIVE RECOVERY FUNNEL */}
+      <RecoveryFunnel3D 
+        stages={funnel} 
+        isSimulating={refreshing} 
+        onTriggerSimulation={fetchData} 
+      />
 
       {/* SAFETY PROOF POINTS & COMPLIANCE GOVERNANCE ROW */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

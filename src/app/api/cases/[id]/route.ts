@@ -3,6 +3,9 @@ import fs from 'fs';
 import path from 'path';
 import { getDatabase } from '@/db/database';
 import { AuditLogger } from '@/audit/audit_logger';
+import { RootCauseClassifier } from '@/diagnosis/root_cause_classifier';
+import { InterventionPolicy } from '@/decision/intervention_policy';
+import { evaluateAdaptedCompliance } from '@/compliance/adapter';
 
 export const dynamic = 'force-dynamic';
 
@@ -36,6 +39,18 @@ export async function GET(
       }
     }
 
+    // Compute real compliance gate evaluation for this case's policy action
+    const diagnosis = RootCauseClassifier.diagnose(subscription);
+    const policyDecision = InterventionPolicy.decide(
+      diagnosis.root_cause,
+      subscription
+    );
+    const complianceEval = evaluateAdaptedCompliance(
+      subscription,
+      policyDecision.action,
+      policyDecision.channel
+    );
+
     return NextResponse.json({
       subscription: {
         ...subscription,
@@ -44,7 +59,16 @@ export async function GET(
       audit_logs: auditLogs,
       interventions,
       ptp,
-      voice_transcript: voiceTranscript
+      voice_transcript: voiceTranscript,
+      policy_decision: policyDecision,
+      compliance_results: complianceEval.check_results,
+      compliance_summary: {
+        passed: complianceEval.passed,
+        blocked_reason: complianceEval.blocked_reason,
+        rule_cited: complianceEval.rule_cited,
+        evaluated_count: complianceEval.evaluated_count,
+        exempt_count: complianceEval.exempt_count
+      }
     });
   } catch (error) {
     return NextResponse.json({ error: String(error) }, { status: 500 });

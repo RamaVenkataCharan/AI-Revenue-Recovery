@@ -2,7 +2,22 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Search, Filter, ArrowUpRight, Phone, CreditCard, ShieldAlert, CheckCircle, MessageSquare, AlertCircle, RefreshCw } from 'lucide-react';
+import { 
+  Search, 
+  Filter, 
+  ArrowUpRight, 
+  Phone, 
+  CreditCard, 
+  ShieldAlert, 
+  CheckCircle, 
+  MessageSquare, 
+  AlertCircle, 
+  RefreshCw,
+  LayoutGrid,
+  Table as TableIcon,
+  Sparkles
+} from 'lucide-react';
+import { CaseTiltCard } from '@/app/components/motion/CaseTiltCard';
 
 function formatINR(amount: number): string {
   return new Intl.NumberFormat('en-IN', {
@@ -17,6 +32,7 @@ export default function CasesPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [activeFilter, setActiveFilter] = useState('all');
+  const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
 
   const fetchCases = async () => {
     try {
@@ -138,51 +154,147 @@ export default function CasesPage() {
           ))}
         </div>
 
-        {/* Search Box */}
-        <form onSubmit={handleSearch} className="relative flex-1 md:max-w-xs">
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
-          <input
-            type="text"
-            placeholder="Search by customer or sub ID..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-xl border border-white/10 bg-slate-900/80 pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:border-emerald-500 focus:outline-none"
-          />
-        </form>
+        {/* Search Box & View Mode Switcher */}
+        <div className="flex items-center gap-2 flex-1 md:max-w-md">
+          <form onSubmit={handleSearch} className="relative flex-1">
+            <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+            <input
+              type="text"
+              placeholder="Search by customer or sub ID..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full rounded-xl border border-white/10 bg-slate-900/80 pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:border-emerald-500 focus:outline-none"
+            />
+          </form>
+
+          {/* View Mode Toggle */}
+          <div className="flex items-center gap-1 rounded-xl bg-slate-900/80 border border-white/10 p-1">
+            <button
+              onClick={() => setViewMode('grid')}
+              className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
+                viewMode === 'grid'
+                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shadow-inner-card'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+              title="Interactive 3D Spring Tilt Grid"
+            >
+              <LayoutGrid className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">Grid</span>
+            </button>
+            <button
+              onClick={() => setViewMode('table')}
+              className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
+                viewMode === 'table'
+                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shadow-inner-card'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+              title="Dense Table View"
+            >
+              <TableIcon className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">Table</span>
+            </button>
+          </div>
+        </div>
       </div>
 
-      {/* Cases Table */}
-      <div className="rounded-2xl glass-panel border border-white/10 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead className="border-b border-white/10 bg-slate-950/80 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-              <tr>
-                <th className="px-5 py-3.5">Subscription & Customer</th>
-                <th className="px-4 py-3.5">Segment</th>
-                <th className="px-4 py-3.5 text-right">Amount At Risk</th>
-                <th className="px-4 py-3.5">Decline Reason</th>
-                <th className="px-4 py-3.5">Retry Count</th>
-                <th className="px-4 py-3.5">Recovery Status</th>
-                <th className="px-5 py-3.5 text-right">Audit Trail</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/5">
-              {loading ? (
-                Array.from({ length: 8 }).map((_, i) => (
-                  <tr key={i}>
-                    <td colSpan={7} className="px-5 py-3">
-                      <div className="skeleton h-8 w-full" />
-                    </td>
-                  </tr>
-                ))
-              ) : cases.length === 0 ? (
+      {/* Cases View (Grid with 3D Spring Tilt or Dense Table) */}
+      {loading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="rounded-2xl glass-panel border border-white/10 p-5 space-y-4">
+              <div className="skeleton h-6 w-1/2" />
+              <div className="skeleton h-10 w-3/4" />
+              <div className="skeleton h-16 w-full" />
+            </div>
+          ))}
+        </div>
+      ) : cases.length === 0 ? (
+        <div className="rounded-2xl glass-panel border border-white/10 p-12 text-center text-slate-400">
+          No cases match the selected filter or query.
+        </div>
+      ) : viewMode === 'grid' ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {cases.map((item) => (
+            <CaseTiltCard
+              key={item.subscription_id}
+              className="group rounded-2xl glass-panel border border-white/10 p-5 flex flex-col justify-between hover:border-emerald-500/40 bg-[#0d1322]/80"
+            >
+              <div>
+                <div className="flex items-start justify-between gap-2 mb-3">
+                  <div>
+                    <div className="font-bold text-white text-sm group-hover:text-emerald-300 transition-colors">
+                      {item.customer_name}
+                    </div>
+                    <div className="num-mono text-[11px] text-slate-400">
+                      {item.subscription_id}
+                    </div>
+                  </div>
+                  {getSegmentBadge(item.customer_segment)}
+                </div>
+
+                <div className="my-4 py-3 border-y border-white/5 flex items-center justify-between">
+                  <div>
+                    <span className="text-[10px] uppercase tracking-wider text-slate-400">Amount At Risk</span>
+                    <div className="text-xl font-black text-emerald-400 num-mono">
+                      {formatINR(item.amount)}
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-[10px] uppercase tracking-wider text-slate-400">Attempt Count</span>
+                    <div className="text-sm font-bold text-slate-200 num-mono">
+                      {item.retry_count_so_far} <span className="text-xs text-slate-500">/ 3</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-slate-400">Decline Code:</span>
+                    <span className="font-mono text-[11px] bg-slate-900 border border-slate-700 px-2 py-0.5 rounded text-slate-300">
+                      {item.failure_reason_code}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs pt-1">
+                    <span className="text-slate-400">Status:</span>
+                    <div>{getStatusBadge(item)}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-5 pt-3 border-t border-white/5 flex items-center justify-between">
+                <span className="text-[10px] text-slate-400 flex items-center gap-1">
+                  <Sparkles className="h-3 w-3 text-emerald-400" />
+                  <span>3D Cursor Tilt</span>
+                </span>
+                <Link
+                  href={`/dashboard/cases/${item.subscription_id}`}
+                  className="inline-flex items-center gap-1 rounded-lg bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 text-xs font-semibold text-emerald-400 group-hover:bg-emerald-500/20 group-hover:text-emerald-300 transition-all"
+                >
+                  <span>Deep Dive</span>
+                  <ArrowUpRight className="h-3 w-3" />
+                </Link>
+              </div>
+            </CaseTiltCard>
+          ))}
+        </div>
+      ) : (
+        /* Dense Table View */
+        <div className="rounded-2xl glass-panel border border-white/10 overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead className="border-b border-white/10 bg-slate-950/80 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
                 <tr>
-                  <td colSpan={7} className="px-5 py-8 text-center text-slate-400">
-                    No cases match the selected filter or query.
-                  </td>
+                  <th className="px-5 py-3.5">Subscription & Customer</th>
+                  <th className="px-4 py-3.5">Segment</th>
+                  <th className="px-4 py-3.5 text-right">Amount At Risk</th>
+                  <th className="px-4 py-3.5">Decline Reason</th>
+                  <th className="px-4 py-3.5">Retry Count</th>
+                  <th className="px-4 py-3.5">Recovery Status</th>
+                  <th className="px-5 py-3.5 text-right">Audit Trail</th>
                 </tr>
-              ) : (
-                cases.map((item) => (
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                {cases.map((item) => (
                   <tr key={item.subscription_id} className="hover:bg-slate-800/40 transition-colors">
                     <td className="px-5 py-3.5">
                       <div className="font-semibold text-white">{item.customer_name}</div>
@@ -221,12 +333,13 @@ export default function CasesPage() {
                       </Link>
                     </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      )}
+
     </div>
   );
 }

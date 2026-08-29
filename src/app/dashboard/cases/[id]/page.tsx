@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, use } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { 
   ArrowLeft, 
   Search, 
@@ -18,6 +19,15 @@ import {
   Calendar,
   Volume2
 } from 'lucide-react';
+import { ComplianceFallback } from '@/app/components/motion/ComplianceFallback';
+
+const ComplianceGateCheckpoint3D = dynamic(
+  () => import('@/app/components/motion/ComplianceGateCheckpoint3D'),
+  {
+    ssr: false,
+    loading: () => <ComplianceFallback />
+  }
+);
 
 function formatINR(amount: number): string {
   return new Intl.NumberFormat('en-IN', {
@@ -261,6 +271,15 @@ export default function CaseDeepDivePage({ params }: { params: Promise<{ id: str
           </div>
         </div>
       </div>
+
+      {/* MOMENT 1: 3D LITERAL COMPLIANCE GATE CHECKPOINT */}
+      {data?.compliance_results && data.compliance_results.length > 0 && (
+        <ComplianceGateCheckpoint3D 
+          results={data.compliance_results}
+          proposedActionName={data?.policy_decision?.action || 'PROPOSED_RECOVERY_ACTION'}
+          proposedChannelName={data?.policy_decision?.channel || 'OUTREACH_CHANNEL'}
+        />
+      )}
 
       {/* VERTICAL EXPLAINABILITY TIMELINE */}
       <div className="rounded-2xl glass-panel p-6 border border-white/10">
