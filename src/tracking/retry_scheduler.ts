@@ -35,8 +35,8 @@ export class RetryScheduler {
     for (const ptp of pendingPromises) {
       if (!ptp.id) continue;
 
-      // Realistic resolution roll: 70% of verbal date commitments are kept
-      const roll = Math.random();
+      // @simulation — Realistic resolution roll: 70% of verbal date commitments are kept
+      const roll = Math.random(); // @simulation — deterministic in production
       const isKept = roll < 0.70;
 
       if (isKept) {

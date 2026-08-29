@@ -14,7 +14,9 @@ export interface ExecutionResult {
 
 export class MandateRetryExecutor {
   /**
-   * Simulates/executes a mandate recurring payment charge against Razorpay Subscriptions / Orders API in test mode.
+   * @simulation Simulates a mandate recurring payment charge against Razorpay Subscriptions / Orders API.
+   * Recovery outcome is determined by weighted Math.random() probability rolls per failure code.
+   * In production, replace with live Razorpay SDK calls (see TODO below).
    */
   public static async executeMandateRetry(
     event: AtRiskSubscriptionEvent,
@@ -37,11 +39,11 @@ export class MandateRetryExecutor {
       }
     });
 
-    // TODO: Connect to live Razorpay Test-Mode API using razorpay node SDK or fetch:
+    // @simulation — Production replacement: Razorpay Node SDK
     // const razorpay = new Razorpay({ key_id: process.env.RAZORPAY_KEY_ID, key_secret: process.env.RAZORPAY_KEY_SECRET });
     // const chargeResult = await razorpay.subscriptions.chargeSubscription(event.subscription_id, { amount: event.amount * 100 });
 
-    // Realistic weighted recovery probability based on root cause
+    // @simulation — Weighted recovery probability based on root cause
     let successProbability = 0.0;
     switch (event.failure_reason_code) {
       case 'technical_error':
@@ -63,7 +65,7 @@ export class MandateRetryExecutor {
         break;
     }
 
-    const randomRoll = Math.random();
+    const randomRoll = Math.random(); // @simulation — deterministic in production
     const isSuccess = randomRoll < successProbability;
 
     const newRetryCount = event.retry_count_so_far + 1;

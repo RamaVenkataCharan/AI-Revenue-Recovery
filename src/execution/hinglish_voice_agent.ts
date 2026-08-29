@@ -90,18 +90,20 @@ export class HinglishVoiceAgent {
   }
 
   /**
-   * Executes a simulated Hinglish recovery voice call, records transcripts, and triggers downstream actions.
+   * @simulation Executes a simulated Hinglish recovery voice call.
+   * Customer outcome is determined by weighted Math.random() probability rolls.
+   * In production, replace with Twilio/Exotel voice API integration.
    */
   public static async executeVoiceCall(event: AtRiskSubscriptionEvent): Promise<VoiceCallExecutionResult> {
     const callId = `call_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
     const { script, tone } = HinglishVoiceAgent.generateScript(event);
     const nowIso = new Date().toISOString();
 
-    // Weighted simulated customer reaction:
+    // @simulation — Weighted simulated customer reaction:
     // 50% Agree to immediate retry
     // 35% Commit to Promise-to-Pay date (2-7 days in future)
     // 15% No answer / Declined
-    const roll = Math.random();
+    const roll = Math.random(); // @simulation — deterministic in production
     let outcome: VoiceCallTranscript['simulated_outcome'];
     let promisedDate: string | undefined;
     let duration = 45;

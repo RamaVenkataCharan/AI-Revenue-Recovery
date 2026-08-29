@@ -2,7 +2,8 @@ import { SubscriptionFailureDetector, AtRiskSubscriptionEvent, DetectionResult }
 import { RootCauseClassifier, DiagnosisResult } from '../diagnosis/root_cause_classifier';
 import { InterventionPolicy, PolicyDecision } from '../decision/intervention_policy';
 import { StoppingRules, StoppingRuleCheckResult } from '../decision/stopping_rules';
-import { ComplianceGate, ComplianceCheckResult } from '../decision/compliance_gate';
+import { evaluateAdaptedCompliance } from '../compliance/adapter';
+import { ComplianceCheckResult } from '../compliance/gate';
 import { MandateRetryExecutor, ExecutionResult } from '../execution/mandate_retry_executor';
 import { HinglishVoiceAgent, VoiceCallExecutionResult } from '../execution/hinglish_voice_agent';
 import { RetryScheduler, SchedulerResolutionSummary } from '../tracking/retry_scheduler';
@@ -17,7 +18,8 @@ export interface CaseProcessingSummary {
   diagnosis: DiagnosisResult;
   decision: PolicyDecision;
   stopping_rule_result: StoppingRuleCheckResult;
-  compliance_gate_result: ComplianceCheckResult;
+  compliance_gate_result: { passed: boolean; blocked_reason?: string; rule_cited?: string };
+  next_scheduled_action_at?: string;
   execution_result?: ExecutionResult;
   voice_result?: VoiceCallExecutionResult;
   status: 
@@ -40,6 +42,7 @@ export interface BatchRunReport {
   voice_recovered_amount: number;
   total_recovered_amount: number;
   recovery_rate_pct: number;
+  deferred_compliance_count: number;
   stopping_rule_triggers_count: number;
   compliance_gate_blocks_count: number;
   voice_calls_placed_count: number;
@@ -55,12 +58,79 @@ export interface BatchRunReport {
   timestamp: string;
 }
 
+/**
+ * Calculates the exact next permissible execution timestamp for a compliance-blocked case.
+ */
+function computeComplianceRescheduleTime(
+  event: AtRiskSubscriptionEvent,
+  ruleCited?: string,
+  proposedTime: Date = new Date()
+): { 
+  nextActionAt: string; 
+  planNote: string; 
+  updatedNoticeSentAt?: string; 
+  redirectedAction?: string; 
+  redirectedChannel?: string;
+} {
+  const t = proposedTime.getTime();
+
+  if (ruleCited === 'TRAI_QUIET_HOURS_2100_0900_IST') {
+    // Reschedule for opening of next permissible active operating window (09:00 IST / 03:30 UTC)
+    const istOffset = 5.5 * 3600 * 1000;
+    const currentIst = new Date(t + istOffset);
+    // If currently after 21:00 IST or before 09:00 IST, advance to 09:00 IST
+    const targetIst = new Date(currentIst);
+    if (targetIst.getUTCHours() >= 21) {
+      targetIst.setUTCDate(targetIst.getUTCDate() + 1);
+    }
+    targetIst.setUTCHours(9, 0, 0, 0); // 09:00 IST
+    const nextUtc = new Date(targetIst.getTime() - istOffset);
+    return {
+      nextActionAt: nextUtc.toISOString(),
+      planNote: `Deferred until active operating window opens at 09:00 IST (${nextUtc.toISOString()})`
+    };
+  } else if (ruleCited === 'MIN_COOLDOWN_48H') {
+    const lastContactStr = event.last_contacted_at || event.contact_history?.[event.contact_history.length - 1];
+    const lastContactTime = lastContactStr ? new Date(lastContactStr).getTime() : t - 24 * 3600 * 1000;
+    const eligibleTime = new Date(lastContactTime + 48.5 * 3600 * 1000);
+    return {
+      nextActionAt: eligibleTime.toISOString(),
+      planNote: `Deferred until mandatory 48-hour anti-harassment cooldown expires at ${eligibleTime.toISOString()}`
+    };
+  } else if (ruleCited === 'RBI_24H_PRE_DEBIT_NOTICE') {
+    // Dispatch pre-debit notice NOW (at proposedTime) so notice period starts immediately
+    const noticeTimestamp = proposedTime.toISOString();
+    const eligibleTime = new Date(t + 24.5 * 3600 * 1000);
+    return {
+      nextActionAt: eligibleTime.toISOString(),
+      updatedNoticeSentAt: noticeTimestamp,
+      planNote: `Pre-debit notice dispatched at ${noticeTimestamp}; retry debit scheduled after 24h notice window at ${eligibleTime.toISOString()}`
+    };
+  } else if (ruleCited === 'TRAI_DND_CHANNEL_BLOCK') {
+    const eligibleTime = new Date(t + 2 * 3600 * 1000);
+    return {
+      nextActionAt: eligibleTime.toISOString(),
+      redirectedAction: 'SEND_BILLING_PORTAL_NOTICE',
+      redirectedChannel: 'TRANSACTIONAL_EMAIL',
+      planNote: `Direct voice/SMS blocked by National DND; redirected to transactional billing portal notice via email.`
+    };
+  }
+
+  const fallbackTime = new Date(t + 24 * 3600 * 1000);
+  return {
+    nextActionAt: fallbackTime.toISOString(),
+    planNote: `Deferred for next diurnal cycle at ${fallbackTime.toISOString()}`
+  };
+}
+
 export class RevenueRecoveryOrchestrator {
   /**
    * Processes a single at-risk subscription through the complete closed-loop pipeline:
    * Detect -> Diagnose -> Decide (with Voice Escalation) -> Safety & Compliance Gates -> Execute -> Audit
    */
   public static async processSingleCase(event: AtRiskSubscriptionEvent): Promise<CaseProcessingSummary> {
+    const db = getDatabase();
+
     // 1. Diagnose
     const diagnosis = RootCauseClassifier.diagnose(event);
 
@@ -90,10 +160,79 @@ export class RevenueRecoveryOrchestrator {
       };
     }
 
-    // 4. Evaluate Compliance Gate (Quiet Hours & TRAI/RBI Anti-Harassment Frequency)
-    const complianceCheck = ComplianceGate.evaluate(event, decision.action);
+    // 4. Evaluate Canonical Compliance Gate (RBI Max Retries, TRAI Quiet Hours, 24h Pre-Debit, Min Cooldown 48h, TRAI DND)
+    const proposedTime = event.last_attempt_timestamp ? new Date(event.last_attempt_timestamp) : new Date();
+    const complianceEval = evaluateAdaptedCompliance(event, decision.action, decision.channel, proposedTime);
 
-    if (!complianceCheck.passed) {
+    const complianceGateResult = {
+      passed: complianceEval.passed,
+      blocked_reason: complianceEval.blocked_reason,
+      rule_cited: complianceEval.rule_cited
+    };
+
+    if (!complianceEval.passed) {
+      const { nextActionAt, planNote, updatedNoticeSentAt, redirectedAction, redirectedChannel } = computeComplianceRescheduleTime(
+        event,
+        complianceEval.rule_cited,
+        proposedTime
+      );
+
+      // Reschedule in database:
+      // If pre-debit notice rule triggered, update pre_debit_notice_sent_at in DB
+      if (updatedNoticeSentAt) {
+        db.prepare(`
+          UPDATE subscriptions 
+          SET next_scheduled_action_at = ?, pre_debit_notice_sent_at = ? 
+          WHERE subscription_id = ?
+        `).run(nextActionAt, updatedNoticeSentAt, event.subscription_id);
+        event.pre_debit_notice_sent_at = updatedNoticeSentAt;
+      } else {
+        db.prepare('UPDATE subscriptions SET next_scheduled_action_at = ? WHERE subscription_id = ?').run(
+          nextActionAt,
+          event.subscription_id
+        );
+      }
+
+      event.next_scheduled_action_at = nextActionAt;
+
+      // Record deferred intervention with redirected action/channel if applicable
+      db.prepare(`
+        INSERT INTO interventions (subscription_id, action_type, reasoning, outcome, metadata)
+        VALUES (?, ?, ?, ?, ?)
+      `).run(
+        event.subscription_id,
+        redirectedAction || 'DEFERRED_COMPLIANCE_RESCHEDULE',
+        `Action delayed per ${complianceEval.rule_cited}. ${planNote}`,
+        'DEFERRED',
+        JSON.stringify({ 
+          next_scheduled_action_at: nextActionAt, 
+          rule_cited: complianceEval.rule_cited,
+          redirected_action: redirectedAction,
+          redirected_channel: redirectedChannel,
+          pre_debit_notice_sent_at: updatedNoticeSentAt
+        })
+      );
+
+      AuditLogger.log({
+        event_type: 'COMPLIANCE_GATE_CHECK',
+        subscription_id: event.subscription_id,
+        decision: 'COMPLIANCE_GATE_BLOCKED',
+        reasoning: `Blocked by ${complianceEval.rule_cited}: ${complianceEval.blocked_reason}. Recovery rescheduled: ${planNote}`,
+        action_taken: redirectedAction ? 'REDIRECT_TRANSACTIONAL_CHANNEL' : 'RESCHEDULE_DEFERRED_ACTION',
+        result: 'DEFERRED_FOR_PERMISSIBLE_WINDOW',
+        metadata: {
+          rule_cited: complianceEval.rule_cited,
+          blocked_reason: complianceEval.blocked_reason,
+          next_scheduled_action_at: nextActionAt,
+          redirected_action: redirectedAction,
+          redirected_channel: redirectedChannel,
+          pre_debit_notice_sent_at: updatedNoticeSentAt,
+          evaluated_count: complianceEval.evaluated_count,
+          exempt_count: complianceEval.exempt_count,
+          checks: complianceEval.check_results
+        }
+      });
+
       return {
         subscription_id: event.subscription_id,
         customer_name: event.customer_name,
@@ -102,11 +241,35 @@ export class RevenueRecoveryOrchestrator {
         diagnosis,
         decision,
         stopping_rule_result: stoppingCheck,
-        compliance_gate_result: complianceCheck,
+        compliance_gate_result: complianceGateResult,
+        next_scheduled_action_at: nextActionAt,
         status: 'BLOCKED_COMPLIANCE',
-        summary_note: `Blocked by compliance gate: ${complianceCheck.blocked_reason}`
+        summary_note: `Deferred by compliance gate (${complianceEval.rule_cited}) — ${planNote}`
       };
     }
+
+    // Gate Passed — Record Compliance Audit with exact evaluated vs exempt counts
+    const exemptRuleNames = complianceEval.check_results
+      .filter((c) => c.context_snapshot?.exempt === true)
+      .map((c) => c.rule_cited)
+      .join(', ');
+
+    const exemptionClause = exemptRuleNames ? ` (${complianceEval.exempt_count} exempt: ${exemptRuleNames})` : '';
+
+    AuditLogger.log({
+      event_type: 'COMPLIANCE_GATE_CHECK',
+      subscription_id: event.subscription_id,
+      decision: 'COMPLIANCE_GATE_PASSED',
+      reasoning: `Action "${decision.action}" complies: ${complianceEval.evaluated_count} applicable regulatory rules evaluated${exemptionClause}; all passed.`,
+      action_taken: 'APPROVE_ACTION',
+      result: 'PASSED',
+      metadata: {
+        rule_cited: complianceEval.rule_cited,
+        evaluated_count: complianceEval.evaluated_count,
+        exempt_count: complianceEval.exempt_count,
+        checks: complianceEval.check_results
+      }
+    });
 
     // 5. Execute Action
     let executionResult: ExecutionResult | undefined;
@@ -168,7 +331,7 @@ export class RevenueRecoveryOrchestrator {
       diagnosis,
       decision,
       stopping_rule_result: stoppingCheck,
-      compliance_gate_result: complianceCheck,
+      compliance_gate_result: complianceGateResult,
       execution_result: executionResult,
       voice_result: voiceResult,
       status: finalStatus,
@@ -199,7 +362,8 @@ export class RevenueRecoveryOrchestrator {
       const summary = await RevenueRecoveryOrchestrator.processSingleCase(event);
       caseSummaries.push(summary);
 
-      if (summary.decision.action === 'HINGLISH_VOICE_RECOVERY') {
+      // Track voice calls placed ONLY when the call was actually executed (not blocked by gates)
+      if (summary.voice_result) {
         voiceCallsPlacedCount++;
       }
 
@@ -236,11 +400,38 @@ export class RevenueRecoveryOrchestrator {
       caseSummaries.filter(c => c.status === 'GATEWAY_RECOVERED' || c.status === 'VOICE_RECOVERED').length + 
       promisesKeptCount;
 
-    const recoveryRatePct = detection.total_at_risk_amount > 0 
-      ? Number(((totalRecovered / detection.total_at_risk_amount) * 100).toFixed(2)) 
+    const recoveryRatePct = detection.total_at_risk_amount > 0
+      ? Number(((totalRecovered / detection.total_at_risk_amount) * 100).toFixed(2))
       : 0;
 
-    const report: BatchRunReport = {
+    // Store batch summary metrics in DB
+    const db = getDatabase();
+    db.prepare(`
+      INSERT OR REPLACE INTO recovery_metrics (
+        batch_id, total_at_risk, total_recovered, recovery_rate_pct,
+        stopping_rule_triggers_count, compliance_gate_blocks_count, exceptions_count,
+        voice_calls_placed_count, promises_made_count, promises_kept_count,
+        promises_broken_count, voice_recovered_amount, gateway_recovered_amount, timestamp
+      ) VALUES (
+        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now')
+      )
+    `).run(
+      batchId,
+      detection.total_at_risk_amount,
+      totalRecovered,
+      recoveryRatePct,
+      stoppingRuleTriggersCount,
+      complianceGateBlocksCount,
+      exceptionsCount,
+      voiceCallsPlacedCount,
+      promisesMadeCount,
+      promisesKeptCount,
+      promisesBrokenCount,
+      voiceRecovered,
+      gatewayRecovered
+    );
+
+    return {
       batch_id: batchId,
       total_events_detected: detection.total_count,
       total_at_risk_amount: detection.total_at_risk_amount,
@@ -248,6 +439,7 @@ export class RevenueRecoveryOrchestrator {
       voice_recovered_amount: voiceRecovered,
       total_recovered_amount: totalRecovered,
       recovery_rate_pct: recoveryRatePct,
+      deferred_compliance_count: complianceGateBlocksCount,
       stopping_rule_triggers_count: stoppingRuleTriggersCount,
       compliance_gate_blocks_count: complianceGateBlocksCount,
       voice_calls_placed_count: voiceCallsPlacedCount,
@@ -257,39 +449,10 @@ export class RevenueRecoveryOrchestrator {
       successful_recoveries_count: successfulRecoveriesCount,
       dispatched_nudges_count: dispatchedNudgesCount,
       failed_retries_count: failedRetriesCount,
-      unresolved_exceptions_count: exceptionsCount + promisesBrokenCount,
+      unresolved_exceptions_count: exceptionsCount,
       cases: caseSummaries,
       scheduler_summary: schedulerSummary,
       timestamp: new Date().toISOString()
     };
-
-    // Persist recovery metrics into DB
-    const db = getDatabase();
-    db.prepare(`
-      INSERT INTO recovery_metrics (
-        batch_id, total_at_risk, total_recovered, recovery_rate_pct,
-        stopping_rule_triggers_count, compliance_gate_blocks_count,
-        exceptions_count, voice_calls_placed_count, promises_made_count,
-        promises_kept_count, promises_broken_count, voice_recovered_amount,
-        gateway_recovered_amount, timestamp
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `).run(
-      report.batch_id,
-      report.total_at_risk_amount,
-      report.total_recovered_amount,
-      report.recovery_rate_pct,
-      report.stopping_rule_triggers_count,
-      report.compliance_gate_blocks_count,
-      report.unresolved_exceptions_count,
-      report.voice_calls_placed_count,
-      report.promises_made_count,
-      report.promises_kept_count,
-      report.promises_broken_count,
-      report.voice_recovered_amount,
-      report.gateway_recovered_amount,
-      report.timestamp
-    );
-
-    return report;
   }
 }

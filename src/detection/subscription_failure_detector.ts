@@ -5,6 +5,7 @@ export interface AtRiskSubscriptionEvent {
   subscription_id: string;
   customer_id: string;
   customer_name: string;
+  phone?: string;
   amount: number;
   currency: string;
   mandate_status: string;
@@ -13,8 +14,12 @@ export interface AtRiskSubscriptionEvent {
   last_attempt_timestamp: string;
   customer_segment: 'high_value' | 'standard' | 'at_risk';
   previous_payment_history: 'on_time' | 'occasional_delay' | 'frequent_delay';
+  dnd_registered?: boolean | number;
   recent_contact_count_48h: number;
+  last_contacted_at?: string;
   contact_history?: string[];
+  pre_debit_notice_sent_at?: string;
+  next_scheduled_action_at?: string;
 }
 
 export interface DetectionResult {
@@ -32,15 +37,17 @@ export class SubscriptionFailureDetector {
     const db = getDatabase();
     const rows = db.prepare(`
       SELECT 
-        subscription_id, customer_id, customer_name, amount, currency,
+        subscription_id, customer_id, customer_name, phone, amount, currency,
         mandate_status, failure_reason_code, retry_count_so_far,
         last_attempt_timestamp, customer_segment, previous_payment_history,
-        recent_contact_count_48h, contact_history
+        dnd_registered, recent_contact_count_48h, last_contacted_at, contact_history,
+        pre_debit_notice_sent_at, next_scheduled_action_at
       FROM subscriptions
       WHERE mandate_status = 'failed'
       ORDER BY amount DESC
     `).all().map((row: any) => ({
       ...row,
+      dnd_registered: Boolean(row.dnd_registered),
       contact_history: row.contact_history ? JSON.parse(row.contact_history) : []
     })) as AtRiskSubscriptionEvent[];
 
@@ -58,7 +65,9 @@ export class SubscriptionFailureDetector {
         metadata: {
           amount: event.amount,
           failure_reason_code: event.failure_reason_code,
-          retry_count_so_far: event.retry_count_so_far
+          retry_count_so_far: event.retry_count_so_far,
+          dnd_registered: event.dnd_registered,
+          last_attempt_timestamp: event.last_attempt_timestamp
         }
       });
     }
