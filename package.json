@@ -8,6 +8,7 @@
     "start": "next start -p 3000",
     "seed": "tsx src/db/seed.ts",
     "batch": "tsx scripts/run_batch.ts",
+    "server": "tsx src/server.ts",
     "test": "tsx src/tests/run_tests.ts"
   },
   "keywords": [],
