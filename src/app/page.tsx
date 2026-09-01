@@ -21,7 +21,8 @@ import {
   Clock,
   Lock,
   Zap,
-  RotateCcw
+  RotateCcw,
+  Sliders
 } from 'lucide-react';
 import { RevenueFlowFallback } from './components/marketing/RevenueFlowFallback';
 
@@ -45,6 +46,52 @@ function formatINR(amount: number): string {
 export default function MarketingLandingPage() {
   const [activeTab, setActiveTab] = useState<'tier1' | 'tier2'>('tier2');
 
+  // Interactive AI Prediction Simulator State
+  const [simAmount, setSimAmount] = useState(12500);
+  const [simFailureReason, setSimFailureReason] = useState('daily_limit_exceeded');
+  const [simSegment, setSimSegment] = useState('high_value');
+  const [simPaymentMethod, setSimPaymentMethod] = useState('upi_autopay');
+  const [simRetries, setSimRetries] = useState(1);
+  const [simPrediction, setSimPrediction] = useState<any>(null);
+  const [simLoading, setSimLoading] = useState(false);
+
+  React.useEffect(() => {
+    let isCancelled = false;
+    const runSim = async () => {
+      try {
+        setSimLoading(true);
+        const res = await fetch('/api/predict', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            amount: simAmount,
+            failure_reason_code: simFailureReason,
+            customer_segment: simSegment,
+            payment_method: simPaymentMethod,
+            retry_count_so_far: simRetries,
+            time_of_debit_ist_hour: 14,
+            has_pre_debit_notice: true,
+            is_dnd_registered: false,
+            hours_since_last_contact: 72
+          })
+        });
+        const data = await res.json();
+        if (!isCancelled && data.success) {
+          setSimPrediction(data.prediction);
+        }
+      } catch (err) {
+        console.error('Simulator prediction failed:', err);
+      } finally {
+        if (!isCancelled) setSimLoading(false);
+      }
+    };
+    const t = setTimeout(runSim, 100);
+    return () => {
+      isCancelled = true;
+      clearTimeout(t);
+    };
+  }, [simAmount, simFailureReason, simSegment, simPaymentMethod, simRetries]);
+
   return (
     <div className="min-h-screen bg-[#F7F7F3] text-[#111111] font-sans antialiased selection:bg-[#C8F000] selection:text-[#111111]">
       {/* ========================================================================= */}
@@ -53,7 +100,7 @@ export default function MarketingLandingPage() {
       <header className="sticky top-0 z-50 border-b border-[#E5E5DF] bg-[#F7F7F3]/90 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           {/* Logo & Category */}
-          <div className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#111111] text-[#C8F000]">
               <ShieldCheck className="h-5 w-5" />
             </div>
@@ -68,25 +115,35 @@ export default function MarketingLandingPage() {
               </div>
               <p className="text-[11px] text-[#686862]">Razorpay Autonomous Revenue Recovery</p>
             </div>
-          </div>
+          </Link>
 
           {/* Nav Links */}
-          <nav className="hidden md:flex items-center gap-6 text-xs font-semibold text-[#686862]">
+          <nav className="hidden lg:flex items-center gap-5 text-xs font-semibold text-[#686862]">
             <a href="#why-now" className="hover:text-[#111111] transition-colors">Why Now</a>
             <a href="#engine" className="hover:text-[#111111] transition-colors">Recovery Engine</a>
+            <a href="#prediction-simulator" className="text-emerald-700 font-bold hover:text-emerald-800 transition-colors flex items-center gap-1 bg-emerald-50 px-2 py-1 rounded-md border border-emerald-200">
+              <Sparkles className="h-3.5 w-3.5 text-emerald-600" />
+              <span>AI Simulator</span>
+            </a>
             <a href="#workflows" className="hover:text-[#111111] transition-colors">Workflows</a>
             <a href="#stopping-rules" className="hover:text-[#111111] transition-colors">Stopping Rules</a>
             <a href="#metrics" className="hover:text-[#111111] transition-colors">Batch Proof</a>
-            <a href="#architecture" className="hover:text-[#111111] transition-colors">Architecture</a>
           </nav>
 
-          {/* Primary CTA */}
-          <div className="flex items-center gap-3">
+          {/* Primary CTAs */}
+          <div className="flex items-center gap-2.5">
+            <Link
+              href="/dashboard/prediction"
+              className="hidden sm:inline-flex items-center gap-1.5 rounded-xl border border-[#E5E5DF] bg-[#FFFFFF] px-3.5 py-2 text-xs font-bold text-[#111111] hover:bg-[#F0F0EB] transition-all shadow-xs"
+            >
+              <Sparkles className="h-3.5 w-3.5 text-emerald-600" />
+              <span>Prediction Studio</span>
+            </Link>
             <Link
               href="/dashboard"
               className="inline-flex items-center gap-2 rounded-xl bg-[#111111] px-4 py-2 text-xs font-bold text-[#FFFFFF] shadow-sm hover:bg-[#222222] transition-all"
             >
-              <span>Open Executive Console</span>
+              <span>Executive Console</span>
               <ArrowRight className="h-3.5 w-3.5 text-[#C8F000]" />
             </Link>
           </div>
@@ -396,6 +453,279 @@ export default function MarketingLandingPage() {
       </section>
 
       {/* ========================================================================= */}
+      {/* INTERACTIVE AI PREDICTION & RECOVERY SCORING SIMULATOR                   */}
+      {/* ========================================================================= */}
+      <section id="prediction-simulator" className="border-t border-[#E5E5DF] bg-[#FFFFFF] py-20">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div className="max-w-2xl">
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded">
+                LIVE INTERACTIVE AI PREDICTION
+              </span>
+              <h2 className="mt-3 text-3xl sm:text-5xl font-black text-[#111111] tracking-tight">
+                Simulate Autonomous Recovery Scoring
+              </h2>
+              <p className="mt-4 text-base text-[#686862]">
+                Test our Hybrid Bayesian Decision Network live. Adjust failure parameters, payment rails, and segment rules to observe instant probability scores, expected values (EV), and 5-rule statutory compliance verification.
+              </p>
+            </div>
+            <Link
+              href="/dashboard/prediction"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#111111] px-5 py-3 text-xs font-bold text-[#FFFFFF] shadow-sm hover:bg-[#222222] transition-all shrink-0"
+            >
+              <Sparkles className="h-3.5 w-3.5 text-[#C8F000]" />
+              <span>Open Full Prediction Studio</span>
+              <ArrowRight className="h-3.5 w-3.5 text-white" />
+            </Link>
+          </div>
+
+          <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* Left: Input Controls */}
+            <div className="lg:col-span-6 p-6 rounded-2xl bg-[#F7F7F3] border border-[#E5E5DF] space-y-5">
+              <div className="flex items-center justify-between border-b border-[#E5E5DF] pb-3">
+                <span className="text-xs font-bold text-[#111111] uppercase tracking-wider flex items-center gap-2">
+                  <Sliders className="h-4 w-4 text-[#111111]" />
+                  Simulation Parameters
+                </span>
+                <span className="text-[10px] font-mono font-bold bg-[#FFFFFF] border border-[#E5E5DF] px-2 py-0.5 rounded text-[#111111]">
+                  Reactive
+                </span>
+              </div>
+
+              {/* Amount Slider */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-xs">
+                  <label htmlFor="sim-amount" className="font-semibold text-[#111111]">Subscription Amount (₹)</label>
+                  <span className="font-mono font-bold text-base text-[#111111]">{formatINR(simAmount)}</span>
+                </div>
+                <input
+                  id="sim-amount"
+                  type="range"
+                  min="499"
+                  max="50000"
+                  step="500"
+                  value={simAmount}
+                  onChange={(e) => setSimAmount(Number(e.target.value))}
+                  className="w-full accent-[#111111] h-2 bg-[#E5E5DF] rounded-lg cursor-pointer"
+                />
+                <div className="flex justify-between text-[10px] text-[#686862] font-mono">
+                  <span>₹499</span>
+                  <span>₹25,000</span>
+                  <span>₹50,000</span>
+                </div>
+              </div>
+
+              {/* Failure Reason */}
+              <div className="space-y-1.5">
+                <label htmlFor="sim-failure" className="text-xs font-semibold text-[#111111]">Decline Reason Code</label>
+                <select
+                  id="sim-failure"
+                  value={simFailureReason}
+                  onChange={(e) => setSimFailureReason(e.target.value)}
+                  className="w-full rounded-xl bg-[#FFFFFF] border border-[#E5E5DF] px-3 py-2.5 text-xs text-[#111111] outline-none font-medium"
+                >
+                  <option value="daily_limit_exceeded">daily_limit_exceeded (UPI / Bank Limit Cap)</option>
+                  <option value="insufficient_funds">insufficient_funds (Balance deficit)</option>
+                  <option value="bank_declined">bank_declined (Temporary network throttle)</option>
+                  <option value="technical_error">technical_error (Transient gateway timeout)</option>
+                  <option value="card_expired">card_expired (Hard token failure)</option>
+                  <option value="mandate_revoked">mandate_revoked (Explicit revocation)</option>
+                </select>
+              </div>
+
+              {/* Customer Segment */}
+              <div className="space-y-1.5">
+                <span className="text-xs font-semibold text-[#111111]">Customer Segment</span>
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    { id: 'high_value', label: 'High Value VIP' },
+                    { id: 'at_risk', label: 'At-Risk Retention' },
+                    { id: 'standard', label: 'Standard Consumer' }
+                  ].map((seg) => (
+                    <button
+                      key={seg.id}
+                      type="button"
+                      onClick={() => setSimSegment(seg.id)}
+                      className={`rounded-lg py-2 text-xs font-semibold border transition-all cursor-pointer ${
+                        simSegment === seg.id
+                          ? 'bg-[#111111] text-[#FFFFFF] border-[#111111]'
+                          : 'bg-[#FFFFFF] text-[#686862] border-[#E5E5DF] hover:text-[#111111]'
+                      }`}
+                    >
+                      {seg.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Payment Rail */}
+              <div className="space-y-1.5">
+                <span className="text-xs font-semibold text-[#111111]">Payment Rail</span>
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    { id: 'upi_autopay', label: 'UPI AutoPay' },
+                    { id: 'card_mandate', label: 'Card Mandate' },
+                    { id: 'enach_emandate', label: 'eNACH e-Mandate' }
+                  ].map((rail) => (
+                    <button
+                      key={rail.id}
+                      type="button"
+                      onClick={() => setSimPaymentMethod(rail.id)}
+                      className={`rounded-lg py-2 text-xs font-semibold border transition-all cursor-pointer ${
+                        simPaymentMethod === rail.id
+                          ? 'bg-[#C8F000] text-[#111111] border-[#111111]'
+                          : 'bg-[#FFFFFF] text-[#686862] border-[#E5E5DF] hover:text-[#111111]'
+                      }`}
+                    >
+                      {rail.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Prior Retries */}
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-semibold text-[#111111]">Prior Failed Attempts</span>
+                  <span className="font-mono text-[#686862]">{simRetries} of 3 Max</span>
+                </div>
+                <div className="flex gap-2">
+                  {[0, 1, 2, 3].map((r) => (
+                    <button
+                      key={r}
+                      type="button"
+                      onClick={() => setSimRetries(r)}
+                      className={`flex-1 py-1.5 rounded-lg text-xs font-mono font-bold border transition-all cursor-pointer ${
+                        simRetries === r
+                          ? r >= 3
+                            ? 'bg-rose-100 text-rose-800 border-rose-400'
+                            : 'bg-[#111111] text-[#C8F000] border-[#111111]'
+                          : 'bg-[#FFFFFF] text-[#686862] border-[#E5E5DF] hover:text-[#111111]'
+                      }`}
+                    >
+                      {r}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Live AI Prediction Intelligence Output */}
+            <div className="lg:col-span-6 p-6 rounded-2xl bg-[#111111] text-[#FFFFFF] space-y-6 shadow-xl relative overflow-hidden flex flex-col justify-between">
+              <div className="space-y-5">
+                <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="h-4 w-4 text-[#C8F000]" />
+                    <span className="text-xs font-mono font-bold text-[#C8F000] uppercase tracking-wider">
+                      Live AI Prediction Output
+                    </span>
+                  </div>
+                  <span className="text-[10px] font-mono text-[#94a3b8]">
+                    Latency: {simPrediction?.model_metadata?.latency_ms || 1.2}ms
+                  </span>
+                </div>
+
+                {/* Score & Expected Value */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="p-4 rounded-xl bg-[#1a1a1a] border border-white/10">
+                    <span className="text-[11px] text-[#94a3b8] font-mono">RECOVERY PROBABILITY</span>
+                    <div className="text-3xl sm:text-4xl font-black text-[#C8F000] num-mono mt-1">
+                      {simPrediction?.overall_recovery_probability_pct || 78}%
+                    </div>
+                    <span className="text-[10px] text-[#94a3b8]">
+                      Confidence: {simPrediction?.diagnosis_confidence_pct || 96}%
+                    </span>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-[#1a1a1a] border border-white/10">
+                    <span className="text-[11px] text-[#94a3b8] font-mono">EXPECTED VALUE (EV)</span>
+                    <div className="text-3xl sm:text-4xl font-black text-white num-mono mt-1">
+                      {formatINR(simPrediction?.expected_recovery_amount || (simAmount * 0.78))}
+                    </div>
+                    <span className="text-[10px] text-emerald-400">
+                      Recoverable ARR
+                    </span>
+                  </div>
+                </div>
+
+                {/* Channel Probabilities Breakdown */}
+                <div className="space-y-2 text-xs">
+                  <span className="text-[11px] font-mono text-[#94a3b8] uppercase">Channel Success Likelihood</span>
+                  <div className="space-y-2">
+                    <div>
+                      <div className="flex justify-between text-[11px] mb-1">
+                        <span className="text-slate-300">Tier-1 Gateway Auto-Retry</span>
+                        <span className="font-mono text-[#C8F000]">{simPrediction?.channel_probabilities?.gateway_retry_pct || 65}%</span>
+                      </div>
+                      <div className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+                        <div
+                          className="h-full bg-[#C8F000] rounded-full transition-all duration-300"
+                          style={{ width: `${simPrediction?.channel_probabilities?.gateway_retry_pct || 65}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="flex justify-between text-[11px] mb-1">
+                        <span className="text-slate-300">Tier-2 Hinglish Voice Outreach</span>
+                        <span className="font-mono text-amber-400">{simPrediction?.channel_probabilities?.voice_outreach_pct || 72}%</span>
+                      </div>
+                      <div className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+                        <div
+                          className="h-full bg-amber-400 rounded-full transition-all duration-300"
+                          style={{ width: `${simPrediction?.channel_probabilities?.voice_outreach_pct || 72}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="flex justify-between text-[11px] mb-1">
+                        <span className="text-slate-300">Digital Nudge (WhatsApp / SMS Link)</span>
+                        <span className="font-mono text-emerald-400">{simPrediction?.channel_probabilities?.whatsapp_nudge_pct || 48}%</span>
+                      </div>
+                      <div className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+                        <div
+                          className="h-full bg-emerald-400 rounded-full transition-all duration-300"
+                          style={{ width: `${simPrediction?.channel_probabilities?.whatsapp_nudge_pct || 48}%` }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Policy & Compliance Badges */}
+                <div className="p-3 rounded-xl bg-[#1a1a1a] border border-white/10 space-y-1.5 text-xs">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] text-[#94a3b8]">AI Recommended Policy Action:</span>
+                    <span className="font-bold text-[#C8F000] font-mono text-[11px]">
+                      {simPrediction?.recommended_action}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] text-[#94a3b8]">5-Rule Statutory Gate:</span>
+                    <span className={`font-mono font-bold text-[11px] ${
+                      simPrediction?.compliance_pre_flight?.all_passed ? 'text-emerald-400' : 'text-rose-400'
+                    }`}>
+                      {simPrediction?.compliance_pre_flight?.all_passed ? 'ALL RULES PASS (RBI/TRAI)' : 'ACTION BLOCKED BY RULE'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Link CTA */}
+              <Link
+                href="/dashboard/prediction"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#C8F000] px-4 py-3 text-xs font-black text-[#111111] hover:bg-[#d8ff1a] transition-all"
+              >
+                <span>Launch Full Prediction Studio in Dashboard</span>
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
       {/* SECTION 7: BOUNDED AUTONOMY & PROMISE-TO-PAY (PTP) STATE MACHINE          */}
       {/* ========================================================================= */}
       <section className="border-t border-[#E5E5DF] bg-[#FFFFFF] py-20">
@@ -637,7 +967,9 @@ export default function MarketingLandingPage() {
 
           <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#686862] pt-8 border-t border-[#E5E5DF]">
             <p>© 2026 AI Revenue Recovery Agent • Razorpay Hackathon (Track 03)</p>
-            <div className="flex items-center gap-6 font-mono text-[11px]">
+            <div className="flex flex-wrap items-center gap-6 font-mono text-[11px]">
+              <Link href="/dashboard" className="hover:text-[#111111] font-bold">Executive Console</Link>
+              <Link href="/dashboard/prediction" className="hover:text-[#111111] font-bold text-emerald-700">AI Prediction Studio</Link>
               <Link href="/dashboard/cases" className="hover:text-[#111111]">Case Portfolio</Link>
               <Link href="/dashboard/audit" className="hover:text-[#111111]">Audit Ledger</Link>
               <Link href="/dashboard/voice" className="hover:text-[#111111]">Voice AI Studio</Link>

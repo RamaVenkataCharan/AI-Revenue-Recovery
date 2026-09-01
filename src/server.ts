@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import { getDatabase } from './db/database';
 import { AuditLogger } from './audit/audit_logger';
 import { RevenueRecoveryOrchestrator } from './agent/orchestrator';
+import { ModelPredictor } from './prediction/model_predictor';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -20,6 +21,28 @@ app.post('/api/recovery/run-batch', async (req: Request, res: Response) => {
     res.json(report);
   } catch (error) {
     res.status(500).json({ error: String(error) });
+  }
+});
+
+// Model Prediction endpoint
+app.post('/api/recovery/predict', (req: Request, res: Response) => {
+  try {
+    const prediction = ModelPredictor.predict(req.body);
+    res.json({ success: true, prediction });
+  } catch (error) {
+    res.status(500).json({ success: false, error: String(error) });
+  }
+});
+
+// Portfolio Batch Prediction endpoint
+app.get('/api/recovery/predict-portfolio', (req: Request, res: Response) => {
+  try {
+    const db = getDatabase();
+    const records = db.prepare('SELECT subscription_id, customer_name, amount, failure_reason_code, customer_segment, retry_count_so_far, payment_method FROM subscriptions ORDER BY amount DESC').all() as any[];
+    const portfolio = ModelPredictor.predictPortfolio(records || []);
+    res.json({ success: true, portfolio });
+  } catch (error) {
+    res.status(500).json({ success: false, error: String(error) });
   }
 });
 

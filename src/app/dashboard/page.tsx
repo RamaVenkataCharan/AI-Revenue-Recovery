@@ -274,8 +274,52 @@ export default function DashboardPage() {
         </div>
       </div>
 
+      {/* AI PREDICTIVE INTELLIGENCE & FORECASTING CARD */}
+      <div className="rounded-2xl glass-panel p-6 border border-emerald-500/30 bg-gradient-to-r from-[#0d1527] via-[#0d1a29] to-[#0b1f24] relative overflow-hidden shadow-glow-emerald">
+        <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-emerald-500/10 blur-2xl" />
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="space-y-1 max-w-2xl">
+            <div className="flex items-center gap-2">
+              <span className="rounded-md bg-emerald-950/90 px-2.5 py-0.5 text-[10px] font-mono font-bold text-emerald-400 border border-emerald-800 flex items-center gap-1.5">
+                <Sparkles className="h-3 w-3" />
+                HYBRID BAYESIAN AI ENGINE
+              </span>
+              <span className="text-xs text-slate-400">Model: <strong className="text-white font-mono">v2.4-hybrid-bayes</strong></span>
+            </div>
+            <h2 className="text-base sm:text-lg font-bold text-white">
+              Real-Time AI Recovery Probability Scoring & Pre-Flight Compliance
+            </h2>
+            <p className="text-xs text-slate-300">
+              Simulate multi-channel recovery likelihood across UPI Autopay, eNACH, and Cards with instant 5-rule statutory compliance verification and dynamic Hinglish voice script previews.
+            </p>
+          </div>
+
+          <Link
+            href="/dashboard/prediction"
+            className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-4 py-2.5 text-xs font-bold text-white shadow-glow-emerald hover:from-emerald-500 hover:to-teal-500 transition-all shrink-0"
+          >
+            <span>Open AI Prediction Studio</span>
+            <ArrowRight className="h-3.5 w-3.5 text-white" />
+          </Link>
+        </div>
+      </div>
+
       {/* QUICK SHORTCUTS & ACTION FOOTER */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+        <Link 
+          href="/dashboard/prediction"
+          className="rounded-xl glass-panel p-4 border border-emerald-500/30 hover:border-emerald-500/60 bg-emerald-950/20 flex items-center justify-between group transition-all"
+        >
+          <div>
+            <span className="text-xs font-semibold text-emerald-400 group-hover:text-emerald-300 transition-colors flex items-center gap-1.5">
+              <Sparkles className="h-3.5 w-3.5" />
+              AI Model Prediction Studio
+            </span>
+            <p className="text-[11px] text-slate-400">Simulate parameters & test EV scores</p>
+          </div>
+          <ArrowRight className="h-4 w-4 text-emerald-400 group-hover:translate-x-1 transition-all" />
+        </Link>
+
         <Link 
           href="/dashboard/cases"
           className="rounded-xl glass-panel p-4 border border-white/10 hover:border-emerald-500/40 flex items-center justify-between group transition-all"

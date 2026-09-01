@@ -1,9 +1,9 @@
 # 🛡️ AI Revenue Recovery Agent — Master System Architecture & Knowledge Base
 
 > **Track 03:** Autonomous AI Revenue Recovery for Indian Recurring Subscriptions (UPI Autopay, e-Mandate, Cards)  
-> **System Status:** 🟡 **Feature-Complete Demo & Simulation Build** *(Core logic, compliance engines, database triggers, PTP state machine, and Next.js frontend are fully operational; 100% unit tests pass [41/41]; third-party payment gateway charges and telecom voice calls use weighted probabilistic simulations).*  
+> **System Status:** 🟢 **Feature-Complete Demo & Simulation Build with AI Prediction Engine** *(Core logic, Hybrid Bayesian Prediction Studio, compliance engines, database triggers, PTP state machine, and Next.js frontend are fully operational; 100% unit tests pass [49/49]; third-party payment gateway charges and telecom voice calls use weighted probabilistic simulations).*  
 > **Repository:** `RamaVenkataCharan/AI-Revenue-Recovery`  
-> **Last Verified:** August 29, 2026 | **Build Version:** `1.0.0`  
+> **Last Verified:** September 02, 2026 | **Build Version:** `1.1.0`  
 
 ---
 
@@ -96,11 +96,11 @@ ORDER BY s.amount DESC;
 
 | Subsystem / Area | Prior / Loose Claim | Verified Current Codebase Reality | Why the Prior Claim Was Inaccurate |
 | :--- | :--- | :--- | :--- |
-| **System Status** | `"Production-Ready Engine"` | 🟡 **Feature-Complete Demo & Simulation Build** | Integrations with Razorpay Mandate API and telecom voice carriers are simulated via deterministic statistical models, not live API credentials. |
+| **System Status** | `"Production-Ready Engine"` | 🟢 **Feature-Complete Demo & AI Prediction Engine** | Complete closed loop with Next.js 16 UI, Express 5 server, 49/49 passing tests, and interactive AI Prediction Studio. |
 | **Database Schema** | 8 Normalized Tables (`merchants`, `customers`, `payment_attempts`, `recovery_actions`, etc.) | **5 Flat/Relational SQLite Tables:** `subscriptions`, `interventions`, `promises_to_pay`, `audit_log`, `recovery_metrics` | The 8-table schema is the target production model. The working hackathon build uses a denormalized flat model for zero-overhead batch processing. |
 | **PTP State Machine** | Full 4-state lifecycle (`PROMISED` ➔ `DUE` ➔ `KEPT` / `BROKEN`) | 3 Active States in batch loop: `PROMISED` ➔ `KEPT` or `BROKEN` (`DUE` defined in enum type only) | The batch simulation resolves commitments directly upon scheduled date arrival rather than running an async background poller for the intermediate `DUE` state. |
-| **Next.js API Endpoints** | Generic umbrella endpoints (`/api/dashboard`, `/api/batch`, `/api/voice`, `/api/audit`) | **Exact Disk Routes:** `/api/dashboard/summary`, `/api/dashboard/funnel`, `/api/cases`, `/api/cases/[id]`, `/api/batch/run`, `/api/audit/search`, `/api/voice/samples` | Prior documentation omitted the nested subfolder hierarchy of the Next.js App Router. |
-| **Express Fallback Server** | `/api/status`, `/api/kpis`, `/api/cases`, `/api/run-batch` | **Actual Server Routes ([`src/server.ts`](file:///c:/Users/ramav/Documents/PROJECTS/AI%20Revenue%20Recovery/src/server.ts)):** `GET /api/health`, `POST /api/recovery/run-batch`, `GET /api/recovery/metrics`, `GET /api/recovery/audit` | Prior notes used generic REST naming instead of the exact Express endpoint definitions on port 3001. |
+| **Next.js API Endpoints** | Generic umbrella endpoints (`/api/dashboard`, `/api/batch`, `/api/voice`, `/api/audit`) | **Exact Disk Routes:** `/api/dashboard/summary`, `/api/dashboard/funnel`, `/api/cases`, `/api/cases/[id]`, `/api/batch/run`, `/api/audit/search`, `/api/voice/samples`, `/api/predict` | Prior documentation omitted the nested subfolder hierarchy of the Next.js App Router and the new AI Prediction endpoint. |
+| **Express Fallback Server** | `/api/status`, `/api/kpis`, `/api/cases`, `/api/run-batch` | **Actual Server Routes ([`src/server.ts`](file:///c:/Users/ramav/Documents/PROJECTS/AI%20Revenue%20Recovery/src/server.ts)):** `GET /api/health`, `POST /api/recovery/run-batch`, `POST /api/recovery/predict`, `GET /api/recovery/predict-portfolio`, `GET /api/recovery/metrics`, `GET /api/recovery/audit` | Prior notes used generic REST naming instead of the exact Express endpoint definitions on port 3001. |
 | **Compliance Gate Engine** | Ad-hoc checks scattered across decision files | **5 Canonical Rules in [`src/compliance/gate.ts`](file:///c:/Users/ramav/Documents/PROJECTS/AI%20Revenue%20Recovery/src/compliance/gate.ts):** `RBI_MANDATE_MAX_RETRIES_3`, `TRAI_QUIET_HOURS_2100_0900_IST`, `RBI_24H_PRE_DEBIT_NOTICE`, `MIN_COOLDOWN_48H`, `TRAI_DND_CHANNEL_BLOCK` bridged via [`adapter.ts`](file:///c:/Users/ramav/Documents/PROJECTS/AI%20Revenue%20Recovery/src/compliance/adapter.ts). | The compliance engine was refactored into a canonical standalone engine with 27 dedicated tests, bridged to the flat database via an adapter. |
 
 ---
@@ -523,6 +523,8 @@ ai-revenue-recovery/
 │   ├── agent/orchestrator.ts             <-- Master closed-loop orchestrator
 │   ├── detection/subscription_failure_detector.ts <-- Scans at-risk subscriptions & sums revenue
 │   ├── diagnosis/root_cause_classifier.ts<-- Classifies 6 decline codes with confidence
+│   ├── prediction/
+│   │   └── model_predictor.ts            <-- Hybrid Bayesian predictive recovery scoring & attribution
 │   ├── decision/
 │   │   ├── intervention_policy.ts        <-- Action selection matrix
 │   │   └── stopping_rules.ts             <-- Core safety ceilings (max 3 retries, cooldowns)
@@ -544,10 +546,15 @@ ai-revenue-recovery/
 │   │   ├── sqlite_schema.sql             <-- SQL DDL schema & triggers
 │   │   └── types.ts                      <-- Shared TypeScript interfaces
 │   ├── app/                              <-- Next.js 16 App Router UI & APIs
-│   │   ├── dashboard/page.tsx            <-- Executive Dashboard UI
-│   │   └── api/                          <-- 7 App Router REST endpoints
+│   │   ├── page.tsx                      <-- Light-theme landing page with 3D Flow & Live Predictor
+│   │   ├── dashboard/page.tsx            <-- Executive Dashboard UI with AI Recovery Score card
+│   │   ├── dashboard/prediction/page.tsx <-- Interactive AI Model Prediction & Simulation Studio
+│   │   ├── dashboard/cases/page.tsx      <-- Portfolio Case Explorer
+│   │   ├── dashboard/audit/page.tsx      <-- Immutable SQLite Audit Log search
+│   │   ├── dashboard/voice/page.tsx      <-- Hinglish Voice AI Showcase
+│   │   └── api/                          <-- 8 App Router REST endpoints (including /api/predict)
 │   ├── server.ts                         <-- Standalone Express fallback server (Port 3001)
-│   └── tests/run_tests.ts                <-- Master test runner (41 tests across 8 suites)
+│   └── tests/run_tests.ts                <-- Master test runner (49 tests across 10 suites)
 ├── scripts/
 │   ├── run_batch.ts                      <-- Headless batch runner with metrics summary
 │   ├── deep_reconcile.ts                 <-- Detailed financial & case reconciliation tool
@@ -567,15 +574,15 @@ npm install
 # 2. Seed SQLite database with synthetic dataset (50 cases, ₹3,42,850 at risk)
 npm run seed
 
-# 3. Execute all 41 unit tests across 8 suites
+# 3. Execute all 49 unit tests across 10 suites
 npm test
 
 # 4. Run closed-loop batch recovery simulation
 npm run batch
 
-# 5. Launch Next.js Executive Dashboard (Port 3000)
+# 5. Launch Next.js Executive Dashboard & Prediction Studio (Port 3000)
 npm run dev
-# Open http://localhost:3000/dashboard
+# Open http://localhost:3000 (Landing & Simulator) or http://localhost:3000/dashboard/prediction
 
 # 6. Run standalone Express server (Port 3001)
 npx tsx src/server.ts
