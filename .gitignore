@@ -43,3 +43,7 @@ AGENTS.md
 CLAUDE.md
 .gemini/
 *.tsbuildinfo
+
+# Performance trace dumps & large test artifacts
+screenshots/*.json
+*.log

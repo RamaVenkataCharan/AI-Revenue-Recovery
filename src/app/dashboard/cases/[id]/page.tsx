@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, use } from 'react';
+import React, { useEffect, useState, useMemo, use } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { 
@@ -60,6 +60,16 @@ export default function CaseDeepDivePage({ params }: { params: Promise<{ id: str
     }
     loadCase();
   }, [subscriptionId]);
+
+  // Memoize compliance_results BEFORE any early returns to satisfy React rules of hooks.
+  // Keeps the array reference stable across re-renders triggered by unrelated state
+  // (e.g. isPlayingAudio), preventing the 3D token animation from restarting.
+  const complianceResults = useMemo(
+    () => data?.compliance_results ?? [],
+    // data is stable (set once per fetch); data.compliance_results is the only
+    // property that should trigger re-derivation.
+    [data]
+  );
 
   const handleSpeakTranscript = (scriptText: string) => {
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
@@ -273,9 +283,9 @@ export default function CaseDeepDivePage({ params }: { params: Promise<{ id: str
       </div>
 
       {/* MOMENT 1: 3D LITERAL COMPLIANCE GATE CHECKPOINT */}
-      {data?.compliance_results && data.compliance_results.length > 0 && (
+      {complianceResults.length > 0 && (
         <ComplianceGateCheckpoint3D 
-          results={data.compliance_results}
+          results={complianceResults}
           proposedActionName={data?.policy_decision?.action || 'PROPOSED_RECOVERY_ACTION'}
           proposedChannelName={data?.policy_decision?.channel || 'OUTREACH_CHANNEL'}
         />
