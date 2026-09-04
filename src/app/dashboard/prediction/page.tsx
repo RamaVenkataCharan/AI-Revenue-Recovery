@@ -218,9 +218,9 @@ export default function PredictionStudioPage() {
   };
 
   const getScoreColor = (pct: number) => {
-    if (pct >= 70) return 'text-emerald-400';
-    if (pct >= 40) return 'text-amber-400';
-    return 'text-rose-400';
+    if (pct >= 70) return 'text-[#C8F000]';
+    if (pct >= 40) return 'text-[#C8F000]';
+    return 'text-[#E5484D]';
   };
 
   const getScoreBg = (pct: number) => {
@@ -232,29 +232,29 @@ export default function PredictionStudioPage() {
   return (
     <div className="space-y-6 pb-16">
       {/* HEADER BANNER */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#26262A] pb-4">
         <div>
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 shadow-glow-emerald">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#141416] border border-[#26262A] text-[#C8F000] shadow-glow-accent">
               <Sparkles className="h-4 w-4 text-white" />
             </div>
             <h1 className="text-xl font-bold tracking-tight text-white sm:text-2xl flex items-center gap-2">
               AI Model Prediction & Recovery Intelligence Studio
             </h1>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-[#A1A1AA] mt-1">
             Hybrid Bayesian Decision Network • Real-time Multi-Channel Recovery Scoring • 5-Rule Statutory Compliance Pre-Flight
           </p>
         </div>
 
         {/* Studio View Tabs */}
-        <div className="flex items-center gap-2 rounded-xl bg-slate-900/80 p-1 border border-white/10 text-xs">
+        <div className="flex items-center gap-2 rounded-xl bg-[#1A1A1D] p-1 border border-[#26262A] text-xs">
           <button
             onClick={() => setActiveTab('simulator')}
             className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 font-medium transition-all ${
               activeTab === 'simulator'
-                ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-[#C8F000]/10 text-[#C8F000] border border-[#C8F000]/30'
+                : 'text-[#A1A1AA] hover:text-white'
             }`}
           >
             <Sliders className="h-3.5 w-3.5" />
@@ -264,8 +264,8 @@ export default function PredictionStudioPage() {
             onClick={() => setActiveTab('portfolio')}
             className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 font-medium transition-all ${
               activeTab === 'portfolio'
-                ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-[#C8F000]/10 text-[#C8F000] border border-[#C8F000]/30'
+                : 'text-[#A1A1AA] hover:text-white'
             }`}
           >
             <Layers className="h-3.5 w-3.5" />
@@ -277,10 +277,10 @@ export default function PredictionStudioPage() {
       {activeTab === 'simulator' ? (
         <div className="space-y-6">
           {/* QUICK PRESETS ROW */}
-          <div className="rounded-2xl glass-panel p-4 border border-white/10 space-y-2">
-            <div className="flex items-center justify-between text-xs text-slate-400">
-              <span className="font-semibold flex items-center gap-1.5 text-slate-300">
-                <Zap className="h-3.5 w-3.5 text-emerald-400" />
+          <div className="rounded-2xl bg-[#141416] border border-[#26262A] p-4 border border-[#26262A] space-y-2">
+            <div className="flex items-center justify-between text-xs text-[#A1A1AA]">
+              <span className="font-semibold flex items-center gap-1.5 text-[#A1A1AA]">
+                <Zap className="h-3.5 w-3.5 text-[#C8F000]" />
                 Quick Case Presets & Portfolio Selector:
               </span>
               <span>Click to populate simulation parameters</span>
@@ -293,8 +293,8 @@ export default function PredictionStudioPage() {
                   onClick={() => setParams(preset.data)}
                   className={`rounded-lg px-3 py-1.5 text-xs font-medium border transition-all cursor-pointer ${
                     params.subscription_id === preset.data.subscription_id
-                      ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300 shadow-glow-emerald'
-                      : 'bg-slate-900/60 border-slate-700/60 text-slate-300 hover:bg-slate-800 hover:text-white'
+                      ? 'bg-[#C8F000]/10 border-[#C8F000]/30 text-[#C8F000] shadow-glow-accent'
+                      : 'bg-[#1A1A1D] border-[#26262A]/60 text-[#A1A1AA] hover:bg-[#1A1A1D] hover:text-white'
                   }`}
                 >
                   {preset.label}
@@ -306,7 +306,7 @@ export default function PredictionStudioPage() {
                 <select
                   aria-label="Select database subscription case"
                   onChange={(e) => e.target.value && handleCaseSelect(e.target.value)}
-                  className="rounded-lg bg-slate-900 border border-slate-700 px-3 py-1.5 text-xs text-slate-200 outline-none hover:border-emerald-500/50 cursor-pointer"
+                  className="rounded-lg bg-[#1A1A1D] border border-[#26262A] px-3 py-1.5 text-xs text-slate-200 outline-none hover:border-[#C8F000]/30 cursor-pointer"
                   defaultValue=""
                 >
                   <option value="" disabled>Or Pick from 50 Live Cases...</option>
@@ -324,13 +324,13 @@ export default function PredictionStudioPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             {/* LEFT COLUMN: INTERACTIVE PARAMETER CONTROLS (5 COLS) */}
             <div className="lg:col-span-5 space-y-4">
-              <div className="rounded-2xl glass-panel p-5 border border-white/10 space-y-5">
-                <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <div className="rounded-2xl bg-[#141416] border border-[#26262A] p-5 border border-[#26262A] space-y-5">
+                <div className="flex items-center justify-between border-b border-[#26262A] pb-3">
                   <h2 className="text-sm font-bold text-white flex items-center gap-2">
-                    <Sliders className="h-4 w-4 text-emerald-400" />
+                    <Sliders className="h-4 w-4 text-[#C8F000]" />
                     Input Parameters
                   </h2>
-                  <span className="text-[10px] font-mono rounded bg-emerald-950/80 px-2 py-0.5 text-emerald-400 border border-emerald-800">
+                  <span className="text-[10px] font-mono rounded bg-[#1A1A1D] px-2 py-0.5 text-[#C8F000] border border-[#26262A]">
                     Live Reactive
                   </span>
                 </div>
@@ -338,8 +338,8 @@ export default function PredictionStudioPage() {
                 {/* 1. Ticket Amount Slider */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-xs">
-                    <label htmlFor="amount-slider" className="text-slate-300 font-semibold">Subscription Amount (₹)</label>
-                    <span className="font-mono font-bold text-emerald-400 text-sm">{formatINR(params.amount)}</span>
+                    <label htmlFor="amount-slider" className="text-[#A1A1AA] font-semibold">Subscription Amount (₹)</label>
+                    <span className="font-mono font-bold text-[#C8F000] text-sm">{formatINR(params.amount)}</span>
                   </div>
                   <input
                     id="amount-slider"
@@ -349,9 +349,9 @@ export default function PredictionStudioPage() {
                     step="500"
                     value={params.amount}
                     onChange={(e) => setParams({ ...params, amount: Number(e.target.value) })}
-                    className="w-full accent-emerald-500 h-2 bg-slate-800 rounded-lg cursor-pointer"
+                    className="w-full accent-[#C8F000] h-2 bg-[#1A1A1D] rounded-lg cursor-pointer"
                   />
-                  <div className="flex justify-between text-[10px] text-slate-500 font-mono">
+                  <div className="flex justify-between text-[10px] text-[#6B6B70] font-mono">
                     <span>₹499 (Starter)</span>
                     <span>₹15,000 (Growth)</span>
                     <span>₹50,000 (Enterprise)</span>
@@ -360,12 +360,12 @@ export default function PredictionStudioPage() {
 
                 {/* 2. Failure Reason Code */}
                 <div className="space-y-1.5">
-                  <label htmlFor="failure-reason-select" className="text-xs text-slate-300 font-semibold">Failure Reason Code</label>
+                  <label htmlFor="failure-reason-select" className="text-xs text-[#A1A1AA] font-semibold">Failure Reason Code</label>
                   <select
                     id="failure-reason-select"
                     value={params.failure_reason_code}
                     onChange={(e) => setParams({ ...params, failure_reason_code: e.target.value })}
-                    className="w-full rounded-xl bg-slate-900/90 border border-slate-700 px-3 py-2 text-xs text-slate-200 outline-none focus:border-emerald-500 transition-colors"
+                    className="w-full rounded-xl bg-[#1A1A1D] border border-[#26262A] px-3 py-2 text-xs text-slate-200 outline-none focus:border-[#C8F000] transition-colors"
                   >
                     <option value="insufficient_funds">insufficient_funds (Balance deficit)</option>
                     <option value="daily_limit_exceeded">daily_limit_exceeded (Mandate/bank cap)</option>
@@ -378,7 +378,7 @@ export default function PredictionStudioPage() {
 
                 {/* 3. Payment Method Rail */}
                 <div className="space-y-1.5">
-                  <span className="text-xs text-slate-300 font-semibold">Payment Method Rail</span>
+                  <span className="text-xs text-[#A1A1AA] font-semibold">Payment Method Rail</span>
                   <div className="grid grid-cols-2 gap-2">
                     {[
                       { id: 'upi_autopay', label: 'UPI AutoPay', desc: 'Instant 1-Click' },
@@ -392,12 +392,12 @@ export default function PredictionStudioPage() {
                         onClick={() => setParams({ ...params, payment_method: m.id })}
                         className={`rounded-xl p-2 text-left border transition-all cursor-pointer ${
                           params.payment_method === m.id
-                            ? 'bg-emerald-500/15 border-emerald-500/50 text-emerald-300'
-                            : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+                            ? 'bg-[#C8F000]/10 border-[#C8F000]/30 text-[#C8F000]'
+                            : 'bg-[#1A1A1D] border-[#26262A] text-[#A1A1AA] hover:border-[#26262A] hover:text-slate-200'
                         }`}
                       >
                         <div className="text-xs font-semibold">{m.label}</div>
-                        <div className="text-[10px] text-slate-500">{m.desc}</div>
+                        <div className="text-[10px] text-[#6B6B70]">{m.desc}</div>
                       </button>
                     ))}
                   </div>
@@ -405,7 +405,7 @@ export default function PredictionStudioPage() {
 
                 {/* 4. Customer Segment */}
                 <div className="space-y-1.5">
-                  <span className="text-xs text-slate-300 font-semibold">Customer Segment</span>
+                  <span className="text-xs text-[#A1A1AA] font-semibold">Customer Segment</span>
                   <div className="grid grid-cols-3 gap-2 text-xs">
                     {[
                       { id: 'high_value', label: 'High Value VIP' },
@@ -418,8 +418,8 @@ export default function PredictionStudioPage() {
                         onClick={() => setParams({ ...params, customer_segment: seg.id })}
                         className={`rounded-lg py-1.5 text-center font-medium border transition-all cursor-pointer ${
                           params.customer_segment === seg.id
-                            ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300'
-                            : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:text-white'
+                            ? 'bg-[#C8F000]/10 border-[#C8F000]/30 text-[#C8F000]'
+                            : 'bg-[#1A1A1D] border-[#26262A] text-[#A1A1AA] hover:text-white'
                         }`}
                       >
                         {seg.label}
@@ -431,8 +431,8 @@ export default function PredictionStudioPage() {
                 {/* 5. Prior Failed Retries */}
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-300 font-semibold">Prior Retries So Far</span>
-                    <span className={`font-mono font-bold ${params.retry_count_so_far! >= 3 ? 'text-rose-400' : 'text-slate-300'}`}>
+                    <span className="text-[#A1A1AA] font-semibold">Prior Retries So Far</span>
+                    <span className={`font-mono font-bold ${params.retry_count_so_far! >= 3 ? 'text-[#E5484D]' : 'text-[#A1A1AA]'}`}>
                       {params.retry_count_so_far} of 3 (RBI Cap)
                     </span>
                   </div>
@@ -445,9 +445,9 @@ export default function PredictionStudioPage() {
                         className={`flex-1 rounded-lg py-1.5 text-xs font-mono font-bold border transition-all cursor-pointer ${
                           params.retry_count_so_far === cnt
                             ? cnt >= 3
-                              ? 'bg-rose-500/20 border-rose-500 text-rose-300'
-                              : 'bg-emerald-500/20 border-emerald-500 text-emerald-300'
-                            : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:text-white'
+                              ? 'bg-[#E5484D]/10 border-[#E5484D]/40 text-[#E5484D]'
+                              : 'bg-[#C8F000]/10 border-[#C8F000] text-[#C8F000]'
+                            : 'bg-[#1A1A1D] border-[#26262A] text-[#A1A1AA] hover:text-white'
                         }`}
                       >
                         {cnt}
@@ -459,14 +459,14 @@ export default function PredictionStudioPage() {
                 {/* 6. Time of Debit (IST) with Quiet Hours Indicator */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-xs">
-                    <label htmlFor="debit-hour-slider" className="text-slate-300 font-semibold flex items-center gap-1.5">
-                      <Clock className="h-3.5 w-3.5 text-slate-400" />
+                    <label htmlFor="debit-hour-slider" className="text-[#A1A1AA] font-semibold flex items-center gap-1.5">
+                      <Clock className="h-3.5 w-3.5 text-[#A1A1AA]" />
                       Debit Execution Hour (IST)
                     </label>
                     <span className={`font-mono font-bold text-xs ${
                       params.time_of_debit_ist_hour! >= 21 || params.time_of_debit_ist_hour! < 9
-                        ? 'text-rose-400'
-                        : 'text-emerald-400'
+                        ? 'text-[#E5484D]'
+                        : 'text-[#C8F000]'
                     }`}>
                       {String(params.time_of_debit_ist_hour).padStart(2, '0')}:00 IST {
                         params.time_of_debit_ist_hour! >= 21 || params.time_of_debit_ist_hour! < 9
@@ -483,37 +483,37 @@ export default function PredictionStudioPage() {
                     step="1"
                     value={params.time_of_debit_ist_hour}
                     onChange={(e) => setParams({ ...params, time_of_debit_ist_hour: Number(e.target.value) })}
-                    className="w-full accent-cyan-400 h-2 bg-slate-800 rounded-lg cursor-pointer"
+                    className="w-full accent-[#C8F000] h-2 bg-[#1A1A1D] rounded-lg cursor-pointer"
                   />
-                  <div className="flex justify-between text-[10px] text-slate-500 font-mono">
-                    <span className="text-rose-400">00:00 (Quiet)</span>
-                    <span className="text-emerald-400">09:00 (Open)</span>
-                    <span className="text-emerald-400">14:00 (Midday)</span>
-                    <span className="text-rose-400">21:00 (Quiet)</span>
+                  <div className="flex justify-between text-[10px] text-[#6B6B70] font-mono">
+                    <span className="text-[#E5484D]">00:00 (Quiet)</span>
+                    <span className="text-[#C8F000]">09:00 (Open)</span>
+                    <span className="text-[#C8F000]">14:00 (Midday)</span>
+                    <span className="text-[#E5484D]">21:00 (Quiet)</span>
                   </div>
                 </div>
 
                 {/* 7. Statutory Condition Toggles */}
-                <div className="pt-2 border-t border-white/10 space-y-2">
-                  <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Statutory Checkpoint Toggles</span>
+                <div className="pt-2 border-t border-[#26262A] space-y-2">
+                  <span className="text-[11px] font-semibold text-[#A1A1AA] uppercase tracking-wider">Statutory Checkpoint Toggles</span>
                   <div className="grid grid-cols-2 gap-2 text-xs">
-                    <label className="flex items-center gap-2 rounded-lg bg-slate-900/60 p-2 border border-slate-800 cursor-pointer">
+                    <label className="flex items-center gap-2 rounded-lg bg-[#1A1A1D] p-2 border border-[#26262A] cursor-pointer">
                       <input
                         type="checkbox"
                         checked={params.has_pre_debit_notice}
                         onChange={(e) => setParams({ ...params, has_pre_debit_notice: e.target.checked })}
-                        className="rounded accent-emerald-500"
+                        className="rounded accent-[#C8F000]"
                       />
-                      <span className="text-slate-300 text-[11px]">24h Pre-Debit Notice</span>
+                      <span className="text-[#A1A1AA] text-[11px]">24h Pre-Debit Notice</span>
                     </label>
-                    <label className="flex items-center gap-2 rounded-lg bg-slate-900/60 p-2 border border-slate-800 cursor-pointer">
+                    <label className="flex items-center gap-2 rounded-lg bg-[#1A1A1D] p-2 border border-[#26262A] cursor-pointer">
                       <input
                         type="checkbox"
                         checked={params.is_dnd_registered}
                         onChange={(e) => setParams({ ...params, is_dnd_registered: e.target.checked })}
-                        className="rounded accent-rose-500"
+                        className="rounded accent-[#E5484D]"
                       />
-                      <span className="text-slate-300 text-[11px]">Registered on DND</span>
+                      <span className="text-[#A1A1AA] text-[11px]">Registered on DND</span>
                     </label>
                   </div>
                 </div>
@@ -523,13 +523,13 @@ export default function PredictionStudioPage() {
             {/* RIGHT COLUMN: PREDICTION RADAR & INTELLIGENCE TELEMETRY (7 COLS) */}
             <div className="lg:col-span-7 space-y-4">
               {/* MAIN RECOVERY SCORE & FINANCIAL EV CARD */}
-              <div className="rounded-2xl glass-panel p-6 border border-emerald-500/30 relative overflow-hidden shadow-glow-emerald">
+              <div className="rounded-2xl bg-[#141416] border border-[#26262A] p-6 border border-[#C8F000]/30 relative overflow-hidden shadow-glow-accent">
                 <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-emerald-500/10 blur-3xl" />
 
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                   {/* Left: Overall Recovery Probability Gauge */}
                   <div className="flex items-center gap-5">
-                    <div className="relative flex h-28 w-28 shrink-0 items-center justify-center rounded-full bg-slate-900/90 border-4 border-slate-800 shadow-inner">
+                    <div className="relative flex h-28 w-28 shrink-0 items-center justify-center rounded-full bg-[#1A1A1D] border-4 border-[#26262A] shadow-inner">
                       {/* Gauge Ring */}
                       <svg className="h-full w-full -rotate-90 p-1" viewBox="0 0 100 100">
                         <circle
@@ -559,7 +559,7 @@ export default function PredictionStudioPage() {
                         <span className={`text-2xl font-black num-mono ${getScoreColor(prediction?.overall_recovery_probability_pct || 0)}`}>
                           {prediction?.overall_recovery_probability_pct || 0}%
                         </span>
-                        <span className="block text-[9px] uppercase tracking-wider text-slate-400 font-bold">
+                        <span className="block text-[9px] uppercase tracking-wider text-[#A1A1AA] font-bold">
                           Recovery
                         </span>
                       </div>
@@ -567,10 +567,10 @@ export default function PredictionStudioPage() {
 
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="rounded-md bg-emerald-950/90 px-2 py-0.5 text-[10px] font-mono font-bold text-emerald-400 border border-emerald-800">
+                        <span className="rounded-md bg-[#1A1A1D] px-2 py-0.5 text-[10px] font-mono font-bold text-[#C8F000] border border-[#26262A]">
                           AI RECOVERY SCORE
                         </span>
-                        <span className="text-xs text-slate-400">
+                        <span className="text-xs text-[#A1A1AA]">
                           Confidence: <strong className="text-white num-mono">{prediction?.diagnosis_confidence_pct || 95}%</strong>
                         </span>
                       </div>
@@ -581,21 +581,21 @@ export default function PredictionStudioPage() {
                           ? 'Moderate Multi-Touch Window'
                           : 'High Escalation / Manual Review'}
                       </h2>
-                      <p className="text-xs text-slate-300 mt-1 max-w-sm">
+                      <p className="text-xs text-[#A1A1AA] mt-1 max-w-sm">
                         {prediction?.diagnosis_explanation}
                       </p>
                     </div>
                   </div>
 
                   {/* Right: Expected Recovered ARR */}
-                  <div className="rounded-xl bg-slate-900/80 border border-white/10 p-4 min-w-[180px]">
-                    <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+                  <div className="rounded-xl bg-[#1A1A1D] border border-[#26262A] p-4 min-w-[180px]">
+                    <div className="text-[11px] font-semibold text-[#A1A1AA] uppercase tracking-wider">
                       Expected Value (EV)
                     </div>
-                    <div className="text-2xl font-black text-emerald-400 num-mono mt-1">
+                    <div className="text-2xl font-black text-[#C8F000] num-mono mt-1">
                       {formatINR(prediction?.expected_recovery_amount || 0)}
                     </div>
-                    <div className="text-[11px] text-slate-400 mt-0.5">
+                    <div className="text-[11px] text-[#A1A1AA] mt-0.5">
                       out of {formatINR(prediction?.amount || 0)} at risk
                     </div>
                   </div>
@@ -603,28 +603,28 @@ export default function PredictionStudioPage() {
               </div>
 
               {/* CHANNEL-BY-CHANNEL PROBABILITY WATERFALL */}
-              <div className="rounded-2xl glass-panel p-5 border border-white/10 space-y-4">
+              <div className="rounded-2xl bg-[#141416] border border-[#26262A] p-5 border border-[#26262A] space-y-4">
                 <div className="flex items-center justify-between">
                   <h2 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                    <Layers className="h-4 w-4 text-cyan-400" />
+                    <Layers className="h-4 w-4 text-[#C8F000]" />
                     Channel-Specific Success Probabilities
                   </h2>
-                  <span className="text-[11px] text-slate-400">Sequential Waterfall Model</span>
+                  <span className="text-[11px] text-[#A1A1AA]">Sequential Waterfall Model</span>
                 </div>
 
                 <div className="space-y-3">
                   {/* Gateway Auto Retry */}
                   <div>
                     <div className="flex justify-between text-xs mb-1">
-                      <span className="text-slate-300 flex items-center gap-1.5 font-medium">
-                        <CreditCard className="h-3.5 w-3.5 text-teal-400" />
+                      <span className="text-[#A1A1AA] flex items-center gap-1.5 font-medium">
+                        <CreditCard className="h-3.5 w-3.5 text-[#C8F000]" />
                         Tier-1 Gateway Auto-Retry
                       </span>
-                      <span className="font-mono font-bold text-teal-400">{prediction?.channel_probabilities.gateway_retry_pct || 0}%</span>
+                      <span className="font-mono font-bold text-[#C8F000]">{prediction?.channel_probabilities.gateway_retry_pct || 0}%</span>
                     </div>
-                    <div className="h-2 w-full rounded-full bg-slate-800 overflow-hidden">
+                    <div className="h-2 w-full rounded-full bg-[#1A1A1D] overflow-hidden">
                       <div
-                        className="h-full rounded-full bg-gradient-to-r from-teal-500 to-emerald-400 transition-all duration-500"
+                        className="h-full rounded-full bg-[#C8F000] transition-all duration-200"
                         style={{ width: `${prediction?.channel_probabilities.gateway_retry_pct || 0}%` }}
                       />
                     </div>
@@ -633,15 +633,15 @@ export default function PredictionStudioPage() {
                   {/* Hinglish Voice Call */}
                   <div>
                     <div className="flex justify-between text-xs mb-1">
-                      <span className="text-slate-300 flex items-center gap-1.5 font-medium">
-                        <PhoneCall className="h-3.5 w-3.5 text-amber-400" />
+                      <span className="text-[#A1A1AA] flex items-center gap-1.5 font-medium">
+                        <PhoneCall className="h-3.5 w-3.5 text-[#C8F000]" />
                         Tier-2 Hinglish Voice Outreach
                       </span>
-                      <span className="font-mono font-bold text-amber-400">{prediction?.channel_probabilities.voice_outreach_pct || 0}%</span>
+                      <span className="font-mono font-bold text-[#C8F000]">{prediction?.channel_probabilities.voice_outreach_pct || 0}%</span>
                     </div>
-                    <div className="h-2 w-full rounded-full bg-slate-800 overflow-hidden">
+                    <div className="h-2 w-full rounded-full bg-[#1A1A1D] overflow-hidden">
                       <div
-                        className="h-full rounded-full bg-gradient-to-r from-amber-500 to-orange-400 transition-all duration-500"
+                        className="h-full rounded-full bg-[#C8F000] transition-all duration-200"
                         style={{ width: `${prediction?.channel_probabilities.voice_outreach_pct || 0}%` }}
                       />
                     </div>
@@ -650,15 +650,15 @@ export default function PredictionStudioPage() {
                   {/* WhatsApp Payment Link */}
                   <div>
                     <div className="flex justify-between text-xs mb-1">
-                      <span className="text-slate-300 flex items-center gap-1.5 font-medium">
+                      <span className="text-[#A1A1AA] flex items-center gap-1.5 font-medium">
                         <MessageSquare className="h-3.5 w-3.5 text-green-400" />
                         Digital Nudge (WhatsApp / SMS Link)
                       </span>
                       <span className="font-mono font-bold text-green-400">{prediction?.channel_probabilities.whatsapp_nudge_pct || 0}%</span>
                     </div>
-                    <div className="h-2 w-full rounded-full bg-slate-800 overflow-hidden">
+                    <div className="h-2 w-full rounded-full bg-[#1A1A1D] overflow-hidden">
                       <div
-                        className="h-full rounded-full bg-gradient-to-r from-green-500 to-emerald-300 transition-all duration-500"
+                        className="h-full rounded-full bg-[#C8F000] transition-all duration-200"
                         style={{ width: `${prediction?.channel_probabilities.whatsapp_nudge_pct || 0}%` }}
                       />
                     </div>
@@ -667,15 +667,15 @@ export default function PredictionStudioPage() {
                   {/* Manual Escalation Risk */}
                   <div>
                     <div className="flex justify-between text-xs mb-1">
-                      <span className="text-slate-300 flex items-center gap-1.5 font-medium">
-                        <AlertCircle className="h-3.5 w-3.5 text-rose-400" />
+                      <span className="text-[#A1A1AA] flex items-center gap-1.5 font-medium">
+                        <AlertCircle className="h-3.5 w-3.5 text-[#E5484D]" />
                         Escalation Risk to Manual Ops
                       </span>
-                      <span className="font-mono font-bold text-rose-400">{prediction?.channel_probabilities.escalation_risk_pct || 0}%</span>
+                      <span className="font-mono font-bold text-[#E5484D]">{prediction?.channel_probabilities.escalation_risk_pct || 0}%</span>
                     </div>
-                    <div className="h-2 w-full rounded-full bg-slate-800 overflow-hidden">
+                    <div className="h-2 w-full rounded-full bg-[#1A1A1D] overflow-hidden">
                       <div
-                        className="h-full rounded-full bg-gradient-to-r from-rose-500 to-red-600 transition-all duration-500"
+                        className="h-full rounded-full bg-[#E5484D] transition-all duration-200"
                         style={{ width: `${prediction?.channel_probabilities.escalation_risk_pct || 0}%` }}
                       />
                     </div>
@@ -685,44 +685,44 @@ export default function PredictionStudioPage() {
 
               {/* RECOMMENDED POLICY ACTION & OPTIMAL WINDOW */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="rounded-xl glass-panel p-4 border border-white/10">
-                  <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+                <div className="rounded-xl bg-[#141416] border border-[#26262A] p-4 border border-[#26262A]">
+                  <div className="text-[11px] font-semibold text-[#A1A1AA] uppercase tracking-wider">
                     Recommended Policy Action
                   </div>
                   <div className="mt-1 flex items-center gap-2 font-bold text-white text-sm">
-                    <Zap className="h-4 w-4 text-emerald-400" />
+                    <Zap className="h-4 w-4 text-[#C8F000]" />
                     <span>{prediction?.recommended_action?.replace(/_/g, ' ')}</span>
                   </div>
-                  <div className="mt-1 text-xs text-slate-400">
+                  <div className="mt-1 text-xs text-[#A1A1AA]">
                     Channel: <strong className="text-slate-200">{prediction?.recommended_channel}</strong>
                   </div>
                 </div>
 
-                <div className="rounded-xl glass-panel p-4 border border-white/10">
-                  <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+                <div className="rounded-xl bg-[#141416] border border-[#26262A] p-4 border border-[#26262A]">
+                  <div className="text-[11px] font-semibold text-[#A1A1AA] uppercase tracking-wider">
                     Optimal Diurnal Timing Window
                   </div>
-                  <div className="mt-1 flex items-center gap-2 font-bold text-cyan-300 text-sm">
-                    <Clock className="h-4 w-4 text-cyan-400" />
+                  <div className="mt-1 flex items-center gap-2 font-bold text-[#C8F000] text-sm">
+                    <Clock className="h-4 w-4 text-[#C8F000]" />
                     <span>{prediction?.optimal_time_window?.split(':')[0]}</span>
                   </div>
-                  <div className="mt-1 text-xs text-slate-400">
+                  <div className="mt-1 text-xs text-[#A1A1AA]">
                     {prediction?.optimal_time_window}
                   </div>
                 </div>
               </div>
 
               {/* 5-RULE STATUTORY COMPLIANCE PRE-FLIGHT RADAR */}
-              <div className="rounded-2xl glass-panel p-5 border border-white/10 space-y-3">
+              <div className="rounded-2xl bg-[#141416] border border-[#26262A] p-5 border border-[#26262A] space-y-3">
                 <div className="flex items-center justify-between">
                   <h2 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                    <ShieldCheck className="h-4 w-4 text-emerald-400" />
+                    <ShieldCheck className="h-4 w-4 text-[#C8F000]" />
                     5-Rule Statutory Compliance Pre-Flight
                   </h2>
                   <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border ${
                     prediction?.compliance_pre_flight.all_passed
-                      ? 'bg-emerald-950 text-emerald-400 border-emerald-800'
-                      : 'bg-rose-950 text-rose-400 border-rose-800'
+                      ? 'bg-[#1A1A1D] text-[#C8F000] border-[#26262A]'
+                      : 'bg-[#E5484D]/10 text-[#E5484D] border-[#E5484D]/40'
                   }`}>
                     {prediction?.compliance_pre_flight.all_passed ? 'ALL RULES PASS ✓' : 'ACTION BLOCKED ⚠️'}
                   </span>
@@ -730,76 +730,76 @@ export default function PredictionStudioPage() {
 
                 <div className="grid grid-cols-1 gap-2 text-xs">
                   {/* Rule 1 */}
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-slate-900/60 border border-slate-800">
+                  <div className="flex items-center justify-between p-2 rounded-lg bg-[#1A1A1D] border border-[#26262A]">
                     <div className="flex items-center gap-2">
                       {prediction?.compliance_pre_flight.rbi_max_retries.passed ? (
-                        <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                        <CheckCircle2 className="h-4 w-4 text-[#C8F000] shrink-0" />
                       ) : (
-                        <XCircle className="h-4 w-4 text-rose-400 shrink-0" />
+                        <XCircle className="h-4 w-4 text-[#E5484D] shrink-0" />
                       )}
                       <div>
                         <span className="font-semibold text-white">1. RBI Mandate Max 3 Retries</span>
-                        <p className="text-[11px] text-slate-400">{prediction?.compliance_pre_flight.rbi_max_retries.explanation}</p>
+                        <p className="text-[11px] text-[#A1A1AA]">{prediction?.compliance_pre_flight.rbi_max_retries.explanation}</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Rule 2 */}
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-slate-900/60 border border-slate-800">
+                  <div className="flex items-center justify-between p-2 rounded-lg bg-[#1A1A1D] border border-[#26262A]">
                     <div className="flex items-center gap-2">
                       {prediction?.compliance_pre_flight.trai_quiet_hours.passed ? (
-                        <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                        <CheckCircle2 className="h-4 w-4 text-[#C8F000] shrink-0" />
                       ) : (
-                        <XCircle className="h-4 w-4 text-rose-400 shrink-0" />
+                        <XCircle className="h-4 w-4 text-[#E5484D] shrink-0" />
                       )}
                       <div>
                         <span className="font-semibold text-white">2. TRAI Quiet Hours (21:00 - 09:00 IST)</span>
-                        <p className="text-[11px] text-slate-400">{prediction?.compliance_pre_flight.trai_quiet_hours.explanation}</p>
+                        <p className="text-[11px] text-[#A1A1AA]">{prediction?.compliance_pre_flight.trai_quiet_hours.explanation}</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Rule 3 */}
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-slate-900/60 border border-slate-800">
+                  <div className="flex items-center justify-between p-2 rounded-lg bg-[#1A1A1D] border border-[#26262A]">
                     <div className="flex items-center gap-2">
                       {prediction?.compliance_pre_flight.rbi_pre_debit_notice.passed ? (
-                        <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                        <CheckCircle2 className="h-4 w-4 text-[#C8F000] shrink-0" />
                       ) : (
-                        <XCircle className="h-4 w-4 text-rose-400 shrink-0" />
+                        <XCircle className="h-4 w-4 text-[#E5484D] shrink-0" />
                       )}
                       <div>
                         <span className="font-semibold text-white">3. RBI 24h Pre-Debit Notice</span>
-                        <p className="text-[11px] text-slate-400">{prediction?.compliance_pre_flight.rbi_pre_debit_notice.explanation}</p>
+                        <p className="text-[11px] text-[#A1A1AA]">{prediction?.compliance_pre_flight.rbi_pre_debit_notice.explanation}</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Rule 4 */}
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-slate-900/60 border border-slate-800">
+                  <div className="flex items-center justify-between p-2 rounded-lg bg-[#1A1A1D] border border-[#26262A]">
                     <div className="flex items-center gap-2">
                       {prediction?.compliance_pre_flight.anti_harassment_cooldown.passed ? (
-                        <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                        <CheckCircle2 className="h-4 w-4 text-[#C8F000] shrink-0" />
                       ) : (
-                        <XCircle className="h-4 w-4 text-rose-400 shrink-0" />
+                        <XCircle className="h-4 w-4 text-[#E5484D] shrink-0" />
                       )}
                       <div>
                         <span className="font-semibold text-white">4. 48h Anti-Harassment Cooldown</span>
-                        <p className="text-[11px] text-slate-400">{prediction?.compliance_pre_flight.anti_harassment_cooldown.explanation}</p>
+                        <p className="text-[11px] text-[#A1A1AA]">{prediction?.compliance_pre_flight.anti_harassment_cooldown.explanation}</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Rule 5 */}
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-slate-900/60 border border-slate-800">
+                  <div className="flex items-center justify-between p-2 rounded-lg bg-[#1A1A1D] border border-[#26262A]">
                     <div className="flex items-center gap-2">
                       {prediction?.compliance_pre_flight.trai_dnd_status.passed ? (
-                        <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                        <CheckCircle2 className="h-4 w-4 text-[#C8F000] shrink-0" />
                       ) : (
-                        <XCircle className="h-4 w-4 text-rose-400 shrink-0" />
+                        <XCircle className="h-4 w-4 text-[#E5484D] shrink-0" />
                       )}
                       <div>
                         <span className="font-semibold text-white">5. TRAI National DND Filter</span>
-                        <p className="text-[11px] text-slate-400">{prediction?.compliance_pre_flight.trai_dnd_status.explanation}</p>
+                        <p className="text-[11px] text-[#A1A1AA]">{prediction?.compliance_pre_flight.trai_dnd_status.explanation}</p>
                       </div>
                     </div>
                   </div>
@@ -807,27 +807,27 @@ export default function PredictionStudioPage() {
               </div>
 
               {/* SHAP-STYLE FEATURE ATTRIBUTIONS */}
-              <div className="rounded-2xl glass-panel p-5 border border-white/10 space-y-3">
+              <div className="rounded-2xl bg-[#141416] border border-[#26262A] p-5 border border-[#26262A] space-y-3">
                 <h2 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                  <Cpu className="h-4 w-4 text-emerald-400" />
+                  <Cpu className="h-4 w-4 text-[#C8F000]" />
                   Model Feature Attribution (SHAP Factors)
                 </h2>
                 <div className="grid grid-cols-1 gap-2">
                   {prediction?.feature_attributions.map((fa, i) => (
                     <div
                       key={i}
-                      className="flex items-center justify-between p-2.5 rounded-lg bg-slate-900/60 border border-slate-800 text-xs"
+                      className="flex items-center justify-between p-2.5 rounded-lg bg-[#1A1A1D] border border-[#26262A] text-xs"
                     >
                       <div>
                         <span className="font-semibold text-white">{fa.factor}</span>
-                        <p className="text-[11px] text-slate-400">{fa.description}</p>
+                        <p className="text-[11px] text-[#A1A1AA]">{fa.description}</p>
                       </div>
                       <span className={`font-mono font-bold px-2 py-0.5 rounded text-xs shrink-0 ${
                         fa.type === 'positive'
-                          ? 'bg-emerald-950 text-emerald-400 border border-emerald-800'
+                          ? 'bg-[#1A1A1D] text-[#C8F000] border border-[#26262A]'
                           : fa.type === 'negative'
-                          ? 'bg-rose-950 text-rose-400 border border-rose-800'
-                          : 'bg-slate-800 text-slate-300'
+                          ? 'bg-[#E5484D]/10 text-[#E5484D] border border-[#E5484D]/40'
+                          : 'bg-[#1A1A1D] text-[#A1A1AA]'
                       }`}>
                         {fa.impact_pct > 0 ? `+${fa.impact_pct}%` : `${fa.impact_pct}%`}
                       </span>
@@ -838,18 +838,18 @@ export default function PredictionStudioPage() {
 
               {/* DYNAMIC HINGLISH VOICE SCRIPT PREVIEW */}
               {prediction?.voice_script_preview && (
-                <div className="rounded-2xl glass-panel p-5 border border-amber-500/30 bg-gradient-to-br from-[#12192c] to-[#181a2e] space-y-3 shadow-glow-amber">
+                <div className="rounded-2xl bg-[#141416] border border-[#26262A] p-5 border border-[#26262A] bg-[#141416] border border-[#26262A] space-y-3 shadow-glow-accent">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-amber-300 uppercase tracking-wider flex items-center gap-2">
-                      <PhoneCall className="h-4 w-4 text-amber-400" />
+                    <span className="text-xs font-bold text-[#C8F000] uppercase tracking-wider flex items-center gap-2">
+                      <PhoneCall className="h-4 w-4 text-[#C8F000]" />
                       Dynamic Hinglish Voice Agent Persona & Script
                     </span>
-                    <span className="text-[10px] font-mono rounded bg-amber-950 px-2 py-0.5 text-amber-300 border border-amber-800">
+                    <span className="text-[10px] font-mono rounded bg-[#1A1A1D] px-2 py-0.5 text-[#C8F000] border border-[#26262A]">
                       Tone: {prediction.voice_script_preview.tone}
                     </span>
                   </div>
 
-                  <div className="rounded-xl bg-slate-950/80 p-4 border border-amber-500/20 font-mono text-xs text-amber-100/90 whitespace-pre-line leading-relaxed">
+                  <div className="rounded-xl bg-[#0A0A0B] p-4 border border-amber-500/20 font-mono text-xs text-amber-100/90 whitespace-pre-line leading-relaxed">
                     {prediction.voice_script_preview.script}
                   </div>
                 </div>
@@ -862,55 +862,55 @@ export default function PredictionStudioPage() {
         <div className="space-y-6">
           {/* Summary KPIs */}
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-            <div className="rounded-2xl glass-panel p-5 border border-white/10">
-              <span className="text-xs text-slate-400 font-semibold">Total At-Risk ARR</span>
+            <div className="rounded-2xl bg-[#141416] border border-[#26262A] p-5 border border-[#26262A]">
+              <span className="text-xs text-[#A1A1AA] font-semibold">Total At-Risk ARR</span>
               <div className="text-2xl font-bold text-white num-mono mt-1">
                 {formatINR(portfolioStats?.total_at_risk_amount || 342850)}
               </div>
-              <span className="text-[11px] text-slate-500">Across 50 Subscriptions</span>
+              <span className="text-[11px] text-[#6B6B70]">Across 50 Subscriptions</span>
             </div>
 
-            <div className="rounded-2xl glass-panel p-5 border border-emerald-500/30 shadow-glow-emerald">
-              <span className="text-xs text-emerald-400 font-semibold">Predicted Recovery</span>
-              <div className="text-2xl font-bold text-emerald-400 num-mono mt-1">
+            <div className="rounded-2xl bg-[#141416] border border-[#26262A] p-5 border border-[#C8F000]/30 shadow-glow-accent">
+              <span className="text-xs text-[#C8F000] font-semibold">Predicted Recovery</span>
+              <div className="text-2xl font-bold text-[#C8F000] num-mono mt-1">
                 {formatINR(portfolioStats?.predicted_recovery_amount || 214500)}
               </div>
-              <span className="text-[11px] text-emerald-300/70 font-mono font-semibold">
+              <span className="text-[11px] text-[#C8F000]/70 font-mono font-semibold">
                 {portfolioStats?.predicted_recovery_rate_pct || 62.5}% Forecasted Rate
               </span>
             </div>
 
-            <div className="rounded-2xl glass-panel p-5 border border-white/10">
-              <span className="text-xs text-slate-400 font-semibold">Average Model Confidence</span>
-              <div className="text-2xl font-bold text-cyan-400 num-mono mt-1">
+            <div className="rounded-2xl bg-[#141416] border border-[#26262A] p-5 border border-[#26262A]">
+              <span className="text-xs text-[#A1A1AA] font-semibold">Average Model Confidence</span>
+              <div className="text-2xl font-bold text-[#C8F000] num-mono mt-1">
                 {portfolioStats?.average_confidence_pct || 96}%
               </div>
-              <span className="text-[11px] text-slate-500">Hybrid Bayesian Network</span>
+              <span className="text-[11px] text-[#6B6B70]">Hybrid Bayesian Network</span>
             </div>
 
-            <div className="rounded-2xl glass-panel p-5 border border-white/10">
-              <span className="text-xs text-slate-400 font-semibold">Distribution Health</span>
+            <div className="rounded-2xl bg-[#141416] border border-[#26262A] p-5 border border-[#26262A]">
+              <span className="text-xs text-[#A1A1AA] font-semibold">Distribution Health</span>
               <div className="flex items-center gap-2 mt-2 text-xs font-mono">
-                <span className="text-emerald-400">● {portfolioStats?.distribution?.high_probability_count || 28} High</span>
-                <span className="text-amber-400">● {portfolioStats?.distribution?.moderate_probability_count || 14} Med</span>
-                <span className="text-rose-400">● {portfolioStats?.distribution?.critical_escalation_count || 8} Esc</span>
+                <span className="text-[#C8F000]">● {portfolioStats?.distribution?.high_probability_count || 28} High</span>
+                <span className="text-[#C8F000]">● {portfolioStats?.distribution?.moderate_probability_count || 14} Med</span>
+                <span className="text-[#E5484D]">● {portfolioStats?.distribution?.critical_escalation_count || 8} Esc</span>
               </div>
             </div>
           </div>
 
           {/* Portfolio Predictions Table */}
-          <div className="rounded-2xl glass-panel border border-white/10 overflow-hidden">
-            <div className="p-4 border-b border-white/10 flex items-center justify-between">
+          <div className="rounded-2xl bg-[#141416] border border-[#26262A] border border-[#26262A] overflow-hidden">
+            <div className="p-4 border-b border-[#26262A] flex items-center justify-between">
               <h2 className="text-sm font-bold text-white flex items-center gap-2">
-                <Layers className="h-4 w-4 text-emerald-400" />
+                <Layers className="h-4 w-4 text-[#C8F000]" />
                 Live 50-Case Portfolio AI Recovery Forecasts
               </h2>
-              <span className="text-xs text-slate-400">Evaluated deterministically in real-time</span>
+              <span className="text-xs text-[#A1A1AA]">Evaluated deterministically in real-time</span>
             </div>
 
             <div className="overflow-x-auto max-h-[500px]">
               <table className="w-full text-left text-xs">
-                <thead className="sticky top-0 bg-slate-900/95 text-slate-400 uppercase font-mono text-[10px] border-b border-white/10">
+                <thead className="sticky top-0 bg-[#1A1A1D]/95 text-[#A1A1AA] uppercase font-mono text-[10px] border-b border-[#26262A]">
                   <tr>
                     <th className="p-3">Case ID</th>
                     <th className="p-3">Customer</th>
@@ -922,30 +922,30 @@ export default function PredictionStudioPage() {
                     <th className="p-3">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5 text-slate-300 font-medium">
+                <tbody className="divide-y divide-white/5 text-[#A1A1AA] font-medium">
                   {portfolioStats?.predictions?.map((p: any) => (
-                    <tr key={p.subscription_id} className="hover:bg-slate-800/40 transition-colors">
-                      <td className="p-3 font-mono text-slate-400">{p.subscription_id}</td>
+                    <tr key={p.subscription_id} className="hover:bg-[#1A1A1D]/40 transition-colors">
+                      <td className="p-3 font-mono text-[#A1A1AA]">{p.subscription_id}</td>
                       <td className="p-3 text-white font-semibold">{p.customer_name}</td>
                       <td className="p-3 text-right num-mono font-bold text-slate-200">{formatINR(p.amount)}</td>
-                      <td className="p-3 font-mono text-slate-400">{p.root_cause}</td>
+                      <td className="p-3 font-mono text-[#A1A1AA]">{p.root_cause}</td>
                       <td className="p-3">
-                        <span className="rounded bg-slate-800 px-2 py-0.5 text-[10px] text-slate-300">
+                        <span className="rounded bg-[#1A1A1D] px-2 py-0.5 text-[10px] text-[#A1A1AA]">
                           {p.root_cause}
                         </span>
                       </td>
                       <td className="p-3 text-center font-mono font-bold">
                         <span className={`px-2 py-0.5 rounded text-[11px] ${
                           p.overall_recovery_probability_pct >= 70
-                            ? 'bg-emerald-950 text-emerald-400 border border-emerald-800'
+                            ? 'bg-[#1A1A1D] text-[#C8F000] border border-[#26262A]'
                             : p.overall_recovery_probability_pct >= 40
-                            ? 'bg-amber-950 text-amber-400 border border-amber-800'
-                            : 'bg-rose-950 text-rose-400 border border-rose-800'
+                            ? 'bg-[#1A1A1D] text-[#C8F000] border border-[#26262A]'
+                            : 'bg-[#E5484D]/10 text-[#E5484D] border border-[#E5484D]/40'
                         }`}>
                           {p.overall_recovery_probability_pct}%
                         </span>
                       </td>
-                      <td className="p-3 text-right num-mono font-bold text-emerald-400">
+                      <td className="p-3 text-right num-mono font-bold text-[#C8F000]">
                         {formatINR(p.expected_recovery_amount)}
                       </td>
                       <td className="p-3">
@@ -967,7 +967,7 @@ export default function PredictionStudioPage() {
                             });
                             setActiveTab('simulator');
                           }}
-                          className="text-emerald-400 hover:text-emerald-300 text-xs font-semibold cursor-pointer"
+                          className="text-[#C8F000] hover:text-[#C8F000] text-xs font-semibold cursor-pointer"
                         >
                           Simulate &rarr;
                         </button>

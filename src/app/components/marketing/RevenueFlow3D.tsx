@@ -17,16 +17,16 @@ interface NodeDef {
 }
 
 const NODES: NodeDef[] = [
-  { id: 'customer', label: 'Customer', sublabel: 'UPI / Card', position: [-4.6, 0.9, 0], color: '#111111', glowColor: '#686862', radius: 0.32 },
-  { id: 'checkout', label: 'Checkout', sublabel: 'Mandate Setup', position: [-2.8, 0.9, 0], color: '#111111', glowColor: '#686862', radius: 0.32 },
-  { id: 'payment', label: 'Payment', sublabel: 'Razorpay Gateway', position: [-1.0, 0.9, 0], color: '#111111', glowColor: '#686862', radius: 0.34 },
-  { id: 'subscription', label: 'Subscription', sublabel: 'Autopay Debit', position: [0.8, 0.9, 0], color: '#111111', glowColor: '#686862', radius: 0.36 },
-  { id: 'invoice', label: 'Healthy Invoice', sublabel: 'Settled Direct', position: [2.6, 0.9, 0], color: '#111111', glowColor: '#686862', radius: 0.32 },
+  { id: 'customer', label: 'Customer', sublabel: 'UPI / Card', position: [-4.6, 0.9, 0], color: '#1A1A1D', glowColor: '#6B6B70', radius: 0.32 },
+  { id: 'checkout', label: 'Checkout', sublabel: 'Mandate Setup', position: [-2.8, 0.9, 0], color: '#1A1A1D', glowColor: '#6B6B70', radius: 0.32 },
+  { id: 'payment', label: 'Payment', sublabel: 'Razorpay Gateway', position: [-1.0, 0.9, 0], color: '#1A1A1D', glowColor: '#6B6B70', radius: 0.34 },
+  { id: 'subscription', label: 'Subscription', sublabel: 'Autopay Debit', position: [0.8, 0.9, 0], color: '#1A1A1D', glowColor: '#6B6B70', radius: 0.36 },
+  { id: 'invoice', label: 'Healthy Invoice', sublabel: 'Settled Direct', position: [2.6, 0.9, 0], color: '#1A1A1D', glowColor: '#6B6B70', radius: 0.32 },
   
   // Deflected Recovery Loop
-  { id: 'at_risk', label: 'At Risk (Leak)', sublabel: 'Decline / Timeout', position: [0.8, -1.2, 0.1], color: '#D94A4A', glowColor: '#F2A900', radius: 0.35 },
-  { id: 'ai_recovery', label: 'AI Recovery Agent', sublabel: 'Hinglish & Gateway', position: [2.7, -1.2, 0.1], color: '#111111', glowColor: '#C8F000', radius: 0.40 },
-  { id: 'recovered', label: 'Recovered Revenue', sublabel: 'Attributed Bank Settled', position: [4.6, -0.15, 0], color: '#111111', glowColor: '#C8F000', radius: 0.42 },
+  { id: 'at_risk', label: 'At Risk (Leak)', sublabel: 'Decline / Timeout', position: [0.8, -1.2, 0.1], color: '#1A1A1D', glowColor: '#E5484D', radius: 0.35 },
+  { id: 'ai_recovery', label: 'AI Recovery Agent', sublabel: 'Hinglish & Gateway', position: [2.7, -1.2, 0.1], color: '#141416', glowColor: '#C8F000', radius: 0.40 },
+  { id: 'recovered', label: 'Recovered Revenue', sublabel: 'Attributed Settled', position: [4.6, -0.15, 0], color: '#141416', glowColor: '#C8F000', radius: 0.42 },
 ];
 
 /**
@@ -50,7 +50,7 @@ function SystemNode({ node }: { node: NodeDef }) {
         <meshStandardMaterial
           color={node.color}
           emissive={node.glowColor}
-          emissiveIntensity={isSpecial ? 0.9 : 0.25}
+          emissiveIntensity={isSpecial ? 1.1 : 0.3}
           roughness={0.3}
           metalness={0.7}
         />
@@ -72,7 +72,7 @@ function SystemNode({ node }: { node: NodeDef }) {
       <Text
         position={[0, node.radius + 0.28, 0]}
         fontSize={0.16}
-        color="#111111"
+        color="#FFFFFF"
         anchorX="center"
         anchorY="bottom"
         fontWeight="bold"
@@ -85,7 +85,7 @@ function SystemNode({ node }: { node: NodeDef }) {
         <Text
           position={[0, -node.radius - 0.26, 0]}
           fontSize={0.11}
-          color="#686862"
+          color="#A1A1AA"
           anchorX="center"
           anchorY="top"
         >
@@ -100,7 +100,6 @@ function SystemNode({ node }: { node: NodeDef }) {
  * Connecting Flow Path Lines
  */
 function FlowPaths() {
-  // 1. Ingestion Line (Customer -> Checkout -> Payment -> Subscription)
   const ingestionPoints = useMemo(() => [
     new THREE.Vector3(-4.6, 0.9, 0),
     new THREE.Vector3(-2.8, 0.9, 0),
@@ -108,14 +107,12 @@ function FlowPaths() {
     new THREE.Vector3(0.8, 0.9, 0),
   ], []);
 
-  // 2. Healthy Straight Line (Subscription -> Invoice -> Recovered)
   const healthyPoints = useMemo(() => [
     new THREE.Vector3(0.8, 0.9, 0),
     new THREE.Vector3(2.6, 0.9, 0),
     new THREE.Vector3(4.6, -0.15, 0),
   ], []);
 
-  // 3. Deflection Curve (Subscription -> At Risk -> AI Recovery -> Recovered)
   const recoveryCurve = useMemo(() => {
     return new THREE.CatmullRomCurve3([
       new THREE.Vector3(0.8, 0.9, 0),
@@ -132,33 +129,32 @@ function FlowPaths() {
       {/* Ingestion Path */}
       <primitive object={new THREE.Line(
         new THREE.BufferGeometry().setFromPoints(ingestionPoints),
-        new THREE.LineBasicMaterial({ color: '#E5E5DF', linewidth: 2 })
+        new THREE.LineBasicMaterial({ color: '#26262A', linewidth: 2 })
       )} />
 
       {/* Healthy Direct Path */}
       <primitive object={new THREE.Line(
         new THREE.BufferGeometry().setFromPoints(healthyPoints),
-        new THREE.LineBasicMaterial({ color: '#E5E5DF', linewidth: 2 })
+        new THREE.LineBasicMaterial({ color: '#26262A', linewidth: 2 })
       )} />
 
       {/* Deflected Recovery Channel */}
       <primitive object={new THREE.Line(
         new THREE.BufferGeometry().setFromPoints(recoveryPoints),
-        new THREE.LineBasicMaterial({ color: '#F2A900', transparent: true, opacity: 0.6, linewidth: 2 })
+        new THREE.LineBasicMaterial({ color: '#C8F000', transparent: true, opacity: 0.65, linewidth: 2 })
       )} />
     </>
   );
 }
 
 /**
- * Animated Flowing Particles (Healthy vs Deflected vs Recovered)
+ * Animated Flowing Particles
  */
 function RevenueParticles({ onRecoverToken }: { onRecoverToken: (amount: number) => void }) {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const particleCount = 28;
   const dummy = useMemo(() => new THREE.Object3D(), []);
 
-  // Curve definitions
   const healthyPath = useMemo(() => new THREE.CatmullRomCurve3([
     new THREE.Vector3(-4.6, 0.9, 0),
     new THREE.Vector3(-2.8, 0.9, 0),
@@ -180,7 +176,6 @@ function RevenueParticles({ onRecoverToken }: { onRecoverToken: (amount: number)
 
   const particles = useMemo(() => {
     return Array.from({ length: particleCount }).map((_, i) => {
-      // ~40% of tokens experience mandate failures (involuntary churn)
       const isFailed = i % 2.4 < 1.0;
       return {
         id: i,
@@ -206,27 +201,20 @@ function RevenueParticles({ onRecoverToken }: { onRecoverToken: (amount: number)
 
       dummy.position.copy(point);
 
-      // Scale & color logic
       if (p.isFailed) {
         if (p.progress > 0.42 && p.progress < 0.72) {
-          // At Risk state: Red / Amber
           dummy.scale.set(0.12, 0.12, 0.12);
         } else if (p.progress >= 0.72) {
-          // Recovered by AI Agent: Electric Chartreuse (#C8F000)
           dummy.scale.set(0.14, 0.14, 0.14);
           if (!p.hasIncremented && p.progress > 0.95) {
             p.hasIncremented = true;
             onRecoverToken(p.amount);
           }
         } else {
-          dummy.scale.set(0.09, 0.09, 0.09);
+          dummy.scale.set(0.10, 0.10, 0.10);
         }
       } else {
-        dummy.scale.set(0.09, 0.09, 0.09);
-      }
-
-      if (p.progress < 0.05) {
-        p.hasIncremented = false;
+        dummy.scale.set(0.10, 0.10, 0.10);
       }
 
       dummy.updateMatrix();
@@ -240,41 +228,33 @@ function RevenueParticles({ onRecoverToken }: { onRecoverToken: (amount: number)
     <instancedMesh ref={meshRef} args={[undefined, undefined, particleCount]}>
       <sphereGeometry args={[1, 14, 14]} />
       <meshStandardMaterial
-        color="#111111"
+        color="#C8F000"
         emissive="#C8F000"
         emissiveIntensity={1.4}
         roughness={0.2}
+        metalness={0.8}
       />
     </instancedMesh>
   );
 }
 
-/**
- * 3D Scene Viewport
- */
 function RevenueFlowScene({ onRecoverToken }: { onRecoverToken: (amount: number) => void }) {
   return (
     <>
-      <ambientLight intensity={0.9} />
-      <directionalLight position={[4, 8, 5]} intensity={1.2} />
-      <pointLight position={[2.7, -1.2, 1.5]} intensity={1.5} color="#C8F000" />
-      <pointLight position={[0.8, -1.2, 1.5]} intensity={1.2} color="#F2A900" />
+      <ambientLight intensity={0.7} />
+      <directionalLight position={[5, 6, 8]} intensity={1.1} />
+      <pointLight position={[2.7, -1.2, 1.5]} intensity={2.0} color="#C8F000" />
+      <pointLight position={[0.8, -1.2, 1.5]} intensity={1.2} color="#E5484D" />
 
-      {/* Grid Floor for spatial perspective */}
-      <gridHelper
-        args={[14, 18, '#E5E5DF', '#F7F7F3']}
-        position={[0, -2.1, -0.5]}
-      />
-
-      {/* Connecting Flow Paths */}
-      <FlowPaths />
-
-      {/* 8 Architectural Nodes */}
-      {NODES.map((node) => (
-        <SystemNode key={node.id} node={node} />
+      {/* Nodes */}
+      {NODES.map((n) => (
+        <SystemNode key={n.id} node={n} />
       ))}
 
-      {/* Flowing Revenue Tokens */}
+      {/* Path Geometry */}
+      <FlowPaths />
+
+      {/* Active Flowing Particles */}
       <RevenueParticles onRecoverToken={onRecoverToken} />
     </>
   );
@@ -288,44 +268,37 @@ function formatINR(amount: number): string {
   }).format(amount || 0);
 }
 
-/**
- * Moment 5: 3D Revenue-Flow Hero Scene (Built from Primitives)
- */
 export default function RevenueFlow3D() {
-  const [recoveredTotal, setRecoveredTotal] = useState<number>(147984);
-  const [activeCycle, setActiveCycle] = useState<number>(1);
+  const [recoveredTotal, setRecoveredTotal] = useState(148500);
 
-  const handleRecoverToken = (amt: number) => {
-    setRecoveredTotal((prev) => prev + amt);
+  const handleRecoverToken = (amount: number) => {
+    setRecoveredTotal((prev) => prev + amount);
   };
 
   return (
-    <div className="w-full rounded-2xl bg-[#FFFFFF] border border-[#E5E5DF] shadow-sm p-6 relative overflow-hidden">
-      {/* Scene Header & Live HUD */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E5E5DF] pb-4 mb-3">
-        <div>
+    <div className="w-full rounded-2xl bg-[#141416] border border-[#26262A] p-6 shadow-sm">
+      {/* HUD Header */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 pb-4 border-b border-[#26262A]">
+        <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#C8F000] border border-[#111111] animate-pulse" />
-            <h3 className="text-sm font-bold text-[#111111] tracking-tight uppercase">
-              3D Autonomous Revenue Deflection & Recovery
-            </h3>
-            <span className="text-[10px] font-mono font-bold bg-[#F7F7F3] border border-[#E5E5DF] text-[#111111] px-2 py-0.5 rounded">
-              WebGL Primitives
+            <span className="flex h-2.5 w-2.5 rounded-full bg-[#C8F000] animate-pulse" />
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#A1A1AA]">
+              Autonomous Recovery Stream
             </span>
           </div>
-          <p className="text-xs text-[#686862] mt-0.5">
-            Failed mandate tokens visibly deflect down to AI recovery node and re-enter settled pipeline
-          </p>
+          <h3 className="text-base font-bold text-white tracking-tight">
+            UPI AutoPay & Card Mandate Continuous Ingestion
+          </h3>
         </div>
 
-        {/* Tabular Figure Counter (Zero Jitter) */}
+        {/* Counter */}
         <div className="flex items-center gap-4">
           <div className="text-right">
-            <div className="text-[10px] uppercase font-mono font-bold text-[#686862] tracking-wider">
+            <div className="text-[10px] uppercase font-mono font-bold text-[#6B6B70] tracking-wider">
               Simulated Settled Revenue
             </div>
             <div
-              className="text-xl sm:text-2xl font-black text-[#111111]"
+              className="text-xl sm:text-2xl font-black text-[#C8F000]"
               style={{ fontVariantNumeric: 'tabular-nums', letterSpacing: '-0.03em' }}
             >
               {formatINR(recoveredTotal)}
@@ -334,8 +307,8 @@ export default function RevenueFlow3D() {
         </div>
       </div>
 
-      {/* 3D WebGL Canvas (Fixed perspective angle, 60fps target) */}
-      <div className="relative h-[340px] sm:h-[400px] w-full rounded-xl bg-[#F7F7F3]/70 border border-[#E5E5DF]/70 overflow-hidden">
+      {/* 3D WebGL Canvas */}
+      <div className="relative h-[340px] sm:h-[400px] w-full rounded-xl bg-[#0A0A0B] border border-[#26262A] overflow-hidden">
         <Canvas
           camera={{ position: [0, 0.2, 6.6], fov: 48 }}
           gl={{ antialias: true, alpha: true }}
@@ -345,34 +318,34 @@ export default function RevenueFlow3D() {
         </Canvas>
 
         {/* Legend Overlay */}
-        <div className="pointer-events-none absolute bottom-3 left-3 flex flex-wrap items-center gap-3 bg-[#FFFFFF]/90 border border-[#E5E5DF] px-3 py-1.5 rounded-lg text-[11px] text-[#111111] backdrop-blur-sm shadow-xs font-mono">
+        <div className="pointer-events-none absolute bottom-3 left-3 flex flex-wrap items-center gap-3 bg-[#141416]/90 border border-[#26262A] px-3 py-1.5 rounded-lg text-[11px] text-white backdrop-blur-sm font-mono">
           <span className="flex items-center gap-1.5">
-            <span className="h-2 w-2 rounded-full bg-[#111111]" />
+            <span className="h-2 w-2 rounded-full bg-[#6B6B70]" />
             Healthy Debit
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="h-2 w-2 rounded-full bg-[#D94A4A]" />
+            <span className="h-2 w-2 rounded-full bg-[#E5484D]" />
             Decline Deflection
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="h-2 w-2 rounded-full bg-[#C8F000] border border-[#111111]" />
+            <span className="h-2 w-2 rounded-full bg-[#C8F000]" />
             AI Recovered
           </span>
         </div>
 
-        <div className="pointer-events-none absolute bottom-3 right-3 text-[10px] font-mono text-[#686862]">
-          Fixed 48° Perspective • Three.js Native Primitives
+        <div className="pointer-events-none absolute bottom-3 right-3 text-[10px] font-mono text-[#6B6B70]">
+          Three.js Native Primitives
         </div>
       </div>
 
       {/* Regulatory Context Footer */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-2 mt-4 pt-3 border-t border-[#E5E5DF] text-xs text-[#686862]">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-2 mt-4 pt-3 border-t border-[#26262A] text-xs text-[#A1A1AA]">
         <div className="flex items-center gap-1.5">
-          <ShieldCheck className="h-3.5 w-3.5 text-[#111111]" />
+          <ShieldCheck className="h-3.5 w-3.5 text-[#C8F000]" />
           <span>Real-time autonomous gating: RBI 3-retry cap & TRAI quiet hours (21:00–09:00 IST) enforced</span>
         </div>
-        <span className="text-[11px] font-mono text-[#686862]">
-          Illustrative Simulation • Batch Model
+        <span className="text-[11px] font-mono text-[#6B6B70]">
+          Batch Model Simulation
         </span>
       </div>
     </div>

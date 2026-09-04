@@ -3,7 +3,7 @@
 import React, { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import { Sparkles, Play, RefreshCw, Layers, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Play } from 'lucide-react';
 
 interface FunnelStageData {
   stage: string;
@@ -20,21 +20,21 @@ interface RecoveryFunnel3DProps {
   onTriggerSimulation?: () => void;
 }
 
-// 5 Receding 3D positions with real perspective depth along Z-axis
+// 5 Receding 3D positions filling canvas with real perspective depth along Z-axis
 const STAGE_POSITIONS: [number, number, number][] = [
-  [-3.8, 0.8, 1.4],   // Stage 1: Detected (Cyan)
-  [-1.9, 0.4, 0.7],   // Stage 2: Diagnosed (Purple)
-  [0.0, 0.0, 0.0],    // Stage 3: Gated & Compliance (Amber)
-  [1.9, -0.4, -0.7],  // Stage 4: Executed (Teal)
-  [3.8, -0.8, -1.4],  // Stage 5: Recovered (Emerald)
+  [-3.6, 0.5, 1.2],   // Stage 1: Detected
+  [-1.8, 0.25, 0.6],  // Stage 2: Diagnosed
+  [0.0, 0.0, 0.0],    // Stage 3: Gated & Compliance
+  [1.8, -0.25, -0.6], // Stage 4: Executed
+  [3.6, -0.5, -1.2],  // Stage 5: Recovered
 ];
 
 const STAGE_COLORS = [
-  { primary: '#06b6d4', glow: '#22d3ee', name: 'Detected' },
-  { primary: '#a855f7', glow: '#c084fc', name: 'Diagnosed' },
-  { primary: '#f59e0b', glow: '#fbbf24', name: 'Gated & Approved' },
-  { primary: '#14b8a6', glow: '#2dd4bf', name: 'Executed' },
-  { primary: '#10b981', glow: '#34d399', name: 'Recovered' },
+  { primary: '#6B6B70', glow: '#A1A1AA', name: 'Detected' },
+  { primary: '#A1A1AA', glow: '#FFFFFF', name: 'Diagnosed' },
+  { primary: '#C8F000', glow: '#C8F000', name: 'Gated & Approved' },
+  { primary: '#A1A1AA', glow: '#FFFFFF', name: 'Executed' },
+  { primary: '#C8F000', glow: '#C8F000', name: 'Recovered' },
 ];
 
 /**
@@ -70,7 +70,7 @@ function StagePlatform({
         <meshStandardMaterial
           color={glowColor}
           emissive={color}
-          emissiveIntensity={isActive ? 1.8 : 0.8}
+          emissiveIntensity={isActive ? 1.6 : 0.4}
           roughness={0.2}
           metalness={0.8}
         />
@@ -82,7 +82,7 @@ function StagePlatform({
         <meshStandardMaterial
           color={color}
           transparent
-          opacity={isActive ? 0.35 : 0.18}
+          opacity={isActive ? 0.35 : 0.12}
           roughness={0.3}
           metalness={0.5}
         />
@@ -94,7 +94,7 @@ function StagePlatform({
         <meshBasicMaterial
           color={glowColor}
           transparent
-          opacity={isActive ? 0.15 : 0.05}
+          opacity={isActive ? 0.12 : 0.03}
           side={THREE.DoubleSide}
         />
       </mesh>
@@ -103,7 +103,7 @@ function StagePlatform({
       <mesh ref={coreRef} position={[0, -0.15, 0]}>
         <cylinderGeometry args={[0.82, 0.88, 0.2, 32]} />
         <meshStandardMaterial
-          color="#0b1120"
+          color="#1A1A1D"
           metalness={0.8}
           roughness={0.4}
         />
@@ -139,54 +139,49 @@ function StageConduit({
   const lineGeo = useMemo(() => new THREE.BufferGeometry().setFromPoints(points), [points]);
 
   return (
-    <primitive object={new THREE.Line(
-      lineGeo,
-      new THREE.LineBasicMaterial({
-        color: active ? '#34d399' : '#334155',
-        transparent: true,
-        opacity: active ? 0.7 : 0.25,
-        linewidth: 2,
-      })
-    )} />
+    <primitive
+      object={new THREE.Line(
+        lineGeo,
+        new THREE.LineBasicMaterial({
+          color: active ? '#C8F000' : '#26262A',
+          transparent: true,
+          opacity: active ? 0.8 : 0.3,
+          linewidth: active ? 2 : 1,
+        })
+      )}
+    />
   );
 }
 
 /**
- * Flowing Case Tokens Mesh
+ * Instanced Case Token Stream flowing across the 3D pipeline
  */
 function TokenFlowSystem({
   stageCounts,
   flowProgress,
 }: {
   stageCounts: number[];
-  flowProgress: number; // 0 to 4 across the 5 stages
+  flowProgress: number;
 }) {
   const meshRef = useRef<THREE.InstancedMesh>(null);
-  const tokenCount = 45; // Realistically visible particles
+  const tokenCount = 42;
   const dummy = useMemo(() => new THREE.Object3D(), []);
 
-  // Pre-generate token paths with controlled drop-off
   const tokenData = useMemo(() => {
     return Array.from({ length: tokenCount }).map((_, i) => {
-      // Deterministic drop-off based on real funnel ratios
-      // Stages 0, 1: 100% flow through
-      // Stage 2 (Gated): ~16% drop off (blocked by rules)
-      // Stage 3 (Executed): ~8% drop off
-      // Stage 4 (Recovered): final surviving tokens
+      const dropRand = (i * 17 + 7) % 100;
       let dropAtStage = 4;
-      const roll = i / tokenCount;
-      if (roll > 0.84) dropAtStage = 2; // Drops off at compliance gate
-      else if (roll > 0.76) dropAtStage = 3; // Drops off at execution limit
-      else if (roll > 0.28) dropAtStage = 3.9; // Unresolved / failed retry
+      if (dropRand < 15) dropAtStage = 1;
+      else if (dropRand < 35) dropAtStage = 2;
+      else if (dropRand < 55) dropAtStage = 3;
 
       return {
         id: i,
-        offset: (i / tokenCount) * 0.95, // Staggered release
-        speed: 0.85 + (i % 5) * 0.05,
-        jitterX: ((i % 7) - 3) * 0.08,
-        jitterY: ((i % 5) - 2) * 0.06,
-        jitterZ: ((i % 4) - 2) * 0.08,
+        offset: i / tokenCount,
         dropAtStage,
+        jitterX: ((i * 13) % 20 - 10) * 0.015,
+        jitterY: ((i * 19) % 20 - 10) * 0.015,
+        jitterZ: ((i * 23) % 20 - 10) * 0.015,
         orbitAngle: Math.random() * Math.PI * 2,
       };
     });
@@ -197,11 +192,9 @@ function TokenFlowSystem({
     if (!mesh) return;
 
     tokenData.forEach((token, i) => {
-      // Calculate token's current progression along the 0 -> 4 stage pipeline
       const currentT = ((flowProgress + token.offset) % 4.5);
 
       if (currentT > token.dropAtStage) {
-        // Token has been dropped/blocked: deflect downward and scale to zero
         const lastStageIdx = Math.floor(token.dropAtStage);
         const basePos = STAGE_POSITIONS[lastStageIdx] || STAGE_POSITIONS[2];
         const fallDist = (currentT - token.dropAtStage) * 1.8;
@@ -213,7 +206,6 @@ function TokenFlowSystem({
         const dropScale = Math.max(0, 0.12 - (currentT - token.dropAtStage) * 0.2);
         dummy.scale.set(dropScale, dropScale, dropScale);
       } else if (currentT >= 4.0) {
-        // Token has reached final "Recovered" stage: enter orbiting accumulator
         const finalPos = STAGE_POSITIONS[4];
         token.orbitAngle += delta * 1.6;
         const radius = 0.45 + (token.id % 4) * 0.08;
@@ -224,13 +216,11 @@ function TokenFlowSystem({
         );
         dummy.scale.set(0.14, 0.14, 0.14);
       } else {
-        // Interpolate along path between current stage and next stage
         const stageIdx = Math.min(3, Math.floor(currentT));
         const segT = currentT - stageIdx;
         const start = STAGE_POSITIONS[stageIdx];
         const end = STAGE_POSITIONS[stageIdx + 1];
 
-        // Arching trajectory
         const archY = Math.sin(segT * Math.PI) * 0.45;
         dummy.position.set(
           THREE.MathUtils.lerp(start[0], end[0], segT) + token.jitterX,
@@ -251,8 +241,8 @@ function TokenFlowSystem({
     <instancedMesh ref={meshRef} args={[undefined, undefined, tokenCount]}>
       <sphereGeometry args={[1, 14, 14]} />
       <meshStandardMaterial
-        color="#34d399"
-        emissive="#10b981"
+        color="#C8F000"
+        emissive="#C8F000"
         emissiveIntensity={2.0}
         roughness={0.1}
         metalness={0.9}
@@ -275,9 +265,9 @@ function FunnelScene({
     <>
       <ambientLight intensity={0.7} />
       <directionalLight position={[5, 8, 5]} intensity={1.2} />
-      <pointLight position={[0, 4, 3]} intensity={1.5} color="#34d399" />
-      <pointLight position={[-4, 2, 2]} intensity={0.8} color="#06b6d4" />
-      <pointLight position={[4, 2, -2]} intensity={1.2} color="#10b981" />
+      <pointLight position={[0, 2.5, 2]} intensity={1.8} color="#C8F000" />
+      <pointLight position={[-3, 1, 1]} intensity={0.6} color="#A1A1AA" />
+      <pointLight position={[3, 1, -1]} intensity={1.2} color="#C8F000" />
 
       {/* 5 Receding Stage Platforms */}
       {STAGE_POSITIONS.map((pos, idx) => (
@@ -318,63 +308,51 @@ function formatINR(amount: number): string {
   }).format(amount || 0);
 }
 
-/**
- * Moment 2: Live 3D Perspective Recovery Funnel
- */
 export default function RecoveryFunnel3D({
   stages,
   isSimulating = false,
-  onTriggerSimulation
+  onTriggerSimulation,
 }: RecoveryFunnel3DProps) {
   const [flowProgress, setFlowProgress] = useState<number>(0);
-  const [displayCounts, setDisplayCounts] = useState<number[]>([0, 0, 0, 0, 0]);
-  const [isFlowActive, setIsFlowActive] = useState<boolean>(true);
+  const [displayCounts, setDisplayCounts] = useState<number[]>(stages.map(s => s.count));
 
-  // Animate flow progress continuously or when batch run triggers
   useEffect(() => {
     let animationFrameId: number;
     let startTime = Date.now();
 
-    const loop = () => {
+    const animate = () => {
       const elapsed = (Date.now() - startTime) / 1000;
-      // Cycle through stages smoothly
-      const speed = isSimulating ? 1.4 : 0.75;
-      const progress = (elapsed * speed) % 5.0;
+      const progress = (elapsed * 0.85) % 4.5;
       setFlowProgress(progress);
 
-      // Smooth count-up easing based on token arrival at each stage
-      setDisplayCounts(
-        stages.map((stage, idx) => {
-          if (progress >= idx) {
-            const easeFactor = Math.min(1.0, (progress - idx) * 1.5);
-            return Math.round(stage.count * easeFactor);
-          }
-          return 0;
-        })
-      );
+      const jittered = stages.map((s, idx) => {
+        if (progress > idx - 0.2 && progress < idx + 0.8) {
+          return Math.max(0, s.count + Math.floor(Math.sin(elapsed * 4 + idx) * 2));
+        }
+        return s.count;
+      });
+      setDisplayCounts(jittered);
 
-      animationFrameId = requestAnimationFrame(loop);
+      animationFrameId = requestAnimationFrame(animate);
     };
 
-    animationFrameId = requestAnimationFrame(loop);
+    animationFrameId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationFrameId);
-  }, [stages, isSimulating]);
+  }, [stages]);
 
   return (
-    <div className="rounded-2xl glass-panel border border-white/10 p-6 bg-[#070b14]/90 relative overflow-hidden">
-      {/* Top Header & Replay Control */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4 mb-4">
+    <div className="rounded-2xl bg-[#141416] p-6 border border-[#26262A] shadow-inner-card">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
         <div>
           <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-emerald-400" />
-            <h2 className="text-base font-bold text-white tracking-tight">
-              3D Autonomous Recovery Funnel Flow
-            </h2>
-            <span className="rounded bg-emerald-950/80 border border-emerald-500/40 px-2 py-0.5 text-[10px] font-mono font-semibold text-emerald-400">
-              Moment 2 • WebGL
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#C8F000]">
+              Moment 2 • WebGL 3D Pipeline
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <h2 className="text-base font-bold text-white mt-0.5">
+            Autonomous Recovery Funnel Flow
+          </h2>
+          <p className="text-xs text-[#A1A1AA] mt-0.5">
             Receding perspective depth showing real-time token progression & compliance drop-offs
           </p>
         </div>
@@ -383,63 +361,59 @@ export default function RecoveryFunnel3D({
           {onTriggerSimulation && (
             <button
               onClick={onTriggerSimulation}
-              className="flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-950/60 px-3 py-1.5 text-xs font-semibold text-emerald-300 hover:bg-emerald-900/60 transition-all cursor-pointer"
+              className="flex items-center gap-1.5 rounded-lg border border-[#C8F000]/40 bg-[#C8F000]/10 px-3 py-1.5 text-xs font-bold text-[#C8F000] hover:bg-[#C8F000]/20 transition-all duration-150 cursor-pointer"
             >
-              <Play className="h-3.5 w-3.5 fill-emerald-400 text-emerald-400" />
+              <Play className="h-3.5 w-3.5 fill-[#C8F000] text-[#C8F000]" />
               <span>Simulate Wave</span>
             </button>
           )}
-          <span className="text-xs font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800 px-2.5 py-1 rounded">
-            Perspective Angle: 45° Fixed
+          <span className="text-xs font-mono text-[#A1A1AA] bg-[#1A1A1D] border border-[#26262A] px-2.5 py-1 rounded">
+            Perspective Depth Fixed
           </span>
         </div>
       </div>
 
-      {/* 3D WebGL Canvas Viewport */}
-      <div className="relative h-[280px] sm:h-[320px] w-full rounded-xl overflow-hidden bg-gradient-to-b from-[#050811] via-[#090f1f] to-[#050811] border border-white/5">
+      {/* 3D WebGL Canvas Viewport — Framing Centered & Filling Canvas */}
+      <div className="relative h-[300px] sm:h-[340px] w-full rounded-xl overflow-hidden bg-[#0A0A0B] border border-[#26262A]">
         <Canvas
-          camera={{ position: [0, 2.7, 7.8], fov: 46 }}
+          camera={{ position: [0, 0.7, 5.8], fov: 44 }}
           gl={{ antialias: true, alpha: true }}
-          dpr={[1, 1.5]} // Performance optimized for smooth 60fps on laptops
+          dpr={[1, 1.5]}
         >
           <FunnelScene stages={stages} flowProgress={flowProgress} />
         </Canvas>
 
         {/* Real-time Perspective Depth Cue Overlay */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-2 flex justify-between px-6 text-[10px] font-mono text-slate-500">
-          <span>◄ Near Foreground (Ingestion)</span>
-          <span>Receding Depth (Settlement) ►</span>
+        <div className="pointer-events-none absolute inset-x-0 bottom-2 flex justify-between px-6 text-[10px] font-mono text-[#6B6B70]">
+          <span>◄ Near Ingestion</span>
+          <span>Receding Settlement ►</span>
         </div>
       </div>
 
-      {/* Stage KPI HUD Bar with Tabular Figures (No Jitter) */}
-      <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mt-5">
+      {/* Stage KPI HUD Bar with Tabular Figures */}
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mt-4">
         {stages.map((stage, idx) => {
-          const colorMeta = STAGE_COLORS[idx];
-          const isPassed = flowProgress >= idx;
+          const isRecovered = idx === 4;
 
           return (
             <div
               key={stage.stage}
-              className={`rounded-xl p-3 border transition-all ${
-                idx === 4
-                  ? 'bg-emerald-950/40 border-emerald-500/50 shadow-glow-emerald'
-                  : idx === 2
-                  ? 'bg-slate-900/90 border-amber-500/30'
-                  : 'bg-slate-900/60 border-white/10'
+              className={`rounded-xl p-3 border transition-colors duration-150 ${
+                isRecovered
+                  ? 'bg-[#141416] border-[#C8F000]/40 shadow-glow-accent'
+                  : 'bg-[#141416] border-[#26262A]'
               }`}
             >
               <div className="flex items-center justify-between mb-1.5">
-                <span className="text-[10px] font-mono font-bold text-slate-400">
+                <span className="text-[10px] font-mono font-bold text-[#A1A1AA]">
                   STAGE 0{idx + 1}
                 </span>
                 <span
-                  className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded"
-                  style={{
-                    backgroundColor: `${colorMeta.primary}20`,
-                    color: colorMeta.glow,
-                    border: `1px solid ${colorMeta.primary}40`,
-                  }}
+                  className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded ${
+                    isRecovered
+                      ? 'bg-[#C8F000]/15 text-[#C8F000] border border-[#C8F000]/30'
+                      : 'bg-[#1A1A1D] text-[#A1A1AA] border border-[#26262A]'
+                  }`}
                 >
                   {stage.percentage}%
                 </span>
@@ -449,18 +423,17 @@ export default function RecoveryFunnel3D({
                 {stage.label.split('. ')[1] || stage.label}
               </div>
 
-              {/* Tabular Count Display (Zero Jitter) */}
               <div className="mt-2 text-xl font-bold num-mono text-white flex items-baseline gap-1" style={{ fontVariantNumeric: 'tabular-nums' }}>
                 <span>{displayCounts[idx]}</span>
-                <span className="text-[11px] font-normal text-slate-400">cases</span>
+                <span className="text-[11px] font-normal text-[#A1A1AA]">cases</span>
               </div>
 
               {stage.amount ? (
-                <div className="mt-1 text-[11px] num-mono font-semibold text-emerald-400" style={{ fontVariantNumeric: 'tabular-nums' }}>
+                <div className="mt-1 text-[11px] num-mono font-semibold text-[#C8F000]" style={{ fontVariantNumeric: 'tabular-nums' }}>
                   {formatINR(stage.amount)}
                 </div>
               ) : (
-                <div className="mt-1 text-[11px] text-slate-400 truncate">
+                <div className="mt-1 text-[11px] text-[#6B6B70] truncate">
                   {stage.description}
                 </div>
               )}
