@@ -53,7 +53,7 @@ export default function Navbar() {
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="text-sm font-bold tracking-tight text-white">RECOVER<span className="text-[#C8F000]">AI</span></span>
+              <span className="text-sm font-bold tracking-tight text-white">RECLAIM<span className="text-[#C8F000]">AI</span></span>
               <span className="rounded bg-[#1A1A1D] px-1.5 py-0.2 text-[9px] font-mono text-[#A1A1AA] border border-[#26262A]">
                 v1.0
               </span>

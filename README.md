@@ -1,4 +1,4 @@
-# 🛡️ AI Revenue Recovery Agent — Autonomous Revenue Recovery for Indian Recurring Subscriptions
+# 🛡️ ReclaimAI — Autonomous Revenue Recovery for Indian Recurring Subscriptions
 
 An autonomous, explainable, and compliance-gated revenue recovery engine that detects failed payment and subscription leaks, diagnoses root causes, enforces strict stopping rules and regulatory compliance gates, executes bounded recovery actions (including **personalized Hinglish Voice Outreach** and **Promise-to-Pay tracking**), and maintains an immutable audit log.
 

@@ -1,4 +1,4 @@
-# RECOVERAI — Comprehensive Frontend & Engine Verification Report
+# ReclaimAI — Comprehensive Frontend & Engine Verification Report
 
 > **Generated:** March 3, 2026  
 > **Repository:** AI Revenue Recovery — Autonomous Revenue Recovery for Indian Recurring Subscriptions  

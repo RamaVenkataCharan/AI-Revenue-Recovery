@@ -1,4 +1,4 @@
-# RECOVERAI — Frontend Live Verification & Visual Showcase
+# ReclaimAI — Frontend Live Verification & Visual Showcase
 
 > **Generated:** March 3, 2026  
 > **Target Environment:** Next.js 16.3.2 (Turbopack) • React 19 • Three.js / React Three Fiber • Tailwind CSS v4  

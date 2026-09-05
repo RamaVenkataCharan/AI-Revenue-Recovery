@@ -1,4 +1,4 @@
-# Project Design Review — AI Revenue Recovery Agent
+# Project Design Review — ReclaimAI
 **System:** Autonomous Revenue Recovery Engine for Indian Recurring Subscriptions
 **Author:** Mekala Rama Venkata Charan
 **Status as of:** September 2026

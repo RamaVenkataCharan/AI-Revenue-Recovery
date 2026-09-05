@@ -1,4 +1,4 @@
-# 🛡️ AI Revenue Recovery Agent — Master System Architecture & Knowledge Base
+# 🛡️ ReclaimAI — Master System Architecture & Knowledge Base
 
 > **Scope:** Autonomous AI Revenue Recovery for Indian Recurring Subscriptions (UPI Autopay, e-Mandate, Cards)  
 > **System Status:** 🟢 **Feature-Complete Demo & Simulation Build with AI Prediction Engine** *(Core logic, Rule-Based Recovery Prediction Studio, compliance engines, database triggers, PTP state machine, and Next.js frontend are fully operational; 100% unit tests pass [44/44]; third-party payment gateway charges and telecom voice calls use weighted probabilistic simulations).*  

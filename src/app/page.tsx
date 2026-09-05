@@ -100,7 +100,7 @@ export default function MarketingLandingPage() {
             <div>
               <div className="flex items-center gap-1.5">
                 <span className="text-sm font-bold tracking-tight text-white">
-                  RECOVER<span className="text-[#C8F000]">AI</span>
+                  RECLAIM<span className="text-[#C8F000]">AI</span>
                 </span>
                 <span className="rounded bg-[#1A1A1D] px-1.5 py-0.2 text-[9px] font-mono text-[#A1A1AA] border border-[#26262A]">
                   v1.0
@@ -447,7 +447,7 @@ export default function MarketingLandingPage() {
                 5 Hard Regulatory Ceilings Enforced
               </h2>
               <p className="mt-2 text-sm text-[#A1A1AA] max-w-2xl">
-                Unlike generic recovery bots that spam customers, RecoverAI codifies RBI circulars and TRAI directives as immutable gate assertions.
+                Unlike generic recovery bots that spam customers, ReclaimAI codifies RBI circulars and TRAI directives as immutable gate assertions.
               </p>
             </div>
             <div className="mt-4 md:mt-0 text-xs font-mono text-[#C8F000] bg-[#C8F000]/10 border border-[#C8F000]/30 px-3 py-1.5 rounded-lg">
@@ -590,7 +590,7 @@ export default function MarketingLandingPage() {
       {/* Footer */}
       <footer className="border-t border-[#26262A] bg-[#0A0A0B] py-6 text-center text-xs font-mono text-[#6B6B70]">
         <div className="mx-auto max-w-7xl px-6 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <span>RECOVERAI • Autonomous Revenue Recovery Engine</span>
+          <span>RECLAIMAI • Autonomous Revenue Recovery Engine</span>
           <span>Autonomous Revenue Recovery Engine • Strict Statutory Gating</span>
         </div>
       </footer>

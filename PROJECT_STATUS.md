@@ -1,6 +1,6 @@
-# 📊 AI Revenue Recovery Agent — Complete Project Status
+# 📊 ReclaimAI — Complete Project Status
 
-**Project:** Autonomous Revenue Recovery Agent for Indian Recurring Subscriptions (UPI AutoPay, e-Mandate, Cards)  
+**Project:** ReclaimAI — Autonomous Revenue Recovery Agent for Indian Recurring Subscriptions (UPI AutoPay, e-Mandate, Cards)  
 **System:** Autonomous Revenue Recovery Engine (v1.0)  
 **Repository:** `RamaVenkataCharan/AI-Revenue-Recovery`  
 **Current Date:** September 5, 2026  
