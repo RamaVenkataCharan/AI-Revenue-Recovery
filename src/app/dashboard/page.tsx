@@ -169,7 +169,7 @@ export default function DashboardPage() {
                 {formatINR(summary?.gateway_recovered_amount || 0)}
               </div>
               <p className="text-[11px] text-[#6B6B70] mt-1">
-                Transient switches & limits recovered automatically via Razorpay API.
+                Transient switches & limits recovered automatically via payment gateway API.
               </p>
             </div>
           </div>
@@ -270,22 +270,22 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* AI PREDICTIVE INTELLIGENCE & FORECASTING CARD */}
+      {/* COMPLIANCE DECISION ENGINE CARD */}
       <div className="rounded-2xl bg-[#141416] p-6 border border-[#26262A] relative overflow-hidden">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="space-y-1 max-w-2xl">
             <div className="flex items-center gap-2">
               <span className="rounded-md bg-[#C8F000]/10 px-2.5 py-0.5 text-[10px] font-mono font-bold text-[#C8F000] border border-[#C8F000]/30 flex items-center gap-1.5">
                 <Sparkles className="h-3 w-3" />
-                HYBRID BAYESIAN AI ENGINE
+                COMPLIANCE DECISION ENGINE
               </span>
-              <span className="text-xs text-[#A1A1AA]">Model: <strong className="text-white font-mono">v2.4-hybrid-bayes</strong></span>
+              <span className="text-xs text-[#A1A1AA]">Engine: <strong className="text-white font-mono">v2.4-weighted-rules</strong></span>
             </div>
             <h2 className="text-base sm:text-lg font-bold text-white">
-              Real-Time AI Recovery Probability Scoring & Pre-Flight Compliance
+              Real-Time Decision Path Scoring & Statutory Pre-Flight
             </h2>
             <p className="text-xs text-[#A1A1AA]">
-              Simulate multi-channel recovery likelihood across UPI Autopay, eNACH, and Cards with instant 5-rule statutory compliance verification.
+              A rule-based compliance decision engine that evaluates evidence, applies defined rules, determines the appropriate decision path, and provides an auditable explanation.
             </p>
           </div>
 
@@ -293,7 +293,7 @@ export default function DashboardPage() {
             href="/dashboard/prediction"
             className="flex items-center gap-2 rounded-xl bg-[#C8F000] px-4 py-2.5 text-xs font-bold text-[#0A0A0B] shadow-glow-accent hover:bg-[#b8dd00] transition-colors duration-150 shrink-0"
           >
-            <span>Open AI Prediction Studio</span>
+            <span>Open Decision Engine</span>
             <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
@@ -308,9 +308,9 @@ export default function DashboardPage() {
           <div>
             <span className="text-xs font-semibold text-[#C8F000] flex items-center gap-1.5">
               <Sparkles className="h-3.5 w-3.5" />
-              AI Prediction Studio
+              Compliance Decision Engine
             </span>
-            <p className="text-[11px] text-[#A1A1AA]">Simulate parameters & test EV scores</p>
+            <p className="text-[11px] text-[#A1A1AA]">Simulate evidence & test decision paths</p>
           </div>
           <ArrowRight className="h-4 w-4 text-[#A1A1AA] group-hover:text-[#C8F000] group-hover:translate-x-1 transition-all duration-150" />
         </Link>

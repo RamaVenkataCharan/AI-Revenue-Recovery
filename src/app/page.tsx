@@ -103,7 +103,7 @@ export default function MarketingLandingPage() {
                   RECOVER<span className="text-[#C8F000]">AI</span>
                 </span>
                 <span className="rounded bg-[#1A1A1D] px-1.5 py-0.2 text-[9px] font-mono text-[#A1A1AA] border border-[#26262A]">
-                  TRACK 03
+                  v1.0
                 </span>
               </div>
             </div>
@@ -137,7 +137,7 @@ export default function MarketingLandingPage() {
         {/* Track Badge */}
         <div className="inline-flex items-center gap-2 rounded-full bg-[#141416] border border-[#26262A] px-3 py-1 text-xs font-mono text-[#A1A1AA] mb-6">
           <span className="h-1.5 w-1.5 rounded-full bg-[#C8F000]" />
-          <span>RAZORPAY HACKATHON 2026 • AUTONOMOUS REVENUE RECOVERY</span>
+          <span>AUTONOMOUS REVENUE RECOVERY ENGINE</span>
         </div>
 
         {/* Headline */}
@@ -188,14 +188,14 @@ export default function MarketingLandingPage() {
                 Simulate Autonomous Recovery Decisions
               </h2>
               <p className="mt-2 text-sm text-[#A1A1AA] max-w-2xl">
-                Test the decision network live. Adjust subscription amount, failure code, and customer segment to inspect instant probability scores, expected values, and statutory rule checks.
+                Test the recovery model live. Adjust subscription amount, failure code, and customer segment to inspect instant probability scores, expected values, and statutory rule checks.
               </p>
             </div>
             <Link
               href="/dashboard/prediction"
               className="mt-4 md:mt-0 inline-flex items-center gap-1.5 text-xs font-semibold text-[#C8F000] hover:underline"
             >
-              <span>Full Prediction Studio</span>
+              <span>Compliance Decision Engine</span>
               <ChevronRight className="h-3.5 w-3.5" />
             </Link>
           </div>
@@ -557,7 +557,7 @@ export default function MarketingLandingPage() {
         <div className="mx-auto max-w-5xl px-6 text-center space-y-6">
           <div className="inline-flex items-center gap-1.5 rounded-full bg-[#1A1A1D] border border-[#26262A] px-3 py-1 text-xs font-mono text-[#C8F000]">
             <Sparkles className="h-3.5 w-3.5" />
-            <span>Ready for Hackathon Evaluation</span>
+            <span>Autonomous Closed-Loop Architecture • Deterministic Compliance</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
@@ -590,7 +590,7 @@ export default function MarketingLandingPage() {
       {/* Footer */}
       <footer className="border-t border-[#26262A] bg-[#0A0A0B] py-6 text-center text-xs font-mono text-[#6B6B70]">
         <div className="mx-auto max-w-7xl px-6 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <span>RECOVERAI • Razorpay Hackathon Track 03</span>
+          <span>RECOVERAI • Autonomous Revenue Recovery Engine</span>
           <span>Autonomous Revenue Recovery Engine • Strict Statutory Gating</span>
         </div>
       </footer>

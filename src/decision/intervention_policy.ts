@@ -13,7 +13,7 @@ export type PolicyAction =
 export interface PolicyDecision {
   action: PolicyAction;
   reasoning: string;
-  channel: 'RAZORPAY_API' | 'WHATSAPP_NUDGE' | 'SMS_NUDGE' | 'HINGLISH_VOICE_CALL' | 'MANUAL_QUEUE';
+  channel: 'GATEWAY_API' | 'WHATSAPP_NUDGE' | 'SMS_NUDGE' | 'HINGLISH_VOICE_CALL' | 'MANUAL_QUEUE';
   is_automated_retry: boolean;
   is_voice_escalation: boolean;
 }
@@ -50,14 +50,14 @@ export class InterventionPolicy {
       switch (rootCause) {
         case 'retry_immediate':
           action = 'RETRY_MANDATE_NOW';
-          channel = 'RAZORPAY_API';
+          channel = 'GATEWAY_API';
           isAutomatedRetry = true;
-          reasoning = `Transient technical error detected for ${event.customer_segment} segment customer. Policy authorizes immediate server-to-server mandate reattempt via Razorpay API.`;
+          reasoning = `Transient technical error detected for ${event.customer_segment} segment customer. Policy authorizes immediate server-to-server mandate reattempt via payment gateway API.`;
           break;
 
         case 'retry_later':
           action = 'SCHEDULE_RETRY_24H';
-          channel = 'RAZORPAY_API';
+          channel = 'GATEWAY_API';
           isAutomatedRetry = true;
           reasoning = `Diagnosed soft failure (${event.failure_reason_code}). Policy schedules an automated mandate retry in 24h to coincide with balance replenishment.`;
           break;

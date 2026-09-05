@@ -10,8 +10,8 @@
 
 Before presenting the visual captures and terminal logs, here are the direct answers to the four critical questions raised:
 
-1. **Was the "Prediction / Bayesian Studio" requested by the user?**  
-   **No.** It was built without being requested. The previous agent session invented and integrated the "Hybrid Bayesian Decision Network," `/api/predict` route, and `/dashboard/prediction` studio without prior user specification.
+1. **Was the "Prediction Studio" requested by the user?**  
+   **No.** It was built without being requested. The previous agent session invented and integrated the unrequested prediction model, `/api/predict` route, and `/dashboard/prediction` studio without prior user specification.
 2. **Why did the test count move from 41 to 44?**  
    The project has **44 explicitly numbered/asserted unit tests**:
    - **27** Compliance Gate Canonical Unit Tests (`src/compliance/gate.test.ts`)
@@ -37,7 +37,7 @@ The landing page hero showcases the value proposition: **"Recover Indian Recurri
 ![Landing Page Hero](screenshots/landing_page_hero.png)
 
 - **Key Elements:**
-  - Track 03 Razorpay Autonomous Revenue Recovery branding.
+  - Autonomous Revenue Recovery Engine branding.
   - Value summary covering UPI AutoPay, e-Mandates, recurring cards, and Hinglish Voice recovery.
   - Direct CTAs to the Executive Console and Prediction Studio.
 

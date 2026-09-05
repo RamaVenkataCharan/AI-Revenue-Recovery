@@ -1,5 +1,5 @@
-﻿# AI Revenue Recovery Agent — Complete Project Status
-**Track:** Razorpay Hackathon Track 03 — Autonomous Revenue Recovery
+# AI Revenue Recovery Agent — Complete Project Status
+**System:** Autonomous Revenue Recovery Engine for Indian Recurring Subscriptions
 **Author:** Mekala Rama Venkata Charan
 **Generated:** September 3, 2026 · 22:28 IST
 **Status:** Pre-submission final pass complete
@@ -63,7 +63,7 @@ DPDP (Digital Personal Data Protection Act) is NOT implemented. It appeared in e
 | Diagnosis | src/diagnosis/root_cause_classifier.ts | - | Maps decline codes to root cause + channel |
 | Decision | src/decision/intervention_policy.ts + stopping_rules.ts | - | Policy engine + escalation safety caps |
 | Compliance Gate | src/compliance/gate.ts + adapter.ts | 15.3 KB | 5-rule statutory gate |
-| Execution Gateway | src/execution/mandate_retry_executor.ts | - | Simulates Razorpay API gateway retry |
+| Execution Gateway | src/execution/mandate_retry_executor.ts | - | Simulates payment gateway API retry |
 | Execution Voice | src/execution/hinglish_voice_agent.ts | - | Hinglish scripts + PTP state machine |
 | Scheduler | src/tracking/retry_scheduler.ts | - | Deferred action queue; 2-cycle loop resolver |
 | Audit | src/audit/audit_logger.ts | - | Append-only SQLite audit log |
@@ -92,7 +92,7 @@ DPDP (Digital Personal Data Protection Act) is NOT implemented. It appeared in e
 | GET /api/cases/[id] | Single-case deep-dive + compliance results | YES |
 | GET /api/audit | Full audit ledger | YES |
 | GET /api/voice | Voice transcripts + PTP records | YES |
-| GET+POST /api/predict | Prediction model (Bayesian scorer) | NO - unscoped |
+| GET+POST /api/predict | Prediction model (Rule-based weighted scorer) | NO - unscoped |
 
 ### 2.4 3D and Motion Components
 

@@ -1,5 +1,5 @@
 # Project Design Review — AI Revenue Recovery Agent
-**Track:** Razorpay Track 03 — Autonomous Revenue Recovery
+**System:** Autonomous Revenue Recovery Engine for Indian Recurring Subscriptions
 **Author:** Mekala Rama Venkata Charan
 **Status as of:** September 2026
 **Document purpose:** Single source of truth on architecture, verified status, and remaining work before submission.

@@ -1,7 +1,7 @@
 # 🛡️ AI Revenue Recovery Agent — Master System Architecture & Knowledge Base
 
-> **Track 03:** Autonomous AI Revenue Recovery for Indian Recurring Subscriptions (UPI Autopay, e-Mandate, Cards)  
-> **System Status:** 🟢 **Feature-Complete Demo & Simulation Build with AI Prediction Engine** *(Core logic, Hybrid Bayesian Prediction Studio, compliance engines, database triggers, PTP state machine, and Next.js frontend are fully operational; 100% unit tests pass [49/49]; third-party payment gateway charges and telecom voice calls use weighted probabilistic simulations).*  
+> **Scope:** Autonomous AI Revenue Recovery for Indian Recurring Subscriptions (UPI Autopay, e-Mandate, Cards)  
+> **System Status:** 🟢 **Feature-Complete Demo & Simulation Build with AI Prediction Engine** *(Core logic, Rule-Based Recovery Prediction Studio, compliance engines, database triggers, PTP state machine, and Next.js frontend are fully operational; 100% unit tests pass [44/44]; third-party payment gateway charges and telecom voice calls use weighted probabilistic simulations).*  
 > **Repository:** `RamaVenkataCharan/AI-Revenue-Recovery`  
 > **Last Verified:** September 02, 2026 | **Build Version:** `1.1.0`  
 
@@ -97,7 +97,7 @@ ORDER BY s.amount DESC;
 | Subsystem / Area | Prior / Loose Claim | Verified Current Codebase Reality | Why the Prior Claim Was Inaccurate |
 | :--- | :--- | :--- | :--- |
 | **System Status** | `"Production-Ready Engine"` | 🟢 **Feature-Complete Demo & AI Prediction Engine** | Complete closed loop with Next.js 16 UI, Express 5 server, 49/49 passing tests, and interactive AI Prediction Studio. |
-| **Database Schema** | 8 Normalized Tables (`merchants`, `customers`, `payment_attempts`, `recovery_actions`, etc.) | **5 Flat/Relational SQLite Tables:** `subscriptions`, `interventions`, `promises_to_pay`, `audit_log`, `recovery_metrics` | The 8-table schema is the target production model. The working hackathon build uses a denormalized flat model for zero-overhead batch processing. |
+| **Database Schema** | 8 Normalized Tables (`merchants`, `customers`, `payment_attempts`, `recovery_actions`, etc.) | **5 Flat/Relational SQLite Tables:** `subscriptions`, `interventions`, `promises_to_pay`, `audit_log`, `recovery_metrics` | The 8-table schema is the target production model. The working autonomous build uses a denormalized flat model for zero-overhead batch processing. |
 | **PTP State Machine** | Full 4-state lifecycle (`PROMISED` ➔ `DUE` ➔ `KEPT` / `BROKEN`) | 3 Active States in batch loop: `PROMISED` ➔ `KEPT` or `BROKEN` (`DUE` defined in enum type only) | The batch simulation resolves commitments directly upon scheduled date arrival rather than running an async background poller for the intermediate `DUE` state. |
 | **Next.js API Endpoints** | Generic umbrella endpoints (`/api/dashboard`, `/api/batch`, `/api/voice`, `/api/audit`) | **Exact Disk Routes:** `/api/dashboard/summary`, `/api/dashboard/funnel`, `/api/cases`, `/api/cases/[id]`, `/api/batch/run`, `/api/audit/search`, `/api/voice/samples`, `/api/predict` | Prior documentation omitted the nested subfolder hierarchy of the Next.js App Router and the new AI Prediction endpoint. |
 | **Express Fallback Server** | `/api/status`, `/api/kpis`, `/api/cases`, `/api/run-batch` | **Actual Server Routes ([`src/server.ts`](file:///c:/Users/ramav/Documents/PROJECTS/AI%20Revenue%20Recovery/src/server.ts)):** `GET /api/health`, `POST /api/recovery/run-batch`, `POST /api/recovery/predict`, `GET /api/recovery/predict-portfolio`, `GET /api/recovery/metrics`, `GET /api/recovery/audit` | Prior notes used generic REST naming instead of the exact Express endpoint definitions on port 3001. |
@@ -428,10 +428,10 @@ Adapter Test Suite Complete: 7/7 passed.
 ┌──────────────────┬────────────────────────┬────────────────────────────────────────────────────────┐
 │ Segment          │ Tone Persona           │ Example Hinglish Script Excerpt                        │
 ├──────────────────┼────────────────────────┼────────────────────────────────────────────────────────┤
-│ High-Value VIP   │ PREMIUM_DEFERENTIAL    │ "Namaste [Name] ji! Main Razorpay Priority Desk se...  │
+│ High-Value VIP   │ PREMIUM_DEFERENTIAL    │ "Namaste [Name] ji! Main Priority Desk se...           │
 │                  │                        │ aapka premium VIP access uninterrupted continue rahe"  │
 ├──────────────────┼────────────────────────┼────────────────────────────────────────────────────────┤
-│ Standard Tier    │ FRIENDLY_DIRECT        │ "Hello [Name] ji, main Razorpay care team se connect   │
+│ Standard Tier    │ FRIENDLY_DIRECT        │ "Hello [Name] ji, main customer care team se connect   │
 │                  │                        │ kar raha hoon... kya hum abhi auto-retry karein?"      │
 ├──────────────────┼────────────────────────┼────────────────────────────────────────────────────────┤
 │ At-Risk Account  │ FIRM_ACTION_ORIENTED   │ "Namaste [Name] ji... recurring mandate decline hua... │
@@ -448,7 +448,7 @@ Adapter Test Suite Complete: 7/7 passed.
 
 ## 10. Planned / Target Architecture (Not Yet Built in Current Sprint)
 
-The following architectural components represent future production milestones and are **not yet built or active** in the current hackathon simulation build:
+The following architectural components represent future production milestones and are **not yet built or active** in the current simulation build:
 
 ### 10.1 Normalized 8-Table Production Schema (Target Milestone)
 
@@ -510,7 +510,7 @@ erDiagram
 - *Current Build:* Batch simulation resolves promises directly from `PROMISED` ➔ `KEPT` or `BROKEN`.
 
 ### 10.3 Live Gateway & Carrier Webhooks (Target Milestone)
-- *Target:* Live integration with Razorpay Webhooks (`subscription.charged`, `payment.failed`) and Twilio / Exotel / Sarvam AI Voice APIs.
+- *Target:* Live integration with Payment Gateway Webhooks (`subscription.charged`, `payment.failed`) and Twilio / Exotel / Sarvam AI Voice APIs.
 - *Current Build:* Deterministic, weighted probabilistic simulations (`Math.random()`) generating realistic distributions.
 
 ---
@@ -524,7 +524,7 @@ ai-revenue-recovery/
 │   ├── detection/subscription_failure_detector.ts <-- Scans at-risk subscriptions & sums revenue
 │   ├── diagnosis/root_cause_classifier.ts<-- Classifies 6 decline codes with confidence
 │   ├── prediction/
-│   │   └── model_predictor.ts            <-- Hybrid Bayesian predictive recovery scoring & attribution
+│   │   └── model_predictor.ts            <-- Rule-based weighted predictive recovery scoring & attribution
 │   ├── decision/
 │   │   ├── intervention_policy.ts        <-- Action selection matrix
 │   │   └── stopping_rules.ts             <-- Core safety ceilings (max 3 retries, cooldowns)

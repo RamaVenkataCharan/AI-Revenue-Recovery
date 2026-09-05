@@ -269,49 +269,78 @@ export default function ComplianceGateCheckpoint3D({
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
 
-  // Find if any rule is blocked and identify its Z coordinate
-  const firstBlockedIdx = results.findIndex((r) => !r.passed);
+  // Stable primitive representation of results to prevent effect churn on array identity changes
+  const resultsKey = useMemo(
+    () => results.map((r) => `${(r as any).rule || r.rule_cited}:${r.passed}`).join(','),
+    [results]
+  );
+
   const count = results.length;
+
+  const firstBlockedIdx = useMemo(
+    () => results.findIndex((r) => !r.passed),
+    [results]
+  );
 
   const panelZPositions = useMemo(() => {
     const startZ = 2.2;
     const endZ = -4.2;
     const step = count > 1 ? (endZ - startZ) / (count - 1) : 0;
     return results.map((_, i) => startZ + i * step);
-  }, [results, count]);
+  }, [count, results]);
 
-  const targetBlockedZ = firstBlockedIdx !== -1
-    ? panelZPositions[firstBlockedIdx] + 0.35
-    : -5.5;
+  const targetBlockedZ = useMemo(() => {
+    return firstBlockedIdx !== -1 && panelZPositions[firstBlockedIdx] !== undefined
+      ? panelZPositions[firstBlockedIdx] + 0.35
+      : -5.5;
+  }, [firstBlockedIdx, panelZPositions]);
 
-  // Animate the token traveling along Z-axis
+  // Persist token position across parent re-renders so it never stutters or resets
+  const tokenZRef = useRef<number>(3.6);
+  const isPlayingRef = useRef<boolean>(isPlaying);
+  isPlayingRef.current = isPlaying;
+
+  const selectedIdxRef = useRef<number | null>(selectedIdx);
+  selectedIdxRef.current = selectedIdx;
+
+  // Reset animation only when the rule evaluation payload actually changes
   useEffect(() => {
-    let animationFrameId: number;
-    let currentZ = 3.6;
-    const speed = 2.2;
-    let lastTime = Date.now();
+    tokenZRef.current = 3.6;
+    setTokenZ(3.6);
+    setIsPlaying(true);
+    setSelectedIdx(null);
+  }, [resultsKey]);
 
-    const animate = () => {
-      const now = Date.now();
-      const delta = (now - lastTime) / 1000;
+  // Stable animation loop driven by performance timestamp
+  useEffect(() => {
+    if (!isPlaying) return;
+
+    let animationFrameId: number;
+    const speed = 2.2;
+    let lastTime = performance.now();
+
+    const animate = (now: number) => {
+      const delta = Math.min((now - lastTime) / 1000, 0.1);
       lastTime = now;
 
-      if (isPlaying) {
-        currentZ -= delta * speed;
+      if (isPlayingRef.current) {
+        tokenZRef.current -= delta * speed;
 
-        if (firstBlockedIdx !== -1 && currentZ <= targetBlockedZ) {
-          currentZ = targetBlockedZ;
-          setTokenZ(currentZ);
+        if (firstBlockedIdx !== -1 && tokenZRef.current <= targetBlockedZ) {
+          tokenZRef.current = targetBlockedZ;
+          setTokenZ(targetBlockedZ);
           setIsPlaying(false);
-          if (selectedIdx === null) setSelectedIdx(firstBlockedIdx);
+          if (selectedIdxRef.current === null) {
+            setSelectedIdx(firstBlockedIdx);
+          }
           return;
         }
 
-        if (currentZ < -5.5) {
-          currentZ = 3.6;
+        if (tokenZRef.current < -5.5) {
+          tokenZRef.current = 3.6;
         }
 
-        setTokenZ(currentZ);
+        setTokenZ(tokenZRef.current);
       }
 
       animationFrameId = requestAnimationFrame(animate);
@@ -319,9 +348,10 @@ export default function ComplianceGateCheckpoint3D({
 
     animationFrameId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationFrameId);
-  }, [results, firstBlockedIdx, targetBlockedZ, isPlaying, selectedIdx]);
+  }, [isPlaying, firstBlockedIdx, targetBlockedZ]);
 
   const handleReplay = () => {
+    tokenZRef.current = 3.6;
     setTokenZ(3.6);
     setIsPlaying(true);
     setSelectedIdx(null);

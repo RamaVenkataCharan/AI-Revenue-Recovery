@@ -19,7 +19,7 @@ interface NodeDef {
 const NODES: NodeDef[] = [
   { id: 'customer', label: 'Customer', sublabel: 'UPI / Card', position: [-4.6, 0.9, 0], color: '#1A1A1D', glowColor: '#6B6B70', radius: 0.32 },
   { id: 'checkout', label: 'Checkout', sublabel: 'Mandate Setup', position: [-2.8, 0.9, 0], color: '#1A1A1D', glowColor: '#6B6B70', radius: 0.32 },
-  { id: 'payment', label: 'Payment', sublabel: 'Razorpay Gateway', position: [-1.0, 0.9, 0], color: '#1A1A1D', glowColor: '#6B6B70', radius: 0.34 },
+  { id: 'payment', label: 'Payment', sublabel: 'Payment Gateway', position: [-1.0, 0.9, 0], color: '#1A1A1D', glowColor: '#6B6B70', radius: 0.34 },
   { id: 'subscription', label: 'Subscription', sublabel: 'Autopay Debit', position: [0.8, 0.9, 0], color: '#1A1A1D', glowColor: '#6B6B70', radius: 0.36 },
   { id: 'invoice', label: 'Healthy Invoice', sublabel: 'Settled Direct', position: [2.6, 0.9, 0], color: '#1A1A1D', glowColor: '#6B6B70', radius: 0.32 },
   

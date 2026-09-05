@@ -7,16 +7,16 @@ export interface ExecutionResult {
   action_type: string;
   success: boolean;
   amount_recovered: number;
-  razorpay_payment_id?: string;
+  gateway_payment_id?: string;
   error_message?: string;
   execution_details: string;
 }
 
 export class MandateRetryExecutor {
   /**
-   * @simulation Simulates a mandate recurring payment charge against Razorpay Subscriptions / Orders API.
+   * @simulation Simulates a mandate recurring payment charge against Payment Gateway Subscriptions / Orders API.
    * Recovery outcome is determined by weighted Math.random() probability rolls per failure code.
-   * In production, replace with live Razorpay SDK calls (see TODO below).
+   * In production, replace with live payment gateway SDK calls (see TODO below).
    */
   public static async executeMandateRetry(
     event: AtRiskSubscriptionEvent,
@@ -29,7 +29,7 @@ export class MandateRetryExecutor {
       event_type: 'EXECUTION',
       subscription_id: event.subscription_id,
       decision: 'INITIATING_RETRY',
-      reasoning: `Executing ${executionMode} mandate retry via Razorpay Subscriptions API for ₹${event.amount}.`,
+      reasoning: `Executing ${executionMode} mandate retry via payment gateway API for ₹${event.amount}.`,
       action_taken: 'POST /v1/subscriptions/' + event.subscription_id + '/charge',
       result: 'IN_PROGRESS',
       metadata: {
@@ -39,9 +39,9 @@ export class MandateRetryExecutor {
       }
     });
 
-    // @simulation — Production replacement: Razorpay Node SDK
-    // const razorpay = new Razorpay({ key_id: process.env.RAZORPAY_KEY_ID, key_secret: process.env.RAZORPAY_KEY_SECRET });
-    // const chargeResult = await razorpay.subscriptions.chargeSubscription(event.subscription_id, { amount: event.amount * 100 });
+    // @simulation — Production replacement: Payment Gateway Node SDK
+    // const gateway = new PaymentGateway({ key_id: process.env.GATEWAY_KEY_ID, key_secret: process.env.GATEWAY_KEY_SECRET });
+    // const chargeResult = await gateway.subscriptions.chargeSubscription(event.subscription_id, { amount: event.amount * 100 });
 
     // @simulation — Weighted recovery probability based on root cause
     let successProbability = 0.0;
@@ -83,7 +83,7 @@ export class MandateRetryExecutor {
         WHERE subscription_id = ?
       `).run(newRetryCount, nowIso, nowIso, event.subscription_id);
 
-      const details = `Mandate charge succeeded via Razorpay gateway. Payment ID: ${mockPaymentId}. ₹${event.amount} recovered.`;
+      const details = `Mandate charge succeeded via payment gateway. Payment ID: ${mockPaymentId}. ₹${event.amount} recovered.`;
 
       // Record intervention
       db.prepare(`
@@ -118,7 +118,7 @@ export class MandateRetryExecutor {
         action_type: `MANDATE_RETRY_${executionMode}`,
         success: true,
         amount_recovered: event.amount,
-        razorpay_payment_id: mockPaymentId,
+        gateway_payment_id: mockPaymentId,
         execution_details: details
       };
     } else {

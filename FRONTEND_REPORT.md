@@ -1,5 +1,5 @@
 # Frontend Systems & UI Architecture Report
-**Project:** AI Revenue Recovery Agent (Razorpay Track 03)  
+**Project:** AI Revenue Recovery Agent (Autonomous Revenue Recovery)  
 **Date:** August 27, 2026  
 **Status:** Live & Rendering on `http://localhost:3000`
 
@@ -63,7 +63,7 @@ Below are the full-page screenshots captured directly from the live browser sess
 
 ### 🔹 1. Executive Dashboard (`/dashboard`)
 - **KPI Metrics Header**: Displays live computed ARR At Risk, Recovered ARR ($$₹$$), Recovery Rate ($$\%$$), and Active Pipeline Cases.
-- **Channel Attribution**: Cards breaking down revenue reclaimed by automated Razorpay retries vs. Hinglish AI Voice calls.
+- **Channel Attribution**: Cards breaking down revenue reclaimed by automated gateway retries vs. Hinglish AI Voice calls.
 - **Interactive 5-Stage Recovery Funnel**: Visualizes volume and drop-off through:
   $$\text{Failed Mandate (100\%)} \longrightarrow \text{Notified (68\%)} \longrightarrow \text{Promise to Pay (48\%)} \longrightarrow \text{Settled (64\%)}$$
 - **Regulatory Safety Proof Points**: 3 governance cards showing real-time Stopping-Rule triggers, Compliance-Gate blocks (anti-harassment & quiet hours), and Honest Financial Exceptions.
@@ -253,7 +253,7 @@ export default function DashboardPage() {
                 {formatINR(summary?.gateway_recovered_amount || 0)}
               </div>
               <p className="text-[11px] text-slate-400 mt-1">
-                Transient switches & limits recovered automatically via Razorpay API.
+                Transient switches & limits recovered automatically via payment gateway API.
               </p>
             </div>
           </div>
@@ -507,7 +507,7 @@ import './globals.css';
 import Navbar from './components/Navbar';
 
 export const metadata: Metadata = {
-  title: 'AI Revenue Recovery Agent — Razorpay Hackathon (Track 03)',
+  title: 'AI Revenue Recovery Agent — Autonomous Revenue Recovery for Indian Recurring Subscriptions',
   description: 'Closed-loop autonomous revenue recovery engine with Hinglish voice outreach, strict stopping rules, and immutable audit trails.',
 };
 
@@ -590,10 +590,10 @@ export default function Navbar() {
             <div className="flex items-center gap-2">
               <span className="text-lg font-bold tracking-tight text-white">RECOVER<span className="text-emerald-400">AI</span></span>
               <span className="rounded bg-emerald-950/80 px-2 py-0.5 text-[10px] font-semibold text-emerald-400 border border-emerald-800/60">
-                Track 03
+                v1.0
               </span>
             </div>
-            <p className="text-[11px] text-slate-400">Razorpay Autonomous Revenue Recovery</p>
+            <p className="text-[11px] text-slate-400">Autonomous Revenue Recovery</p>
           </div>
         </div>
 

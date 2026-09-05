@@ -1,4 +1,4 @@
-# 🛡️ AI Revenue Recovery Agent (Razorpay Hackathon — Track 03)
+# 🛡️ AI Revenue Recovery Agent — Autonomous Revenue Recovery for Indian Recurring Subscriptions
 
 An autonomous, explainable, and compliance-gated revenue recovery engine that detects failed payment and subscription leaks, diagnoses root causes, enforces strict stopping rules and regulatory compliance gates, executes bounded recovery actions (including **personalized Hinglish Voice Outreach** and **Promise-to-Pay tracking**), and maintains an immutable audit log.
 
@@ -38,8 +38,8 @@ Maps raw gateway decline codes (`insufficient_funds`, `card_expired`, `bank_decl
 
 ### 4. Hinglish Voice Recovery Agent (`src/execution/hinglish_voice_agent.ts`) — *Differentiator*
 Generates natural, code-switched Hindi-English scripts customized by segment tone and failure cause:
-- **`high_value` (Premium/Deferential):** *"Namaste Aarav ji! Main Razorpay Priority Desk se baat kar raha hoon... uninterrupted VIP access continue rahe..."*
-- **`standard` (Friendly/Direct):** *"Hello Rohan ji, main Razorpay customer care team se connect kar raha hoon... kya hum abhi auto-retry karein..."*
+- **`high_value` (Premium/Deferential):** *"Namaste Aarav ji! Main Priority Desk se baat kar raha hoon... uninterrupted VIP access continue rahe..."*
+- **`standard` (Friendly/Direct):** *"Hello Rohan ji, main customer care team se connect kar raha hoon... kya hum abhi auto-retry karein..."*
 - **`at_risk` (Firm/Action-Oriented):** *"Namaste Priya ji... overdue payment bounce ho gaya hai... suspension se bachne ke liye kya hum PTP date commit kar sakte hain?"*
 
 ### 5. Promise-to-Pay (PTP) State Machine (`src/tracking/promise_to_pay_tracker.ts`)

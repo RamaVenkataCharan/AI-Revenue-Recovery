@@ -14,7 +14,7 @@ function formatINR(amount: number): string {
 
 async function main() {
   console.log('='.repeat(85));
-  console.log(' AI REVENUE RECOVERY AGENT — BATCH EXECUTION RUNNER (Track 03 Closed Loop)');
+  console.log(' AI REVENUE RECOVERY AGENT — BATCH EXECUTION RUNNER (Autonomous Closed Loop)');
   console.log('='.repeat(85));
 
   // Step 1: Seed fresh synthetic data into SQLite

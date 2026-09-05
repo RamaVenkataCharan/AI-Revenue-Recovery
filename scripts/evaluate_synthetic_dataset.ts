@@ -193,7 +193,7 @@ export function runDatasetEvaluations() {
   const scenarioA = evaluateScenario(
     dataset,
     'Scenario A — "Immediate Automated Retry"',
-    'Default automated merchant action: retry debit immediately via Razorpay API at payment failure time',
+    'Default automated merchant action: retry debit immediately via payment gateway API at payment failure time',
     'retry_now',
     'gateway_retry'
   );

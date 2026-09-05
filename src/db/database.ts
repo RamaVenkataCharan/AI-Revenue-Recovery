@@ -1,8 +1,8 @@
 /**
  * @module Database — SQLite (better-sqlite3) singleton for the Revenue Recovery Agent.
  *
- * Design decision: Single SQLite file (`revenue_recovery.db`) chosen for hackathon
- * demo — zero external dependencies, works on any machine with Node.js.
+ * Design decision: Single SQLite file (`revenue_recovery.db`) chosen for standalone
+ * deployment — zero external dependencies, works on any machine with Node.js.
  *
  * Schema source: `src/db/sqlite_schema.sql` (flat denormalized tables).
  * There is no Postgres/Supabase fallback — those schemas have been removed.

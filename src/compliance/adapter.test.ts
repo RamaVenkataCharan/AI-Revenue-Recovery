@@ -31,7 +31,7 @@ export function runAdapterTests() {
     const adapted = adaptEventToComplianceInput(
       sampleEvent,
       'RETRY_MANDATE_NOW',
-      'RAZORPAY_API',
+      'GATEWAY_API',
       new Date('2026-08-29T10:00:00Z')
     );
 
@@ -81,7 +81,7 @@ export function runAdapterTests() {
     };
 
     const testTime = new Date('2026-08-29T06:00:00Z'); // 11:30 AM IST (daytime)
-    const adaptedInput = adaptEventToComplianceInput(eventMaxRetries, 'RETRY_MANDATE_NOW', 'RAZORPAY_API', testTime);
+    const adaptedInput = adaptEventToComplianceInput(eventMaxRetries, 'RETRY_MANDATE_NOW', 'GATEWAY_API', testTime);
     const adaptedResults = evaluateComplianceGate(adaptedInput);
 
     const adaptedRbiCheck = adaptedResults.find((r) => r.rule_cited === 'RBI_MANDATE_MAX_RETRIES_3')!;
@@ -209,7 +209,7 @@ export function runAdapterTests() {
     const adaptedEval = evaluateAdaptedCompliance(
       missingNoticeEvent,
       'RETRY_MANDATE_NOW',
-      'RAZORPAY_API',
+      'GATEWAY_API',
       new Date(missingNoticeEvent.last_attempt_timestamp)
     );
 
@@ -243,7 +243,7 @@ export function runAdapterTests() {
     const adaptedEval = evaluateAdaptedCompliance(
       compliantEvent,
       'RETRY_MANDATE_NOW',
-      'RAZORPAY_API',
+      'GATEWAY_API',
       new Date(compliantEvent.last_attempt_timestamp)
     );
 

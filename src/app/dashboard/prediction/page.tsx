@@ -239,11 +239,11 @@ export default function PredictionStudioPage() {
               <Sparkles className="h-4 w-4 text-white" />
             </div>
             <h1 className="text-xl font-bold tracking-tight text-white sm:text-2xl flex items-center gap-2">
-              AI Model Prediction & Recovery Intelligence Studio
+              Compliance Decision Engine
             </h1>
           </div>
           <p className="text-xs text-[#A1A1AA] mt-1">
-            Hybrid Bayesian Decision Network • Real-time Multi-Channel Recovery Scoring • 5-Rule Statutory Compliance Pre-Flight
+            A rule-based compliance decision engine that evaluates evidence, applies defined rules, determines the appropriate decision path, and provides an auditable explanation.
           </p>
         </div>
 
@@ -568,7 +568,7 @@ export default function PredictionStudioPage() {
                     <div>
                       <div className="flex items-center gap-2">
                         <span className="rounded-md bg-[#1A1A1D] px-2 py-0.5 text-[10px] font-mono font-bold text-[#C8F000] border border-[#26262A]">
-                          AI RECOVERY SCORE
+                          DECISION PATH SCORE
                         </span>
                         <span className="text-xs text-[#A1A1AA]">
                           Confidence: <strong className="text-white num-mono">{prediction?.diagnosis_confidence_pct || 95}%</strong>
@@ -881,11 +881,11 @@ export default function PredictionStudioPage() {
             </div>
 
             <div className="rounded-2xl bg-[#141416] border border-[#26262A] p-5 border border-[#26262A]">
-              <span className="text-xs text-[#A1A1AA] font-semibold">Average Model Confidence</span>
+              <span className="text-xs text-[#A1A1AA] font-semibold">Average Decision Confidence</span>
               <div className="text-2xl font-bold text-[#C8F000] num-mono mt-1">
                 {portfolioStats?.average_confidence_pct || 96}%
               </div>
-              <span className="text-[11px] text-[#6B6B70]">Hybrid Bayesian Network</span>
+              <span className="text-[11px] text-[#6B6B70]">Weighted Rule Engine</span>
             </div>
 
             <div className="rounded-2xl bg-[#141416] border border-[#26262A] p-5 border border-[#26262A]">

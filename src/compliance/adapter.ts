@@ -59,7 +59,7 @@ export function mapPolicyActionToProposedAction(policyAction: string): ProposedA
  */
 export function mapPolicyChannelToProposedChannel(policyChannel?: string): ProposedChannel {
   switch (policyChannel) {
-    case 'RAZORPAY_API':
+    case 'GATEWAY_API':
       return 'gateway_retry';
     case 'WHATSAPP_NUDGE':
       return 'whatsapp_nudge';
@@ -142,7 +142,7 @@ export function adaptEventToComplianceInput(
   // 2. Map subscription
   const subscription: Subscription = {
     id: event.subscription_id,
-    merchant_id: 'mer_razorpay_live',
+    merchant_id: 'mer_gateway_live',
     customer_id: event.customer_id,
     plan_name: 'Recurring Subscription',
     amount: event.amount,
@@ -168,7 +168,7 @@ export function adaptEventToComplianceInput(
 
   const customer: Customer = {
     id: event.customer_id,
-    merchant_id: 'mer_razorpay_live',
+    merchant_id: 'mer_gateway_live',
     name: event.customer_name,
     phone: event.phone || '+919876543210',
     email: `${event.customer_name.toLowerCase().replace(/[^a-z0-9]/g, '.')}@example.com`,
@@ -198,7 +198,7 @@ export function adaptEventToComplianceInput(
     pre_debit_notice_sent_at: event.pre_debit_notice_sent_at ?? undefined,
     occurred_at: event.last_attempt_timestamp,
     raw_webhook_payload: {
-      source: 'razorpay_webhook',
+      source: 'gateway_webhook',
       error_code: event.failure_reason_code
     }
   };

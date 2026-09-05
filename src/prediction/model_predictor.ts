@@ -66,7 +66,7 @@ export interface PredictionOutput {
 }
 
 export class ModelPredictor {
-  private static readonly MODEL_VERSION = 'v2.4-hybrid-bayes';
+  private static readonly MODEL_VERSION = 'v2.4-weighted-rules';
   private static readonly BENCHMARK_SAMPLES = 5000;
 
   /**
@@ -290,7 +290,7 @@ export class ModelPredictor {
     const traiQuietHoursPassed = !isQuietHours;
     const rbiPreDebitNoticePassed = hasPreDebitNotice;
     const cooldownPassed = hoursSinceContact >= 48;
-    const dndPassed = !isDnd || policy.channel === 'RAZORPAY_API';
+    const dndPassed = !isDnd || policy.channel === 'GATEWAY_API';
 
     const compliancePreFlight: CompliancePreFlight = {
       rbi_max_retries: {
@@ -370,7 +370,7 @@ export class ModelPredictor {
       voice_script_preview: scriptPreview,
       model_metadata: {
         version: ModelPredictor.MODEL_VERSION,
-        model_type: 'Hybrid Bayesian Decision Network with Dynamic Feature Attribution',
+        model_type: 'Rule-Based Weighted Recovery Scoring Model with Feature Attribution',
         trained_on_samples: ModelPredictor.BENCHMARK_SAMPLES,
         latency_ms: Math.round((endTime - startTime) * 100) / 100
       }

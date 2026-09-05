@@ -32,7 +32,7 @@ export function runRescheduleLoopTests() {
     const cycle1Eval = evaluateAdaptedCompliance(
       missingNoticeCase,
       'RETRY_MANDATE_NOW',
-      'RAZORPAY_API',
+      'GATEWAY_API',
       initialTime
     );
 
@@ -52,7 +52,7 @@ export function runRescheduleLoopTests() {
     const cycle2Eval = evaluateAdaptedCompliance(
       missingNoticeCase,
       'RETRY_MANDATE_NOW',
-      'RAZORPAY_API',
+      'GATEWAY_API',
       cycle2Time
     );
 

@@ -2,7 +2,7 @@ import assert from 'assert';
 import { ModelPredictor } from '../prediction/model_predictor';
 
 export function runPredictionModelTests() {
-  console.log('\n--- Running AI Model Predictor Unit Test Suite ---');
+  console.log('\n--- Running Compliance Decision Predictor Unit Test Suite ---');
 
   // Test 1: Transient Technical Error
   const res1 = ModelPredictor.predict({

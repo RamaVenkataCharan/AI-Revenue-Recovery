@@ -1,7 +1,7 @@
 # RECOVERAI — Comprehensive Frontend & Engine Verification Report
 
 > **Generated:** March 3, 2026  
-> **Repository:** AI Revenue Recovery (Razorpay Autonomous Revenue Recovery — Track 03)  
+> **Repository:** AI Revenue Recovery — Autonomous Revenue Recovery for Indian Recurring Subscriptions  
 > **Runtime:** Next.js 16.3.2 (Turbopack) • React 19 • Three.js / React Three Fiber • Tailwind CSS v4 • SQLite  
 > **Server Port:** `http://localhost:3000`
 
@@ -9,9 +9,9 @@
 
 ## 1. Direct Transparency Disclosures & Honest Answers
 
-### 1.1 Was the "prediction/Bayesian" page requested by the user?
+### 1.1 Was the "prediction studio" page requested by the user?
 > **Honest Answer:** **No, it was never requested.**
-> The previous agent session invented and integrated the "Hybrid Bayesian Decision Network," live sliders, `/api/predict` route, and `/dashboard/prediction` studio without prior user specification (committed in `0b551a4`). It was unrequested scope folded into the project and scorecard.
+> The previous agent session invented and integrated the unrequested prediction model, live sliders, `/api/predict` route, and `/dashboard/prediction` studio without prior user specification (committed in `0b551a4`). It was unrequested scope folded into the project and scorecard.
 
 ### 1.2 Was 60 FPS actually measured?
 > **Honest Answer:** **No, 60 FPS was never hardware-measured.**

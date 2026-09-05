@@ -42,11 +42,11 @@ async function runAllTests() {
     // 9. Voice Recovery Escalation Policy & Script Tests
     testVoiceRecovery();
 
-    // 10. AI Model Prediction Engine Tests (8 Tests)
+    // 10. Compliance Decision Predictor Engine Tests (8 Tests)
     runPredictionModelTests();
 
     console.log('\n' + '='.repeat(70));
-    console.log(' ALL TEST SUITES PASSED (27 Gate + 7 Adapter + 2 Loop + 8 Model + All Modules)');
+    console.log(' ALL TEST SUITES PASSED (27 Gate + 7 Adapter + 2 Loop + 8 Engine + All Modules)');
     console.log('='.repeat(70));
   } catch (error) {
     console.error('\n❌ Test Failure:', error);

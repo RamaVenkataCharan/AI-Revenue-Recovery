@@ -225,7 +225,7 @@ CREATE TABLE IF NOT EXISTS payment_attempts (
     attempt_number INTEGER NOT NULL DEFAULT 1,
     amount REAL NOT NULL,
     currency TEXT NOT NULL DEFAULT 'INR',
-    gateway TEXT NOT NULL DEFAULT 'razorpay',
+    gateway TEXT NOT NULL DEFAULT 'payment_gateway',
     gateway_payment_id TEXT,
     status TEXT NOT NULL,
     error_code TEXT,
@@ -897,7 +897,7 @@ npx tsx scripts/evaluate_synthetic_dataset.ts
 
 ### Scenario A — "Immediate Automated Retry"
 Policy: proposedAction='retry_now', proposedChannel='gateway_retry', proposedTime=occurred_at
-Context: Default automated merchant action: retry debit immediately via Razorpay API at payment failure time
+Context: Default automated merchant action: retry debit immediately via payment gateway API at payment failure time
 --------------------------------------------------------------------------------
 Total Cases Evaluated : 100
 Total Cases Blocked   : 70 (70.0%)
@@ -1054,18 +1054,18 @@ export class RootCauseClassifier {
 
 ---
 
-## 5. Execution Layer (Razorpay / Twilio / Resend Integrations)
+## 5. Execution Layer (Payment Gateway / Twilio / Resend Integrations)
 
 **Honest Integration Status:**
-- **Razorpay API:** **STUBBED / SIMULATED**. Proved by lines 40-42 of `src/execution/mandate_retry_executor.ts` (commented out `// TODO: Connect to live Razorpay Test-Mode API`). It uses `Math.random()` to simulate success rates and creates mock IDs like `pay_test_${random}`.
+- **Payment Gateway API:** **STUBBED / SIMULATED**. Proved by lines 40-42 of `src/execution/mandate_retry_executor.ts` (commented out `// TODO: Connect to live Payment Gateway Test-Mode API`). It uses `Math.random()` to simulate success rates and creates mock IDs like `pay_test_${random}`.
 - **Twilio (Voice/SMS):** **STUBBED / SIMULATED**. Hinglish Voice Agent generates simulated code-switched scripts and writes JSON records to `data/synthetic/voice_call_transcripts.json`. No live SIP or telephony credentials are wired.
 - **Resend / Email:** **STUBBED / SIMULATED**. Direct notification dispatch returns mock message IDs (`msg_${random}`).
 
 ### Proving Code from Disk: `src/execution/mandate_retry_executor.ts` (lines 40–73)
 ```typescript
-    // TODO: Connect to live Razorpay Test-Mode API using razorpay node SDK or fetch:
-    // const razorpay = new Razorpay({ key_id: process.env.RAZORPAY_KEY_ID, key_secret: process.env.RAZORPAY_KEY_SECRET });
-    // const chargeResult = await razorpay.subscriptions.chargeSubscription(event.subscription_id, { amount: event.amount * 100 });
+    // TODO: Connect to live Payment Gateway Test-Mode API using gateway node SDK or fetch:
+    // const gateway = new PaymentGateway({ key_id: process.env.GATEWAY_KEY_ID, key_secret: process.env.GATEWAY_KEY_SECRET });
+    // const chargeResult = await gateway.subscriptions.chargeSubscription(event.subscription_id, { amount: event.amount * 100 });
 
     // Realistic weighted recovery probability based on root cause
     let successProbability = 0.0;
@@ -1212,6 +1212,6 @@ npx tsx src/tests/run_tests.ts
 | **Phase 1** | **Data Model & Schema** | **Partially Built / Diverged** | SQLite schema (`sqlite_schema.sql`) and Postgres schema (`schema.sql`) exist with 100 synthetic cases seeded. However, API endpoints and older agent files expect Phase 1 schema, causing runtime SQLite errors on dashboard fetch. |
 | **Phase 2** | **Compliance Gate Engine** | **100% Complete & Verified** | Full pure-function compliance gate in `src/compliance/gate.ts`. 27/27 unit tests pass with mathematical reconciliation across 100 cases. |
 | **Phase 3** | **Decision Engine (Root Cause & Policy)** | **Partially Built (Needs Phase 2 Schema Wire-up)** | Rule logic in `root_cause_classifier.ts` and `intervention_policy.ts` exists in isolation, but queries legacy subscription fields. Not yet updated to read normalized `failure_events` and `recovery_cases`. |
-| **Phase 4** | **Execution Layer** | **Stubbed / Simulated** | Razorpay charging and Twilio calls are simulated via `Math.random()` and local JSON files. No live API credentials connected. |
+| **Phase 4** | **Execution Layer** | **Stubbed / Simulated** | Payment gateway charging and Twilio calls are simulated via `Math.random()` and local JSON files. No live API credentials connected. |
 | **Phase 5** | **Dashboard UI** | **Complete Visual Shell / Blocked API** | Next.js 16 Dark glassmorphism UI is fully built with 5 routes. Pages render, but display 0/empty states because API routes fail SQLite queries against new tables. |
 | **Phase 6** | **Voice Layer** | **Mocked / Script-Gen Only** | Hinglish script generation and prompt formulation work, but audio synthesis/Twilio SIP media streams are not wired to physical telephony. |

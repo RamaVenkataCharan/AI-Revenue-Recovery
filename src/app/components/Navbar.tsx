@@ -14,7 +14,7 @@ export default function Navbar() {
   const navLinks = [
     { href: '/dashboard', label: 'Console', icon: Activity },
     { href: '/dashboard/cases', label: 'Cases', icon: ListChecks },
-    { href: '/dashboard/prediction', label: 'Prediction', icon: Sparkles },
+    { href: '/dashboard/prediction', label: 'Decision Engine', icon: Sparkles },
     { href: '/dashboard/audit', label: 'Audit', icon: FileText },
     { href: '/dashboard/voice', label: 'Voice', icon: Mic },
   ];
@@ -55,7 +55,7 @@ export default function Navbar() {
             <div className="flex items-center gap-1.5">
               <span className="text-sm font-bold tracking-tight text-white">RECOVER<span className="text-[#C8F000]">AI</span></span>
               <span className="rounded bg-[#1A1A1D] px-1.5 py-0.2 text-[9px] font-mono text-[#A1A1AA] border border-[#26262A]">
-                TRACK 03
+                v1.0
               </span>
             </div>
           </div>

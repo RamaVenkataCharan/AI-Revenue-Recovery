@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
       if (sub.mandate_status === 'recovered') {
         statusCategory = 'RECOVERED';
         statusBadge = sub.ptp_state === 'KEPT' ? 'Recovered via Voice (PTP)' : 'Recovered via Gateway';
-        channel = sub.ptp_state === 'KEPT' ? 'HINGLISH_VOICE' : 'RAZORPAY_API';
+        channel = sub.ptp_state === 'KEPT' ? 'HINGLISH_VOICE' : 'GATEWAY_API';
       } else if (sub.retry_count_so_far >= 3 || sub.failure_reason_code === 'mandate_revoked') {
         statusCategory = 'BLOCKED';
         statusBadge = sub.failure_reason_code === 'mandate_revoked' ? 'Blocked: Revoked Mandate' : 'Blocked: Max 3 Retries Exceeded';
@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
       } else if (sub.last_action_outcome === 'FAILED') {
         statusCategory = 'ESCALATED';
         statusBadge = 'Gateway Retry Failed';
-        channel = 'RAZORPAY_API';
+        channel = 'GATEWAY_API';
       }
 
       return {

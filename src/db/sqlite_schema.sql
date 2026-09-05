@@ -1,5 +1,5 @@
 -- ============================================================================
--- AI REVENUE RECOVERY AGENT — CANONICAL SQLITE SCHEMA (FLAT / HACKATHON BUILD)
+-- AI REVENUE RECOVERY AGENT — CANONICAL SQLITE SCHEMA (FLAT RELATIONAL BUILD)
 -- ============================================================================
 -- This is the SINGLE source of truth for the database structure.
 -- All modules (seed, detection, diagnosis, decision, execution, tracking,

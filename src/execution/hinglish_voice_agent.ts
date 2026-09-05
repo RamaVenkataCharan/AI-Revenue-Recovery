@@ -68,21 +68,21 @@ export class HinglishVoiceAgent {
     if (event.customer_segment === 'high_value') {
       return {
         tone: 'PREMIUM_DEFERENTIAL',
-        script: `[Agent]: "Namaste ${firstName} ji! Main Razorpay Priority Desk se baat kar raha hoon. Hope you are having a wonderful day.\n` +
+        script: `[Agent]: "Namaste ${firstName} ji! Main Priority Desk se baat kar raha hoon. Hope you are having a wonderful day.\n` +
           `[Agent]: "${firstName} ji, aapka ₹${amountStr} ka premium recurring subscription renewal ${reasonHinglish} process nahi ho paya tha.\n` +
           `[Agent]: "Hum ensure karna chahte hain ki aapki uninterrupted VIP access continue rahe. Kya hum abhi ek instant secure retry initiate kar sakte hain, ya aap mujhe koi convenient date bata denge jab hum aapke liye debit re-schedule karein?"`
       };
     } else if (event.customer_segment === 'at_risk') {
       return {
         tone: 'FIRM_ACTION_ORIENTED',
-        script: `[Agent]: "Namaste ${firstName} ji, main Razorpay account resolution team se urgent update ke liye call kar raha hoon.\n` +
+        script: `[Agent]: "Namaste ${firstName} ji, main account resolution team se urgent update ke liye call kar raha hoon.\n` +
           `[Agent]: "Aapka ₹${amountStr} ka overdue payment ${reasonHinglish} decline ho gaya hai aur previous notifications par koi action nahi mila.\n` +
           `[Agent]: "Service suspension aur late penalty se bachne ke liye, kya hum payment abhi process karein, ya aap ek specific Promise-to-Pay date commit karenge?"`
       };
     } else {
       return {
         tone: 'FRIENDLY_DIRECT',
-        script: `[Agent]: "Hello ${firstName} ji, main Razorpay customer care team se connect kar raha hoon.\n` +
+        script: `[Agent]: "Hello ${firstName} ji, main customer care team se connect kar raha hoon.\n` +
           `[Agent]: "Aapka monthly payment of ₹${amountStr}, ${reasonHinglish} complete nahi ho paya tha.\n` +
           `[Agent]: "Kya hum abhi isse auto-retry kar dein, ya fir aap 2-3 din baad ki koi date confirm karenge jab account mein funds available honge?"`
       };
